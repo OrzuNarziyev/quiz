@@ -1,0 +1,91 @@
+{% load crispy_forms_tags %}
+
+<form id="form" action="" class="p-5">
+    {% csrf_token %}
+    <div class="block">
+        {{ formset.non_form_errors }}
+        {{ formset.management_form }}
+    </div>
+    <div class="block__question">
+        <div id="div_id_answers-0-text" class="mb-3">
+            {{form.media}}
+            {{ form|crispy }}
+        </div>
+    </div>
+
+    <div class="block__answer mt-3">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Javoblar</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            {% for foo in formset %}
+                <tr>
+                    <th scope="row">
+                        <div id="div_id_answers-0-correct" class="mb-3 form-check">
+                            {{ foo.correct }}
+                        </div>
+                    </th>
+                    <th>
+                        {{ foo.text }}
+                    </th>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <button id="submit" class="btn btn-primary">saqlash
+    </button>
+</form>
+
+<script>
+    var url = '{% url 'quiz:create_question' quiz_id%}'
+    var check_list = document.querySelectorAll("[id$='-correct']")
+    var submit = document.getElementById('submit')
+    var form = document.getElementById('form')
+    var list_questions = document.getElementById('list_question')
+    check_list.forEach(item => {
+        item.addEventListener('click', (e) => {
+
+            target = e.target
+            target.setAttribute('checked', '')
+            check_list.forEach(item => {
+                if (item != target) {
+                    if (item.hasAttribute('checked')) {
+                        item.checked = false
+                        item.removeAttribute('checked')
+                    }
+                }
+            })
+        })
+    })
+
+    form.addEventListener('submit', event => {
+        event.preventDefault()
+
+        const formData = new FormData(form)
+
+        fetch(
+            url,
+            {
+                method: 'post',
+                body: formData
+            }
+        ).then((response) => response.text())
+            .then((data) => {
+
+                list_questions.innerHTML += data
+                form.reset()
+
+
+            })
+            .catch(error => console.log(error))
+    })
+
+</script>

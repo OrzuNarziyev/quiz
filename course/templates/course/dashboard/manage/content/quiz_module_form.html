@@ -1,0 +1,27 @@
+
+{% load crispy_forms_tags %}
+<div class="card">
+<div class="card-body">
+    <form
+    {% if object %}
+        action = "{% url 'course:module_quiz_update' module.id object.id %}"
+    {% else %}
+        action="{% url 'course:module_quiz_create' module.id %}"
+        
+    {% endif %}
+        method="post"
+       class="p-3">
+
+        {% csrf_token %}
+        {{ form|crispy }}
+        
+        <button type='submit' class="btn btn-success float-end">saqlash</button>
+
+        {% if object %}
+            <button class="btn btn-outline-dark" hx-get="{% url 'quiz:htmx_quiz_detail' object.id %}" hx-swap="innerHTML" hx-target="#quiz_detail-{{ object.id }}">orqaga</button>
+            <button class="btn btn-warning" hx-post="{% url 'course:module_quiz_update' module.id object.id %}" hx-swap="innerHTML" hx-target="#quiz_detail-{{ object.id }}">update</button>
+        {% endif %}
+    
+    </form>
+</div>
+</div>

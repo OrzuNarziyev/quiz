@@ -1,0 +1,109 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% load mptt_tags %}
+
+{% block title %}
+    Categories
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'user/dash/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-dashboard bg-light">
+        <div class="main-dashboard">
+            <div class="top__main-dashboard ">
+                <div class="profile-group__main-dashboard rounded-3">
+                    <img
+                            class="rounded-circle border border-4"
+                            src="{{ photo }}"
+                            alt="profile"
+                            width="130"
+                            height="130"
+                    />
+                    {#                    <h5 class="title__profile-group fw-bold mb-0 mt-1">Ali Barin</h5>#}
+                    <p class="text__profile-group text-secondary p-2"
+                       style="text-align: center">{{ organization.name }}</p>
+                    <p class="text__profile-group text-secondary " style="text-align: center">{{ staff_full }}</p>
+                </div>
+                <div class="search-group__main-dashboard rounded-3">
+                    <h3 class="text-light fw-bolder">{{ fullname }}</h3>
+                    <div class="form-group search-content">
+              <span class="google-icon__search-content">
+
+              </span>
+                        <input
+                                type="text"
+                                class="form-control bg-white bg-opacity-75 rounded-5"
+                                placeholder="Поиск"
+                        />
+                        <div class="search-icon__search-content">
+                            <img
+                                    src="{% static 'assets/img/search-icon.png' %}"
+                                    alt="search icon"
+                                    width="30"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="middle__main-dashboard">
+                <h3 class="title-dashboard">{{ cat }}</h3>
+                <hr>
+                <div class="content__middle-dashboard">
+                    <div class="links-group__main-dashboard">
+                        {% recursetree object_list %}
+                            {% if not node.is_child_node %}
+
+                                <a href="{% url 'quiz:quiz_cat' node.slug %}"
+                                   class="link-card__main-dashboard rounded-3">
+                                    {% if node.icon %}
+                                        <img width="70" src="{{ node.icon.url }}" alt="icon"/>
+                                    {% else %}
+                                        <img width="70" src="{% static 'user/dash/img/file.png' %}" alt="icon"/>
+                                    {% endif %}
+                                    <p class="text-secondary">{{ node }}</p>
+                                </a>
+                            {% else %}
+                                {% with node.quizs.first as quiz %}
+                                    {% if quiz %}
+                                        <a href="{% url 'quiz:user_quiz_detail' quiz.pk %}"
+                                           class="link-card__main-dashboard rounded-3 position-relative">
+                                            <span class="badge rounded-pill bg-success align-self-end">test</span>
+
+
+
+                                            {% if node.icon %}
+                                                <img width="70" src="{{ node.icon.url }}" alt="icon"/>
+                                            {% else %}
+                                                <img width="70" src="{% static 'user/dash/img/file.png' %}"
+                                                     alt="icon"/>
+                                            {% endif %}
+                                            <p class="text-secondary">{{ node }}</p>
+
+
+                                        </a>
+
+                                    {% else %}
+                                        <div class="link-card__main-dashboard rounded-3">
+                                            {% if node.icon %}
+                                                <img width="70" src="{{ node.icon.url }}" alt="icon"/>
+                                            {% else %}
+                                                <img width="70" src="{% static 'user/dash/img/file.png' %}"
+                                                     alt="icon"/>
+
+                                            {% endif %}
+                                            <p class="text-secondary">{{ node }}</p>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                            {% endif %}
+                        {% endrecursetree %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,119 @@
+a {
+    color: black;
+    text-decoration: none;
+}
+
+/*body {*/
+/*    overflow: hidden;*/
+/*}*/
+
+
+.wrapper-quiz {
+    display: grid;
+    grid-template-columns: 25% auto;
+    /*align-items: center;*/
+    height: 80vh;
+    background: #fff;
+    overflow: hidden;
+}
+
+.wrapper-quiz h3 {
+    font-size: 28px;
+    color: gray;
+    text-align: center;
+}
+
+.wrapper-questions {
+    /*height: 100%;*/
+
+    position: relative;
+    /*padding: .5em;*/
+}
+
+.block__questions {
+    height: 80vh;
+}
+
+
+.list__questions {
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.item__question {
+    padding: 1em;
+    border-bottom: .3px solid rgba(128, 128, 128, 0.53);
+    font-size: 13px;
+    cursor: pointer;
+
+}
+
+.block__btn {
+    min-height: 60px;
+    display: flex;
+    justify-content: end;
+    padding: 1em;
+    /*border-bottom: .5px solid gray;*/
+    box-shadow: 1px 0 4px -2px gray;
+    background-color: #474E68;
+}
+
+ul {
+    padding: 0;
+}
+
+
+/* width */
+.list__questions::-webkit-scrollbar {
+    width: 3px;
+    height: 20px;
+}
+
+.wrapper-form::-webkit-scrollbar {
+    width: 3px;
+    height: 20px;
+}
+
+.wrapper-answers::-webkit-scrollbar {
+    width: 3px;
+    height: 20px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: gray;
+}
+
+
+/*.wrapper-answers{*/
+/*    overflow-y: scroll;*/
+/*    !*background: #aaaaaa;*!*/
+/*}*/
+.wrapper-form {
+    /*background: rgba(255, 227, 225, 0.46);*/
+    height: 100%;
+    overflow-y: auto;
+}
+
+
+/* .checkboxinput {
+    padding: 2em;
+} */
+
+.block-answer {
+    display: grid;
+    grid-template-columns: 10% auto;
+    align-items: center;
+}

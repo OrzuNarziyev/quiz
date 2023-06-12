@@ -1,0 +1,34 @@
+{% load embed_video_tags %}
+
+{% comment %} <section class="wrapper-video" class="text-center mt-5">
+
+
+    {% video item.url as my_video %}
+
+
+    {% video my_video '100% x 100%' %}
+
+    {% endvideo %}
+
+    <div class="text-center">
+        <p>{{ item.title }}</p>
+    </div>
+
+
+</section> {% endcomment %}
+
+{# you can just embed #}
+{% comment %} {% video item.url  %} {% endcomment %}
+
+{# or use variables (with embedding, too) #}
+
+<!--
+    {% video item.url as my_video %}
+    {% comment %} URL: {{ my_video.url }}
+    Thumbnail: {{ my_video.thumbnail }}
+    Backend: {{ my_video.backend }} {% endcomment %}
+    {% video my_video '100%x600' %}
+    <br>
+{% endvideo %}
+-->
+{{item}}

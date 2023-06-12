@@ -1,0 +1,28 @@
+{% comment %} {% load static %}
+{% load course %}
+<div hx-target="this" class=" mx-3 my-3 py-3 px-3 p-5  shadow border" data-id="{{ content.id }}">
+    {% with content.item as item %}
+
+        <p>{{ item }} ({{ item|model_name }})</p>
+        <div class="manage mt-2 d-flex gap-3 justify-content-evenly">
+            <button
+                    hx-get="{% url  'course:manage:module_content_update' module.id item|model_name item.id %}"
+                    hx-swap="outerHTML"
+                    class="btn btn-outline-warning"
+                    title="Tahrirlash">
+                <span class="fas fa-edit fs-5" title="o'chirish"></span>update
+            </button>
+
+
+            <button hx-post="{% url  'course:manage:module_content_delete' content.id %}"
+                    hx-confirm="{{ item.title }}ni o'chirish"
+                    hx-swap="outerHTML swap:0.1s"
+                    class="btn btn-outline-danger"
+                    title="O'chirish">
+                <span class="fas fa-trash fs-5" title="o'chirish"></span>delete
+            </button>
+        </div>
+    {% endwith %}
+
+</div> {% endcomment %}
+{{content}}

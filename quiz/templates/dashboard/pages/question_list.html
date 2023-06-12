@@ -1,0 +1,55 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'assets/css/quiz_style.css' %}">
+{% endblock style %}
+
+{% block content %}
+
+
+    <div class="pagetitle">
+        <h1>{{ quiz }}</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'quiz:quiz_list' %}">Testlar</a></li>
+                <li class="breadcrumb-item active">{{ quiz }}</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    
+    <div class="block__btn gap-2">
+       <button hx-target="#wrapper-form" hx-get="{% url 'quiz:create_question' quiz.pk %}" hx-swap="innerHTML"
+                class="btn btn-warning">savol qo'shish
+        </button>
+    <button hx-target="#wrapper-form" hx-get="{% url 'quiz:create_question_with_excel' quiz.pk %}" hx-swap="innerHTML"
+                class="btn btn-success">export exel
+        </button>
+    </div>
+
+    <div class="wrapper-quiz">
+
+        <div class="wrapper-questions">
+
+
+            <div class="block__questions">
+
+                <ul class="list__questions" id="list_question">
+                    {% for question in questions %}
+                        {% include 'dashboard/manage/detail_question.html' %}
+                    {% endfor %}
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div class="wrapper-form" id="wrapper-form">
+
+
+        </div>
+    </div>
+
+
+{% endblock %}

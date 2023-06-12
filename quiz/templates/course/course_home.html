@@ -1,0 +1,69 @@
+{% extends 'quiz/_base.html' %}
+{% load static %}
+{% load mptt_tags %}
+
+{% block quiz %}
+    <header>
+        <div class="container">
+            <div class="login">
+                <div class="arrow_prev float-start fs-9">
+                    <span id="prev">
+                        <i class="bi bi-arrow-left-circle fs-1"></i>
+                    </span>
+                </div>
+                <img src="{% static 'quiz/images/logo.png' %}" alt="">
+
+                <div class="login-item">
+                    <div class="item">
+                        {#                    {{ object_list }}#}
+                        {#                        {% for node in object_list %}#}
+                        {#                            {{ node }}#}
+                        {#                          {% if not node.is_child_node %}#}
+                        {#                                <a href="{% url 'quiz:quiz_cat' node.slug %}" class="link_item">{{ node }}</a>#}
+                        {#                            {% endif %}#}
+                        {#                        {% endfor %}#}
+
+
+                        {% recursetree object_list %}
+                            {% if not node.is_child_node %}
+                                <a href="{% url 'course:course_cat' node.slug %}" class="link_item">{{ node }}</a>
+                            {% else %}
+                                {% with node.courses.first as course %}
+
+                                    {% if course %}
+                                        <a href="{% url 'course:user_course_detail' course.pk %}"
+                                           class="link_item">{{ node }}</a>
+                                    {% else %}
+                                        <a href="{% url 'course:course_cat' node.slug %}" class="link_item">{{ node }}</a>
+                                    {% endif %}
+                                {% endwith %}
+                            {% endif %}
+                        {% endrecursetree %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    {#    <ul>#}
+    {#        {% recursetree object_list %}#}
+    {#            <li>#}
+    {#                {{ node }}#}
+    {#                {% if not node.is_leaf_node %}#}
+    {#                    <ul class="children">#}
+    {#                        {{ children }}#}
+    {#                    </ul>#}
+    {#                {% endif %}#}
+    {#            </li>#}
+    {#        {% endrecursetree %}#}
+    {#    </ul>#}
+{% endblock %}
+
+{% block include_js %}
+    <script>
+        let prev_link_item = document.getElementById('prev')
+        prev_link_item.addEventListener('click', () => {
+            window.history.back()
+        })
+    </script>
+{% endblock %}

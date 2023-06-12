@@ -1,0 +1,370 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: #937846;
+}
+
+
+header {
+    width: 100%;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.container {
+    padding: 10px 5px;
+    height: 100vh
+}
+
+nav {
+    margin-top: 20px;
+}
+
+/* Ichkari qisim */
+.login {
+    position: relative;
+    text-align: center;
+    min-height: 100vh;
+    align-items: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0px 5px 10px 2px rgba(34, 60, 80, 0.2);
+}
+
+
+.login img {
+    max-width: 200px;
+}
+
+.arrow_prev {
+    position: absolute;
+}
+
+.log-dop {
+    display: flex;
+    justify-content: space-between;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.login-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.login-item h1 {
+    margin-bottom: 20px;
+}
+
+.kirish {
+    width: 100%;
+    display: flex;
+    padding: 15px 5px;
+    gap: 15px;
+    border-bottom: 1px solid;
+}
+
+.dop {
+    gap: 20px;
+}
+
+.kirish input {
+    width: 100%;
+    outline: none;
+    border: none;
+}
+
+.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.login-item .link_item {
+    padding: 8px 16px;
+    background-color: #DFD3C399;
+    color: #7D6E83;
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #D0B8A8;
+}
+
+.login-item span {
+    text-align: center;
+    /*margin-top: 60px;*/
+}
+
+.login-title {
+    text-align: center;
+}
+
+.login-img {
+    width: 750px;
+}
+
+.login-img img {
+    width: 100%;
+}
+
+/* Item */
+
+.item .link_item {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+    margin-top: 20px;
+    transition: all 0.3s ease;
+    border: 1px solid #D0B8A8;
+}
+
+.prev_btn {
+    padding: 8px 16px;
+    background-color: #DFD3C399;
+    color: #7D6E83;
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #D0B8A8;
+}
+
+.prev_btn:hover {
+    background-color: #fff;
+    color: #937846;
+}
+
+.item .link_item:hover, .login-item .link_item:hover {
+    background-color: #fff;
+    color: #937846;
+}
+
+.item-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 160px;
+    margin: 0 auto;
+}
+
+/* Back */
+.nazad {
+    width: 100%;
+}
+
+.back {
+    margin-left: 0;
+    background-color: #ece5db;
+    border: 1px solid #937846;
+    padding: 10px 20px;
+    border-radius: 4px;
+    color: #7D6E83;
+}
+
+/* Test */
+
+.test-menu {
+    display: flex;
+    gap: 2em;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.test-menu .active {
+    background-color: #fff;
+    border: 1px solid #937846;
+}
+
+.wrapper_number {
+    width: 30px;
+    height: 30px;
+    background-color: #cccccc;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.dop-btn {
+    width: auto;
+}
+
+.item {
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    border-radius: 5px;
+    padding: 30px;
+}
+
+
+.knopki {
+    margin-top: 1em;
+}
+
+.confirm {
+    float: right;
+
+
+}
+
+
+.test-menu {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.number_item {
+    width: 2rem;
+    height: 2rem;
+    align-self: center;
+    background: #DFD3C399;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+    border: 0.6px solid #9a958f;
+    transition: .3s ease;
+}
+
+.number_item.active {
+    background: #ccc;
+}
+
+.number_item.selected {
+    background: rgba(69, 139, 34, 0.84);
+    color: white;
+    /*border: .6px solid #0f5132;*/
+}
+.number_item.selected.active{
+    color:#000000;
+}
+.number_item.selected:hover {
+    color: black;
+}
+
+.number_item:hover {
+    background: #ffffff;
+    border: 0.6px solid #9a958f;
+    transform: scale(1.09);
+
+
+}
+
+.test-menu .active {
+    background-color: #fff;
+    border: 1px solid #937846;
+}
+
+.item-test {
+    border: 1px solid #ccc;
+}
+
+.item-test p {
+    font-size: 22px;
+    text-align: justify;
+}
+
+.wrapper_number {
+    width: 30px;
+    height: 30px;
+    background-color: #cccccc;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.abcd {
+    display: flex;
+    margin-top: 10px;
+    background-color: #f3eaea;
+    border: none;
+    border-radius: 5px;
+    padding: 20px;
+    gap: 20px;
+}
+
+.wrapper_question {
+    display: none;
+    opacity: 0;
+    transition: .3s ease-in-out;
+}
+
+.wrapper_question.show {
+    display: block;
+    opacity: 1;
+}
+
+
+
+/* Media */
+@media only screen and (max-width: 680px) {
+    /*.container {*/
+    /*    background: url(https://railway.uz/local/templates/main_v2/img/logo.png) no-repeat center #aaa3a3;*/
+    /*    background-size: cover;*/
+    /*    padding: 0;*/
+    /*}*/
+    /*.form-box {*/
+    /*    width: 350px;*/
+    /*}*/
+    /*.login {*/
+    /*    display: flex;*/
+    /*    text-align: center;*/
+    /*    flex-direction: column;*/
+    /*    padding: 1em 1.5em;*/
+    /*    backdrop-filter: blur(20px);*/
+    /*    background: none;*/
+    /*    background-size: 400px;*/
+    /*}*/
+    .login-img img {
+        display: none;
+    }
+
+    .link_item {
+        font-size: 12px;
+    }
+
+    .item {
+        text-align: left;
+        width: 100%;
+        padding: 9% 1em;
+    }
+
+    .item .link_item {
+        width: 100%;
+    }
+
+    .test-menu {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 10px;
+    }
+
+    .knopki {
+        width: auto;
+    }
+}
+
+/*@media only screen and (max-width: 500px) {*/
+/*    .item {*/
+/*        text-align: left;*/
+/*        width: 100%;*/
+/*        padding: 0 5%;*/
+/*    }*/
+/*}*/

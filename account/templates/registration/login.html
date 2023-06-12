@@ -1,0 +1,80 @@
+{% extends '../base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% comment %} {% load widget_tweaks %} {% endcomment %}
+{% block content %}
+    {% with request.GET.next as next %}
+        <div class="limiter">
+            <div class="container-login100">
+
+                <div class="wrap-login100">
+
+
+                    <form method="POST" class="login100-form validate-form">
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{message.tags}} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                            aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+
+
+                        {% endif %}
+                        {% csrf_token %}
+                       
+
+                        <span class="login100-form-title p-b-43">
+                            Kirish
+                        </span>
+                        <div class="wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+                            {{form.username}}
+                            <span class="focus-input100"></span>
+                            <span class="label-input100">login yoki telfon raqam</span>
+                        </div>
+
+                        <div class="wrap-input100 validate-input" data-validate="Password is required">
+                            {% comment %} <input type="password" class="input100 has-val" name="password"> {% endcomment %}
+                            {{form.password}}
+                            <span class="focus-input100"></span>
+                            <span class="label-input100">{{ form.password.label }}</span>
+                        </div>
+
+                        <div class="flex-sb-m w-full p-t-3 p-b-32">
+
+                            <div>
+                                {#                            <a href="{% url 'password_reset' %}" class="txt1">#}
+                                Parolni unutdingizmi?{{ info }}
+                                </a>
+                            </div>
+                        </div>
+
+
+                        <div class="container-login100-form-btn">
+                            <button type="submit" class="login100-form-btn">
+                                Login
+                            </button>
+                        </div>
+
+                        <div class="text-center p-t-46 p-b-20">
+                        <span class="txt2">
+                            <h4 class="alert alert-primary">yangi foydalanuvchimisiz!!!<br>
+                            
+                            <a style="text-decoration: underline;" href="{% url 'account:signup' %}"
+                                class="mt-2 signup-image-link">Ro'yxatdan o'ting</a> 
+                            </h4>
+
+                        </span>
+                        </div>
+
+                    </form>
+
+                    <div class="login100-more"
+                         style="background-image: url({% static 'account/images/backgrouund/img.png' %});">
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endwith %}
+{% endblock content %}

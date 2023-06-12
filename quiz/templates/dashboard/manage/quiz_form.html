@@ -1,0 +1,39 @@
+{% load crispy_forms_tags %}
+
+<div class="alert alert-dismissible fade show" role="alert">
+    <div class="card-body">
+        <form method="post"
+        {% if not object %}
+        action="{% url 'course:module_quiz_create' module.id %}"
+        {% endif %}
+        class="p-3">
+            
+            {% csrf_token %}
+            {{ form|crispy }}
+    
+            {% if object.module %}
+                <div class="d-flex justify-content-end gap-4">
+                    <button class="btn btn-warning" hx-post="{% url 'course:module_quiz_update' object.module.id object.id %}" hx-swap="innerHTML" hx-target="#quiz_detail-{{ object.id }}">update</button>
+`                    <button class="btn btn-outline-dark"  hx-get="{% url 'quiz:htmx_quiz_detail' object.id %}" hx-swap="innerHTML" hx-target="#quiz_detail-{{ object.id }}">orqaga</button>
+                </div>
+                {% elif object %}
+                <div class="d-flex justify-content-end gap-2">
+                    <button class="btn btn-warning" hx-post="{% url 'quiz:quiz_update' object.id %}" hx-swap="innerHTML" hx-target="#quiz_detail-{{ object.id }}">update</button>
+                    <button class="btn btn-outline-dark" hx-get="{% url 'quiz:htmx_quiz_detail' object.id %}" hx-swap="innerHTML" hx-target="#quiz_detail-{{ object.id }}">orqaga</button>
+                </div>
+                {% else %}
+                <button type='submit' class="btn btn-success float-end">saqlash</button>
+            {% endif %}
+            {% comment %} {% if object %}
+            
+    
+            {% endif %}
+         {% endcomment %}
+        </form>
+    </div>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+
+<div class="card">
+
+</div>

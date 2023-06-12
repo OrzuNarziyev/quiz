@@ -1,0 +1,110 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% load mptt_tags %}
+
+{% block content %}
+    {{ modules.get_family }}
+
+    <div class="container mt-5">
+        <div class="pagetitle">
+            {#            <h1>Profile</h1>#}
+            <nav>
+                <ol class="breadcrumb">
+                    {% for foo in object.subject.get_family %}
+                        <li class="breadcrumb-item">{{ foo }}</li>
+                    {% endfor %}
+                    {#                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>#}
+                    {#                    #}
+                    {#                    <li class="breadcrumb-item active">Profile</li>#}
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section profile">
+            <div class="row">
+                <div class="col-xl-4">
+
+                    <div class="card">
+                        <div class="card-header">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title fw-bolder fs-3">{{ object|capfirst }}</h5>
+                            <p>
+
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            modules: {{ count_m }}
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="col-xl-8">
+
+                    <div class="col-lg-12">
+
+                        <div class="card">
+                            <div class="card-header">Mavzular: {{ count_m }}</div>
+                            <div class="card-body">
+                                {#                                <h5 class="card-title">Accordion without outline borders</h5>#}
+
+                                <!-- Accordion without outline borders -->
+                                <div class="accordion accordion-flush" id="accordionFlushExample">
+                                    {% recursetree modules %}
+                                        <div class="accordion-item">
+                                            <h2 class="accordion-header" id="flush-heading-{{ node.id }}">
+                                                <button class="accordion-button collapsed" type="button"
+                                                        data-bs-toggle="collapse"
+                                                        data-bs-target="#flush-collapse-{{ node.id }}"
+                                                        aria-expanded="false"
+                                                        aria-controls="flush-collapse-{{ node.id }}">
+                                                    <h5 class="fw-bold">
+                                                        {{ node.title }} <span
+                                                            class="badge rounded bg-black">{{ node.get_descendant_count }}</span>
+                                                    </h5>
+                                                </button>
+                                            </h2>
+                                            <div id="flush-collapse-{{ node.id }}"
+                                                 class="accordion-collapse collapse"
+                                                 aria-labelledby="flush-heading{{ node.id }}"
+                                                 data-bs-parent="#accordionFlushExample">
+                                                <ul class="list-group list-group-flush">
+                                                    {% if not node.is_leaf_node %}
+                                                        {% for get_child in node.get_children %}
+
+                                                            <li class="list-group-item">
+                                                                <a class="" href="">{{ get_child.title }}</a>
+                                                            </li>
+
+                                                        {% endfor %}
+                                                    {% endif %}
+                                                </ul><!-- End Clean list group -->
+
+
+                                            </div>
+                                        </div>
+                                    {% endrecursetree %}
+                                </div><!-- End Accordion without outline borders -->
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+
+{% endblock %}
+
+{% block include_js %}
+    <script>
+        let prev_btn = document.getElementById('prev')
+        prev_btn.addEventListener('click', () => {
+            window.history.back()
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,234 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% load mptt_tags %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'user/dash/css/style.css' %}">
+{% endblock %}
+{% block title %}
+    Homepage
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-dashboard bg-light">
+        <div class="main-dashboard">
+            <div class="top__main-dashboard ">
+                <div class="profile-group__main-dashboard rounded-3">
+                    <img
+                            class="rounded-circle border border-4"
+                            src="{{ photo }}"
+                            alt="profile"
+                            width="130"
+                            height="130"
+                    />
+                    {#                    <h5 class="title__profile-group fw-bold mb-0 mt-1">Ali Barin</h5>#}
+                    <p class="text__profile-group text-secondary p-2"
+                       style="text-align: center">{{ organization.name }}</p>
+                    <p class="text__profile-group text-secondary " style="text-align: center">{{ staff_full }}</p>
+                </div>
+                <div class="search-group__main-dashboard rounded-3">
+                    <h3 class="text-light fw-bolder">{{ fullname }}</h3>
+                    <div class="form-group search-content">
+              <span class="google-icon__search-content">
+
+              </span>
+                        <input
+                                type="text"
+                                class="form-control bg-white bg-opacity-75 rounded-5"
+                                placeholder="Поиск"
+                        />
+                        {#                        <div class="search-icon__search-content">#}
+                        {#                            <img#}
+                        {#                                    src="./assets/search-icon.png"#}
+                        {#                                    alt="search icon"#}
+                        {#                                    width="30"#}
+                        {#                            />#}
+                        {#                        </div>#}
+                    </div>
+                </div>
+            </div>
+            <div class="middle__main-dashboard">
+                <h3 class="title-dashboard">Билим ошириш бўлими</h3>
+                <hr>
+                <div class="content__middle-dashboard">
+                    <div class="links-group__main-dashboard">
+                        {% recursetree object_list %}
+                            {% if not node.is_child_node %}
+                                <a href="{% url 'course:user_course_categories' node.slug %}"
+                                   class="link-card__main-dashboard rounded-3">
+
+                                    {% if node.icon %}
+                                        <img width="70" src="{{ node.icon.url }}" alt="icon"/>
+                                    {% else %}
+                                        <img width="70" src="{% static 'user/dash/img/file.png' %}" alt="icon"/>
+
+                                    {% endif %}
+                                    <p class="text-secondary">{{ node }}</p>
+                                </a>
+                            {% else %}
+                                {% with node.courses.first as course %}
+                                    {% if course %}
+                                        <a href="{% url 'course:user_course_detail' course.pk %}"
+                                           class="link-card__main-dashboard rounded-3">
+                                            <span class="badge rounded-pill bg-success align-self-end">course</span>
+                                            {% if node.icon %}
+                                                <img width="70" src="{{ node.icon.url }}" alt="icon"/>
+                                            {% else %}
+                                                <img width="70" src="{% static 'user/dash/img/file.png' %}"
+                                                     alt="icon"/>
+
+                                            {% endif %}
+                                            <p class="text-secondary">{{ node }}</p>
+                                        </a>
+                                    {% else %}
+                                        <div href="{% url 'course:course_cat' node.slug %}"
+                                             class="link-card__main-dashboard rounded-3">
+                                            {% if node.icon %}
+                                                <img width="70" src="{{ node.icon.url }}" alt="icon"/>
+                                            {% else %}
+                                                <img width="70" src="{% static 'user/dash/img/file.png' %}"
+                                                     alt="icon"/>
+                                            {% endif %}
+                                            <p class="text-secondary">{{ node }}</p>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                            {% endif %}
+                        {% endrecursetree %}
+
+                    </div>
+
+                </div>
+            </div>
+            {% if results %}
+                <div class="bottom__main-dashboard">
+                    <h3 class="title-dashboard">Natijalar</h3>
+                    <div class="table-responsive">
+                        <table class="table align-middle mb-0 bg-none borderless">
+                            <thead class="bg-light">
+                            <tr>
+                                <th>Yo'nalish</th>
+                                <th>Sana</th>
+                                <th>Natija</th>
+                                <th>Urunishlar soni</th>
+                                {#                                <th>Status</th>#}
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for result in results %}
+                                <tr
+                                        style="
+                                    box-shadow: rgba(100, 100, 111, 0.2) 2px 3px 5px 0px;
+                                    background: white;
+                                "
+                                >
+                                    <td>
+                                        <p class="fw-bold">
+                                            <a href="#">{{ result.course.category.parent }}</a></p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-bold">{{ result.date }}</p>
+                                    </td>
+                                    <td>
+                                        <p class="fw-bold">{{ result.score|floatformat:0 }}%</p>
+
+                                    </td>
+                                    <td>
+                                        <p class="fw-bold">{{ result.attempts }}</p>
+                                    </td>
+                                    <td>
+                                        {#                                        <span class="badge rounded-pill bg-warning">Completed</span>#}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            {% endif %}
+
+        </div>
+        <div class="sidebar-dashboard">
+            <div class="actions__sidebar-dashboard">
+                <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"> <img src="{% static 'assets/img/setting.png' %}"
+                                                                             width="25" alt="setting icon"/></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+                        {#                        <li><a class="dropdown-item" href="#">Today</a></li>#}
+                        {#                        <li><a class="dropdown-item" href="#">This Month</a></li>#}
+                        <li><a class="dropdown-item" href="{% url 'account:logout' %}">Chiqish</a></li>
+                    </ul>
+                </div>
+
+                {#                                <img src="{% static 'assets/img/dots.png' %}" width="25" alt="dots icon"/>#}
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bir haftalik o'zlashtirish</h5>
+
+                    <!-- Bar Chart -->
+                    <div id="barChart" style="min-height: 400px;" class="echart"></div>
+
+                    <script>
+
+                        document.addEventListener("DOMContentLoaded", () => {
+                            echarts.init(document.querySelector("#barChart")).setOption({
+                                xAxis: {
+                                    type: 'category',
+                                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                                },
+                                yAxis: {
+                                    type: 'value'
+                                },
+                                series: [{
+                                    data: [0, 0, 150, 80, 70, 110, 130],
+                                    type: 'bar'
+                                }]
+                            });
+                        });
+                    </script>
+                    <!-- End Bar Chart -->
+
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bir yillik ko'rsatgich</h5>
+
+                    <!-- Line Chart -->
+                    <canvas id="lineChart" style="max-height: 400px;"></canvas>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            new Chart(document.querySelector('#lineChart'), {
+                                type: 'line',
+                                data: {
+                                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                                    datasets: [{
+                                        label: 'Line Chart',
+                                        data: [65, 59, 80, 81, 56, 55, 40],
+                                        fill: false,
+                                        borderColor: 'rgb(75, 192, 192)',
+                                        tension: 0.1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+                    <!-- End Line CHart -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

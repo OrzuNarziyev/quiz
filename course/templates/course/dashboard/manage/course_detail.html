@@ -1,0 +1,72 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load mptt_tags %}
+{% block style %}
+    <link rel="stylesheet" href="{% static 'assets/css/quiz_style.css' %}">
+{% endblock style %}
+
+{% block content %}
+    <div class="pagetitle">
+        <h1>{{ object }}</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item "><a href="{% url 'course:course_list' %}">Kurslar</a></li>
+                {% for cat in object.subject.get_family %}
+                    {% if not forloop.last %}
+                        <li class="breadcrumb-item active">
+                            <a href="">
+                                {{ cat }}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li class="breadcrumb-item ">{{ cat }}</li>
+
+                    {% endif %}
+                {% endfor %}
+            </ol>
+        </nav>
+
+
+    </div><!-- End Page Title -->
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="block__btn">
+                {% comment %} <button hx-target="#wrapper-form" hx-get="{% url 'quiz:create_question' quiz.pk %}" hx-swap="innerHTML"
+                     class="btn btn-warning">savol qo'shish
+             </button> {% endcomment %}
+                <button hx-target="#wrapper-form" hx-get="{% url 'course:module_create' object.id %}"
+                        hx-swap="innerHTML"
+                        class="btn btn-warning">Mavzu qo'shish
+                </button>
+            </div>
+            <div class="wrapper-quiz">
+
+                <div class="wrapper-questions">
+
+
+                    <div class="block__questions">
+
+                        <ul class="list__questions" id="list_question">
+
+
+                            {% for module in modules %}
+                                {% include 'course/dashboard/manage/detail_module.html' %}
+                            {% endfor %}
+
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div class="wrapper-form" id="wrapper-form">
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+{% endblock content %}
+

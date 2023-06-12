@@ -1,0 +1,50 @@
+{% extends 'quiz/_base.html' %}
+
+{% load static %}
+
+{% load mptt_tags %}
+
+{% block quiz %}
+    <header>
+        <div class="container">
+            <div class="login" id="login">
+                <div class="login-item">
+                    <div id="timer-box" class="col text-end"></div>
+                    <br><br>
+                    <div class="test-menu" id="list_number">
+                    </div>
+                    <div class="item item-test">
+                        <form action="" id="quiz-form">
+                            {% csrf_token %}
+                            <div id="quiz-box" class="quiz_box">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+{% block include_js %}
+{#    <script>#}
+{#        {% comment %} function confirmUnload(event) {#}
+{#            event.preventDefault();#}
+{#            event.returnValue = '';#}
+{#          }#}
+{#        window.addEventListener('beforeunload', confirmUnload); {% endcomment %}#}
+{#        window.addEventListener('beforeunload', function(event) {#}
+{#            event.preventDefault();#}
+{#            event.returnValue = 'Are you sure you want to leave this page?';#}
+{#            if (confirm('Are you sure you want to leave this page?')) {#}
+{#              console.log('hello confirm')#}
+{#            } else if(confirm('Changes you made may not be saved.')){#}
+{#                console.log('reloadga keldi')#}
+{#            }else {#}
+{#              console.log('cancel')#}
+{#            }#}
+{#          });#}
+{##}
+{#    </script>#}
+<script src="{% static 'quiz/js/quiz.js' %}" defer></script>
+{% endblock %}

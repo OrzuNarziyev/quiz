@@ -1,0 +1,144 @@
+{% load crispy_forms_tags %}
+
+<form id="form" action="" class="p-5">
+    {% csrf_token %}
+
+    <div class="block__question">
+        <div id="div_id_answers-0-text" class="mb-3">
+            {{ form|crispy }}
+        </div>
+    </div>
+
+    <div class="block__answer mt-3">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Javoblar</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            <div class="block">
+                {{ formset.non_form_errors }}
+                {{ formset.management_form }}
+            </div>
+
+            {#            {{ formset|crispy }}#}
+            {#            {% for fields in formset.empty_form.hidden_fields %}#}
+            {#                {{ fields }}#}
+            {#            {% endfor %}#}
+
+            {#             {% for fields in formset.empty_form.visible_fields %}#}
+            {#                {{ fields }}#}
+            {#            {% endfor %}#}
+
+            {% for foo in formset %}
+
+                <tr>
+                    {{ foo.id }}
+                    {{ foo.question }}
+                    <th scope="row">
+                        <div id="div_id_answers-0-correct" class="mb-3 form-check">
+                            {{ foo.correct }}
+                        </div>
+                    </th>
+                    <th>
+                        {{ foo.text }}
+                    </th>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="btn-toolbar" style="justify-content: flex-end" align="right" role="toolbar"
+         aria-label="Toolbar with button groups">
+        <div class="btn-group me-2" role="group" aria-label="First group">
+            <button id="update" class="btn btn-warning"> o'zgartirish</button>
+        </div>
+        <div class="btn-group me-2" role="group" aria-label="Second group">
+            <button hx-post="{% url 'quiz:delete_question' question_id %}" hx-swap="innerHTML" hx-target="#wrapper-form"
+                    hx-confirm="Savol o'chirilsinmi"
+                    id="delete" class="btn btn-danger"> o'chirish
+            </button>
+        </div>
+    </div>
+
+
+</form>
+
+<script>
+    var update_url = '{% url 'quiz:update_question' question_id %}'
+    var update_check_list = document.querySelectorAll("[id$='-correct']")
+    var update_btn = document.getElementById('update')
+    var update_form = document.getElementById('form')
+    var update_list_questions = document.getElementById('list_question')
+
+
+    function htmlToElement(html) {
+        var parser = new DOMParser();
+        var htmlDoc = parser.parseFromString(html, "text/html");
+        return htmlDoc.body.firstChild
+    }
+
+
+    update_check_list.forEach(item => {
+        item.addEventListener('click', (e) => {
+
+            target = e.target
+            console.log(target.checked)
+            target.setAttribute('checked', '')
+            update_check_list.forEach(item => {
+                if (item != target) {
+                    if (item.hasAttribute('checked')) {
+                        item.checked = false
+                        item.removeAttribute('checked')
+                    }
+                }
+            })
+        })
+    })
+
+    update_btn.addEventListener('click', event => {
+        event.preventDefault()
+
+        const formData = new FormData(update_form)
+
+        fetch(
+            update_url,
+            {
+                method: 'post',
+                body: formData
+            }
+        ).then((response) => response.text())
+            .then((data) => {
+                console.log(data)
+                var element = htmlToElement(data)
+
+
+                var id = element.getAttribute('data-question')
+
+                var len = update_list_questions.children.length
+
+                for (var i = 0; i < len; i++) {
+
+                    if (id === update_list_questions.children[i].getAttribute('data-question')) {
+
+                        update_list_questions.children[i].remove()
+                        update_list_questions.insertBefore(element, update_list_questions.children[i])
+                    }
+
+
+                }
+
+
+                update_form.remove()
+
+
+            })
+            .catch(error => console.log(error))
+    })
+
+</script>

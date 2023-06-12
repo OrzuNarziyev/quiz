@@ -1,0 +1,87 @@
+from datetime import datetime
+
+from django.core.cache import cache
+from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+# Create your views here.
+from .forms import CustomAuthenticationForm, LoginForm, RegisterUserForm
+from .models import Organizations, Staff_user
+from account.translate import to_cyrillic, to_latin
+from django.contrib.syndication.views import Feed
+
+def register(request):
+    if request.user.is_authenticated:
+        return redirect('quiz:dashboard')
+    form = RegisterUserForm()
+    request.session['date'] = str(datetime.now())
+    if request.method == 'POST':
+        form = RegisterUserForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            if user:
+                data = cache.get(user.pinfl)
+                # organization = data['organization']['name']
+                # organization_railway = data['organization']['railway']['name']
+                # department = data['staff'][0]['department_id']['name']
+                organization_railway = to_cyrillic(data['organization']['name']) if str(
+                    data['organization']['name']).isascii() else \
+                    data['organization']['name']
+
+                organization = to_cyrillic(data['organization']['railway']['name']) if str(
+                    data['organization']['railway']['name']).isascii() else \
+                    data['organization']['railway']['name']
+
+                department = to_cyrillic(data['staff'][0]['department_id']['name']) if str(
+                    data['staff'][0]['department_id']['name']).isascii() else \
+                    data['staff'][0]['department_id']['name']
+
+                org, create = Organizations.objects.get_or_create(organization=organization)
+                if create:
+                    org_railway = Organizations.objects.create(organization=organization_railway, parent=org)
+                    obj = Organizations.objects.create(organization=department, parent=org_railway)
+                else:
+                    org_railway, create_railway = Organizations.objects.get_or_create(organization=organization_railway,
+                                                                                      parent=org)
+                    Organizations.objects.get_or_create(organization=department, parent=org_railway)
+
+            messages.success(request, f'{user}user muvaffaqiyatli saqlandi')
+            return redirect('account:login')
+
+    context = {
+        'forms': form
+    }
+    return render(request, 'registration/signup.html', context)
+
+
+# clickhouse
+
+def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('quiz:dashboard')
+    # messages.success(request, 'Login yoki parol xato kiritildi')
+
+    form = LoginForm()
+    if request.method == 'POST':
+
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+            username = cd['username']
+            password = cd['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('quiz:dashboard')
+            else:
+                messages.warning(request, 'Login yoki parol xato kiritildi')
+                return render(request, 'registration/login.html', {'form': form})
+            print(username, password)
+
+    return render(request, 'registration/login.html', {'form': form})
+
+
+def logout_view(request):
+    logout(request)
+    return redirect('account:login')

@@ -1,0 +1,90 @@
+
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">
+            <a href="{% url 'quiz:quiz_detail' object.pk %}"> {{ object }}</a>
+        </h5>
+
+        <div class="responsive">
+            <table class="table">
+
+                <tr>
+                    <th>savollar soni</th>
+                    <td>{{ object.number_of_questions }} talik</td>
+                </tr>
+
+                <tr>
+                    <th>O'tish bali</th>
+                    <td>{{ object.score_to_pass }} ball</td>
+                </tr>
+
+                <tr>
+                    <th>Test yechish muddati</th>
+                    <td>{{ object.time }} min</td>
+                </tr>
+                <tr>
+                    <th>Umumiy savollar soni</th>
+
+                    <td>
+                        {{ object.questions.all.count }} ta
+                    </td>
+                </tr>
+                {% if object.course %}
+                <tr>
+                    <th>Kurs</th>
+
+                    <td>
+                        {{ object.course }}
+                    </td>
+                </tr>
+                <tr>
+                    <th>Dars</th>
+
+                    <td>
+                        {{ object.module }}
+                    </td>
+                </tr>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+
+    <div class="card-footer">
+        <ul class="root">
+
+            {#                        {{ object.category.get_family }}#}
+            <nav>
+                <ol class="breadcrumb">
+                    {% for cat in object.category.get_family %}
+                        <li class="breadcrumb-item">{{ cat }}</li>
+                    {% endfor %}
+                </ol>
+            </nav>
+
+        </ul>
+
+        {% if object.module %}
+            <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-warning" hx-get="{% url 'course:module_quiz_update' object.module.id object.id %}" hx-swap="innerHTML"
+                        hx-target="#quiz_detail-{{ object.id }}">update
+                </button>
+
+                <button class="btn btn-danger" hx-get="{% url 'quiz:quiz_delete' object.pk %}" hx-swap="innerHTML"
+                        hx-target="#quiz_detail-{{ object.id }}">delete
+                </button>
+            </div>
+        {% else %}
+            <div class="d-flex justify-content-end gap-2">
+                <button class="btn btn-warning" hx-get="{% url 'quiz:quiz_update' object.id %}" hx-swap="innerHTML"
+                        hx-target="#quiz_detail-{{ object.id }}">update
+                </button>
+
+                <button class="btn btn-danger" hx-get="{% url 'quiz:quiz_delete' object.pk %}" hx-swap="innerHTML"
+                        hx-target="#quiz_detail-{{ object.id }}">delete
+                </button>
+            </div>
+        {% endif %}
+       
+    </div>
+</div><!-- End Default Card -->

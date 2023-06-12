@@ -1,0 +1,21 @@
+{% extends 'quiz/_base.html' %}
+{% load static %}
+
+
+{% block quiz %}
+    <header>
+
+        <div class="container">
+            <div class="login">
+                <img src="{% static 'quiz/images/logo.png' %}" alt="">
+                <div class="login-item">
+                    <div class="item">
+                        <a href="{% url 'quiz:quiz_home' %}" class="link_item">Test sinovlari</a>
+                        <a href="{% url 'course:course_home' %}" class="link_item">Bilimlarni oshirish</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
+

@@ -1,0 +1,5 @@
+<li data-question="{{ question.id }}" hx-get="{% url 'quiz:update_question' question.id %}" hx-target="#wrapper-form"
+    hx-swap="innerHtml"
+    class="item__question"><span>{{ question.order|add:1 }}. </span>
+    {{ question.text }}
+</li> 

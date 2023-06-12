@@ -1,0 +1,148 @@
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load course %}
+
+{% block content %}
+    <div class="pagetitle">
+        <h1>{{ object.title }}</h1>
+        {% for message in messages %}
+            <div class="col-lg-3 alert alert-success alert-dismissible fade show" role="alert">
+                {% comment %} <h4 class="alert-heading">{{message}}</h4> {% endcomment %}
+                <p>{{ message }}</p>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item "><a href="{% url 'course:course_list' %}">Kurslar</a></li>
+                <li class="breadcrumb-item "><a
+                        href="{% url 'course:course_detail' object.course.slug %}">{{ object.course }}</a></li>
+                <li class="breadcrumb-item active">{{ object.title|capfirst }}</li>
+            </ol>
+        </nav>
+
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h3>Test block</h3>
+                    <button hx-get="{% url 'course:module_quiz_create' object.id %}" hx-target="#card-body__form-test"
+                            hx-swap="innerHTML" class="btn btn-outline-dark"> test qo'shish
+                    </button>
+
+                </div>
+                <div class="card-body">
+                    <div id="card-body__form-test">
+
+                    </div>
+                    <div class="row pt-2">
+                        {% for object in object.quizs.all %}
+                            <div class="col-lg-4" id="quiz_detail-{{ object.id }}">
+                                {% comment %} {% include 'course/dashboard/manage/content/quiz_module_detail.html' %} {% endcomment %}
+                                {% include 'dashboard/manage/quiz_detail.html' %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+
+            <div class="card">
+                <div class="card-header d-flex justify-content-between">
+                    <h3>{{ object.title }}</h3>
+                    <div class="block_content d-flex justify-content-between gap-2">
+
+                        <div class="action_content">
+                            <button class="btn btn-outline-dark" hx-target="#card-body__form" hx-swap="innerHTML"
+                                    hx-get="{% url 'course:module_content_create' object.id 'text' %}"><i
+                                    class="bi bi-card-text"></i> Text
+                            </button>
+                        </div>
+                        <div class="action_content">
+                            <button class="btn btn-outline-dark" hx-target="#card-body__form" hx-swap="innerHTML"
+                                    hx-get="{% url 'course:module_content_create' object.id 'image' %}"><i
+                                    class="bi bi-card-image"></i> Rasm
+                            </button>
+                        </div>
+                        <div class="action_content">
+                            <button class="btn btn-outline-dark" hx-target="#card-body__form" hx-swap="innerHTML"
+                                    hx-get="{% url 'course:module_content_create' object.id 'video' %}"><i
+                                    class="bi bi-youtube"></i> Video
+                            </button>
+                        </div>
+                        <div class="action_content">
+                            <button class="btn btn-outline-dark" hx-target="#card-body__form" hx-swap="innerHTML"
+                                    hx-get="{% url 'course:module_content_create' object.id 'file' %}"><i
+                                    class="bi bi-file-earmark-plus"></i> File
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+
+                    <div id="card-body" id="card-body">
+                        <div id="card-body__form">
+
+                        </div>
+                        {% with user.is_authenticated as auth %}
+                            {% for content in object.contents.all %}
+                                <p>
+                                    {{ content.item.render }}
+                                    {% if auth %}
+                                        <div class="d-flex justify-content-end gap-3">
+                                            <button class="btn btn-warning"> update</button>
+                                            <button class="btn btn-danger"> delete</button>
+                                        </div>
+                                    {% endif %}
+                                </p>
+                                <hr>
+                            {% endfor %}
+                        {% endwith %}
+                    </div>
+                </div>
+                <div class="card-footer">
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 ">
+            <div class="card">
+                <div class="card-header">
+                    <h3>Mavzular</h3>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                        {% for module in modules %}
+                            {% if not module.parent %}
+                                <li class="list-group-item fs-4">
+                                    <a class="text-dark" href="{% url 'course:module_detail' module.id %}">
+                                         {{ module.title }}</a>
+
+                                </li>
+                            {% else %}
+                                <li class="list-group-item">
+                                    <a class="text-dark" href="{% url 'course:module_detail' module.id %}">
+                                        <span>{{ module.order|add:1 }}</span>) {{ module.title }}</a>
+
+                                </li>
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock content %}
+
+{% block include_js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5sortable/0.13.3/
+html5sortable.min.js"></script>
+{% endblock include_js %}
+

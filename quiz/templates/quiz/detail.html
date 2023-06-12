@@ -1,0 +1,113 @@
+{% extends 'quiz/_base.html' %}
+{% load static %}
+{% load mptt_tags %}
+
+{% block quiz %}
+    <header>
+        <div class="container">
+
+            <div class="login">
+                <ul class="root">
+
+                    {#                        {{ object.category.get_family }}#}
+                    <nav>
+                        <ol class="breadcrumb">
+                            {% for cat in object.category.get_family %}
+                                <li class="breadcrumb-item">{{ cat }}</li>
+                            {% endfor %}
+                        </ol>
+                    </nav>
+
+                </ul>
+                <div class="arrow_prev float-start fs-9">
+                    <span id="prev">
+                        <i class="bi bi-arrow-left-circle fs-1"></i>
+                    </span>
+                </div>
+                <img src="{% static 'quiz/images/logo.png' %}" alt="">
+
+                <div class="login-item">
+                    <div class="item">
+
+                        <div class="jumbotron">
+
+
+                            <div class="">
+                                <div class="">
+                                    <h5 class="card-title">
+                                        <h1 class="display-6">{{ quiz.category }}</h1>
+                                    </h5>
+                                    <hr class="my-4">
+                                    <div class="responsive">
+                                        <table class="table">
+
+                                            <tr>
+                                                <th>Savollar</th>
+                                                <td>{{ object.number_of_questions }} ta</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>O'tish bali</th>
+                                                <td>{{ object.score_to_pass }}</td>
+                                            </tr>
+
+                                            <tr>
+                                                <th>Vaqt</th>
+                                                <td>{{ object.time }} min</td>
+                                            </tr>
+                                            {% if result %}
+                                                <tr>
+                                                    <th>Ball</th>
+                                                    <td>{{ result.score }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>urunishlar soni</th>
+                                                    <td>{{ result.attempts }}</td>
+                                                </tr>
+                                            {% endif %}
+
+                                            {% if object.course %}
+                                                <tr>
+                                                    <th>Kurs</th>
+
+                                                    <td>
+                                                        {{ object.course }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Dars</th>
+
+                                                    <td>
+                                                        {{ object.module }}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div><!-- End Default Card -->
+
+
+                            <a class="btn btn-primary  btn-md mt-2" href="{% url 'quiz:user_quiz_start' object.pk %}"
+                               role="button">Testni boshlash</a>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+{% endblock %}
+
+
+{% block include_js %}
+    <script>
+        let prev_btn = document.getElementById('prev')
+        prev_btn.addEventListener('click', () => {
+            window.history.back()
+        })
+    </script>
+{% endblock %}

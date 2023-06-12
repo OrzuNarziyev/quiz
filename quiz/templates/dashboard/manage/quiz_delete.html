@@ -1,0 +1,12 @@
+<div class="card">
+        <form action="{% url 'quiz:quiz_delete' object.id %}" method="post">
+            {%csrf_token%}
+            <div class="card-body pt-3">
+                <p>Haqiqatdan ham "{{ object }}" - testini o'chirmoqchimisiz?</p>
+            </div>
+            <div class="card-footer">
+                <input type="submit" value="o'chirish" class="btn btn-danger">
+                <button class="btn btn-outline-dark" hx-get="{% url 'quiz:htmx_quiz_detail' object.id %}" hx-swap="innerHTML" hx-target="#quiz_detail-{{ object.id }}">orqaga</button>
+            </div>
+        </form>
+</div>

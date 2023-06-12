@@ -1,0 +1,39 @@
+{% extends 'dashboard/base.html' %}
+{% load mptt_tags %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    {% if messages %}
+    <div class="alert">
+        {% for m in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="bi bi-check-circle me-1"></i>
+           '{{m}}' ~ testi muvaffaqiyatli o'chirildi 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+    {% endfor %}
+    </div>
+        
+    {% endif %}
+    <div class="pagetitle">
+        <h1>Testlar Ro'yxati</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'quiz:manage_dashboard' %}">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    {#    <div class="col-lg-8">#}
+    <div class="row">
+        {% for object in object_list %}
+            <div class="col-lg-4" id="quiz_detail-{{ object.id }}">
+                {% include 'dashboard/manage/quiz_detail.html' %}
+            </div>
+        {% endfor %}
+    </div>
+
+    {#    </div>#}
+
+
+{% endblock %}

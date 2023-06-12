@@ -1,0 +1,36 @@
+{% extends 'dashboard/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="pagetitle">
+        <h1>Test Yaratish</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item active">Dashboard</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    <div class="col-lg-8 card p-2" >
+            <form action="" method="post">
+                <div class="card-body">
+
+                        {% csrf_token %}
+            
+                        {{ form|crispy }}
+            
+                        
+            
+            {#            <button type="submit" class="btn btn-outline-primary float-end"> yaratish</button>#}
+                </div>
+                <div class="card-footer">
+                    <input type="submit" value="yaratish" class="btn btn-success float-end">
+                </div>
+            
+            </form>
+
+        
+    </div>
+
+
+{% endblock %}

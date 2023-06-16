@@ -156,17 +156,19 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_RESTRICT_BY_USER = False
 CKEDITOR_IMAGE_BACKEND = "pillow"
+
+
 # CKEDITOR_CONFIGS = {
 #     "default": {
-#         'skin': 'office2013',
-#         "removePlugins": "stylesheetparser",
-#         'height': 100,
+#         'skin': 'moono',
+#         # "removePlugins": "stylesheetparser",
+#         # 'height': 100,
 #     }
 # }
 
 CKEDITOR_CONFIGS = {
     'default': {
-        # 'skin': 'moono',
+        'skin': 'moono',
         # 'skin': 'office2013',
         'toolbar_Basic': [
             ['Source', '-', 'Bold', 'Italic']
@@ -174,11 +176,11 @@ CKEDITOR_CONFIGS = {
         'toolbar_YourCustomToolbarConfig': [
             # {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
             # {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
-            {'name': 'forms',
-             'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
-                       'HiddenField']},
-            '/',
+
+            # {'name': 'forms',
+            #  'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+            #            'HiddenField']},
+            # '/',
             {'name': 'basicstyles',
              'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
             {'name': 'paragraph',
@@ -188,12 +190,13 @@ CKEDITOR_CONFIGS = {
             {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
             {'name': 'insert',
              'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
-            '/',
+            # '/',
             {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
             {'name': 'about', 'items': ['About']},
-            '/',  # put this to force next toolbar on new line
+            {'name': 'editing', 'items': ['Find', 'Replace']},
+            # '/',  # put this to force next toolbar on new line
             {'name': 'yourcustomtools', 'items': [
                 # put the name of your editor.ui.addButton here
                 'Preview',

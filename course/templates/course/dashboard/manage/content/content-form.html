@@ -3,13 +3,26 @@
 
 <div class="alert  alert-dismissible fade show" role="alert">
     <h1>{{ model_name|capfirst }}</h1>
-    <form action="{% url 'course:module_content_create' modul_id model_name %}" method="post"
-          enctype="multipart/form-data">
+    <form
+            method="post"
+            enctype="multipart/form-data"
+            {% if object %}
+                action="{% url 'course:module_content_update' modul_id model_name object.id %}"
+            {% else %}
+                action="{% url 'course:module_content_create' modul_id model_name %}"
+
+            {% endif %}>
         {% csrf_token %}
         {{ form.media }}
         {{ form|crispy }}
+        {% if object %}
+            <button class="btn btn-outline-success float-end mb-5"><i class="bi bi-download"></i>saqlash</button>
+            <button type="button" class="btn-close" aria-label="Close"></button>
+        {% else %}
+            <button class="btn btn-outline-success float-end mb-5"><i class="bi bi-download"></i>saqlash</button>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        {% endif %}
 
-        <button class="btn btn-outline-success float-end mb-5"><i class="bi bi-download"></i> save</button>
 
     </form>
 
@@ -19,6 +32,6 @@
     {% comment %} <div class="progress" role="progressbar" aria-label="Success striped example"aria-valuemin="0" aria-valuemax="100">
         <div id="progress_bootstrapt" class="progress-bar progress-bar-striped bg-success"></div>
     </div> {% endcomment %}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    {#    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>#}
 </div>
 

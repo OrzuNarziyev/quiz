@@ -32,7 +32,11 @@ class CategoryAdmin(DraggableMPTTAdmin):
 
 @admin.register(Quiz)
 class QuizAdmin(admin.ModelAdmin):
-    list_display = ['category', 'title', 'created', 'active']
+    mptt_level_indent = 50
+    list_display = ['category', 'module', 'title', 'created', 'active']
+    list_filter = (
+        ('category', TreeRelatedFieldListFilter),
+    )
 
 
 class InlineAnswer(admin.TabularInline):
@@ -59,12 +63,13 @@ class ResultAdmin(admin.ModelAdmin):
 class ResultAdmin(admin.ModelAdmin):
     list_display = ['excel_file']
 
+
 dict = {
-    "Aloqa va signallashtirish":[
+    "Aloqa va signallashtirish": [
         "Aloqa",
         "Signallashtirish(СЦБ)"
     ],
-    "Elektr xo'jaligi":[
+    "Elektr xo'jaligi": [
         "Elektromantyor",
         "Elektromexanik",
         "Katta Elektromantyor"
@@ -75,37 +80,35 @@ dict = {
         "Boshliq o'rinbosari"
     ],
 
-    "Tashish va bekat ishlari":[
+    "Tashish va bekat ishlari": [
         'Poezd tuzuvchisi',
         'Bekat navbatchisi',
         "Bekat boshlig'ining o'rinbosari",
         "Bekat boshlig'i"
     ],
-    "Yuk va tijorat ishlari":[
+    "Yuk va tijorat ishlari": [
         "Yuk qabul qiluvchi topshiruvchi",
         "Katta yuk qabul qiluvchi topshiruvchi",
         "Yuk xazinasichi",
         "Katta yuk xazinachisi"
     ],
-    "Yo'l xo'jaligi":[
+    "Yo'l xo'jaligi": [
         "Brigadir",
         "Katta yo'l ustasi",
         "Temir yo'l masofasi boshlig'i o'rinbosari",
         "Yo'l tamirlovchi",
         "Yo'l ustasi",
     ],
-    "Lokomativ xo'jaligi":[
+    "Lokomativ xo'jaligi": [
         "Eksplutatsiya",
         "Tamirlash"
     ],
-    "Vagon xo'jaligi":[
+    "Vagon xo'jaligi": [
         "Eksplutatsiya-20",
         "Tamirlash-20"
     ],
 
 }
-
-
 
 # Tashish va bekat ishlari,
 # Bekat boshlig'i,

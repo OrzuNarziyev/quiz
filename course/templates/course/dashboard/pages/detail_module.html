@@ -27,9 +27,13 @@
             <div class="card">
                 <div class="card-header d-flex justify-content-between">
                     <h3>Test block</h3>
-                    <button hx-get="{% url 'course:module_quiz_create' object.id %}" hx-target="#card-body__form-test"
-                            hx-swap="innerHTML" class="btn btn-outline-dark"> test qo'shish
-                    </button>
+                    {% if not object.quizs_module.first %}
+                        <button hx-get="{% url 'course:module_quiz_create' object.id %}"
+                                hx-target="#card-body__form-test"
+                                hx-swap="innerHTML" class="btn btn-outline-dark"> test qo'shish
+                        </button>
+                    {% endif %}
+
 
                 </div>
                 <div class="card-body">
@@ -37,9 +41,8 @@
 
                     </div>
                     <div class="row pt-2">
-                        {% for object in object.quizs.all %}
+                        {% for object in object.quizs_module.all %}
                             <div class="col-lg-4" id="quiz_detail-{{ object.id }}">
-                                {% comment %} {% include 'course/dashboard/manage/content/quiz_module_detail.html' %} {% endcomment %}
                                 {% include 'dashboard/manage/quiz_detail.html' %}
                             </div>
                         {% endfor %}
@@ -89,15 +92,31 @@
                         </div>
                         {% with user.is_authenticated as auth %}
                             {% for content in object.contents.all %}
-                                <p>
-                                    {{ content.item.render }}
+                                <div id="content-item-{{ content.item.id }}">
+                                    <p>
+                                        {{ content.item.render }}
+                                    </p>
                                     {% if auth %}
                                         <div class="d-flex justify-content-end gap-3">
-                                            <button class="btn btn-warning"> update</button>
-                                            <button class="btn btn-danger"> delete</button>
+                                            <button class="btn btn-warning"
+                                                    hx-target="#content-item-{{ content.item.id }}"
+                                                    hx-swap="outerHTML"
+                                                    hx-get="{% url 'course:module_content_update' object.id content.item|model_name content.item.id %}"
+                                            >update
+                                            </button>
+                                            <button class="btn btn-danger"
+                                                    hx-target="#content-item-{{ content.item.id }}"
+                                                    hx-swap="outerHTML"
+                                                    hx-get="{% url 'course:module_content_delete' content.id %}"
+                                            > delete
+                                            </button>
                                         </div>
                                     {% endif %}
-                                </p>
+                                </div>
+                                {#                                <p id="content-{{ content.id }}">#}
+                                {#                                    {{ content.item.render }}#}
+                                {##}
+                                {#                                </p>#}
                                 <hr>
                             {% endfor %}
                         {% endwith %}
@@ -118,20 +137,15 @@
                             {% if not module.parent %}
                                 <li class="list-group-item fs-4">
                                     <a class="text-dark" href="{% url 'course:module_detail' module.id %}">
-                                         {{ module.title }}</a>
-
+                                        {{ module.title }}</a>
                                 </li>
                             {% else %}
                                 <li class="list-group-item">
                                     <a class="text-dark" href="{% url 'course:module_detail' module.id %}">
                                         <span>{{ module.order|add:1 }}</span>) {{ module.title }}</a>
-
                                 </li>
                             {% endif %}
-
                         {% endfor %}
-
-
                     </ul>
                 </div>
             </div>

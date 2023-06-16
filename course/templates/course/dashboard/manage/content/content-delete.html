@@ -1,0 +1,10 @@
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <h4 class="alert-heading">{{ object.item.title }}</h4>
+    <form action="{% url 'course:module_content_delete' object.id %}" method="post">
+        {% csrf_token %}
+        <p>Haqiqatdan ham "{{ object.item.title }}" - contentini o'chirmoqchimisiz?</p>
+        <input type="submit" value="o'chirish" class="btn btn-danger">
+        {% comment %} <button class="btn btn-outline-dark" hx-get="{% url 'quiz:htmx_quiz_detail' object.id %}" hx-swap="innerHTML" hx-target="#quiz_detail-{{ object.id }}">orqaga</button> {% endcomment %}
+    </form>
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>

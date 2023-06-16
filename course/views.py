@@ -19,6 +19,7 @@ from django.apps import apps
 
 from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
 from ckeditor.widgets import CKEditorWidget
+from django.utils.text import slugify
 
 
 class CourseHomeView(LoginRequiredMixin, TemplateView):
@@ -40,32 +41,7 @@ class CourseHomeView(LoginRequiredMixin, TemplateView):
 course_home = CourseHomeView.as_view()
 
 
-class CourseDetail(LoginRequiredMixin, TemplateView):
-    template_name = 'course/users/pages/detail.html'
-
-    def get(self, request, pk):
-        object = get_object_or_404(Course, pk=pk)
-        modules = Module.objects.filter(course=object)
-        return self.render_to_response({
-            'object': object,
-            'modules': modules,
-            'count_m':modules.filter(parent__isnull=False).count()
-        })
-
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     # try:
-    #     #     result = Result.objects.get(user=self.request.user)
-    #     # except:
-    #     #     result = None
-    #     # context['result'] = result
-    #     return context
-
-
-user_course_detail = CourseDetail.as_view()
-
-
-class CourseListView(TemplateResponseMixin, View):
+class CourseListView(LoginRequiredMixin, TemplateResponseMixin, View):
     template_name = 'course/dashboard/course_list.html'
 
     # def get(self, request, slug=None, **kwargs):
@@ -114,10 +90,8 @@ class CourseDetailView(DetailView):
 
 course_detail_view = CourseDetailView.as_view()
 
-from django.utils.text import slugify
 
-
-class CourseCreateView(CreateView):
+class CourseCreateView(LoginRequiredMixin, CreateView):
     model = Course
     template_name = 'course/dashboard/manage/course_form.html'
     form_class = CourseForm
@@ -131,7 +105,7 @@ class CourseCreateView(CreateView):
 course_create_view = CourseCreateView.as_view()
 
 
-class CourseUpdateView(UpdateView):
+class CourseUpdateView(LoginRequiredMixin, UpdateView):
     model = Course
     template_name = 'course/dashboard/manage/course_form.html'
 
@@ -139,7 +113,7 @@ class CourseUpdateView(UpdateView):
 course_update_view = CourseUpdateView.as_view()
 
 
-class CourseDeleteView(DeleteView):
+class CourseDeleteView(LoginRequiredMixin, DeleteView):
     model = Course
     template_name = 'course/dashboard/manage/course_delete.html'
     success_url = reverse_lazy('course:course_list')
@@ -148,7 +122,7 @@ class CourseDeleteView(DeleteView):
 course_delete_view = CourseDeleteView.as_view()
 
 
-class ModuleCreateUpdateView(TemplateResponseMixin, View):
+class ModuleCreateUpdateView(LoginRequiredMixin, TemplateResponseMixin, View):
     template_name = 'course/dashboard/manage/module_form.html'
 
     def get(self, request, course_id=None, module_id=None, *args, **kwargs):
@@ -180,7 +154,7 @@ class ModuleCreateUpdateView(TemplateResponseMixin, View):
 module_form = ModuleCreateUpdateView.as_view()
 
 
-class ModuleUpdateView(UpdateView):
+class ModuleUpdateView(LoginRequiredMixin, UpdateView):
     model = Module
     form_class = ModuleForm
     template_name = 'course/dashboard/manage/module_form.html'
@@ -199,7 +173,7 @@ class ModuleUpdateView(UpdateView):
 module_update_view = ModuleUpdateView.as_view()
 
 
-class ModuleDeleteView(DeleteView):
+class ModuleDeleteView(LoginRequiredMixin, DeleteView):
     model = Module
     template_name = 'course/dashboard/manage/module_delete.html'
 
@@ -216,7 +190,7 @@ class ModuleDeleteView(DeleteView):
 module_delete_view = ModuleDeleteView.as_view()
 
 
-class ModuleDetailView(TemplateView):
+class ModuleDetailView(LoginRequiredMixin, TemplateView):
     # model = Module
     template_name = 'course/dashboard/pages/detail_module.html'
 
@@ -239,7 +213,7 @@ class ModuleDetailView(TemplateView):
 module_detail = ModuleDetailView.as_view()
 
 
-class ContentCreateUpdateView(TemplateResponseMixin, View):
+class ContentCreateUpdateView(LoginRequiredMixin, TemplateResponseMixin, View):
     module = None
     model = None
     obj = None
@@ -266,13 +240,13 @@ class ContentCreateUpdateView(TemplateResponseMixin, View):
 
         return Form(*args, **kwrags)
 
-    def dispatch(self, request, module_id, model_name, id=None, *args, **kwargs):
+    def dispatch(self, request, module_id, model_name, pk=None, *args, **kwargs):
         self.module = get_object_or_404(Module, pk=module_id)
         self.model = self.get_model(model_name)
-
-        if id:
-            self.obj = get_object_or_404(self.model, id=id)
-        return super().dispatch(request, module_id, model_name, id=None, *args, **kwargs)
+        print(request.method, pk)
+        if pk:
+            self.obj = get_object_or_404(self.model, id=pk)
+        return super().dispatch(request, module_id, model_name, pk, *args, **kwargs)
 
     def get(self, request, module_id, model_name, id=None):
         form = self.get_form(self.model, instance=self.obj)
@@ -281,14 +255,16 @@ class ContentCreateUpdateView(TemplateResponseMixin, View):
                                         'modul_id': module_id,
                                         'model_name': model_name})
 
-    def post(self, request, module_id, model_name, id=None):
+    def post(self, request, module_id, model_name, pk=None):
+        print(id)
         form = self.get_form(self.model, instance=self.obj,
                              data=request.POST, files=request.FILES)
+
         if form.is_valid():
             obj = form.save(commit=False)
             obj.owner = request.user
             obj.save()
-            if not id:
+            if not pk:
                 # new content
                 content = Content.objects.create(module=self.module,
                                                  item=obj)
@@ -300,14 +276,15 @@ class ContentCreateUpdateView(TemplateResponseMixin, View):
                 return redirect(reverse('course:module_detail', kwargs={'pk': self.module.id}))
                 # return render(request, 'course/dashboard/manage/content/content_detail.html', context)
                 # return redirect('module_content_list', self.module.id)
-        return self.render_to_response({'form': form,
-                                        'object': self.obj})
+            # return self.render_to_response({'form': form,
+            #                                 'object': self.obj})
+            return HttpResponseRedirect(reverse('course:module_detail', args=(module_id,)))
 
 
 content_create_update_view = ContentCreateUpdateView.as_view()
 
 
-class ContentDetailView(TemplateResponseMixin, View):
+class ContentDetailView(LoginRequiredMixin, TemplateResponseMixin, View):
     template_name = 'course/dashboard/manage/content/content-detail.html'
 
     def get(self, request, module_id, content_id, item_id):
@@ -322,7 +299,27 @@ class ContentDetailView(TemplateResponseMixin, View):
 content_detail_view = ContentDetailView.as_view()
 
 
-class ModuleOrderView(CsrfExemptMixin, JsonRequestResponseMixin, View):
+class ContentDeleteView(LoginRequiredMixin, DeleteView):
+    model = Content
+    template_name = 'course/dashboard/manage/content/content-delete.html'
+
+    # def get(self, request, module_id, content_id, item_id):
+    #     module = get_object_or_404(Module, id=module_id)
+    #     content = get_object_or_404(Content, id=content_id)
+    #     return self.render_to_response({
+    #         'module': module,
+    #         'content': content
+    #     })
+    def get_success_url(self):
+        content = self.object.module
+
+        return reverse('course:module_detail', args=(content.id,))
+
+
+content_delete_view = ContentDeleteView.as_view()
+
+
+class ModuleOrderView(LoginRequiredMixin, CsrfExemptMixin, JsonRequestResponseMixin, View):
 
     def post(self, request):
         for id, order in self.request_json.items():
@@ -331,7 +328,7 @@ class ModuleOrderView(CsrfExemptMixin, JsonRequestResponseMixin, View):
         return self.render_json_response({'saved': 'OK'})
 
 
-class ContentOrderView(CsrfExemptMixin, JsonRequestResponseMixin, View):
+class ContentOrderView(LoginRequiredMixin, CsrfExemptMixin, JsonRequestResponseMixin, View):
     def post(self, request):
         for id, order in self.request_json.items():
             Content.objects.filter(id=id, module__course__owner=request.user) \
@@ -385,7 +382,7 @@ class ModuleCreateQuiz(LoginRequiredMixin, TemplateResponseMixin, View):
             if form.is_valid():
 
                 object = form.save()
-                messages.success(request, f'{object} - muvaffaqiyatli saqlandi')
+                # messages.success(request, f'{object} - muvaffaqiyatli saqlandi')
                 return redirect(reverse('course:module_detail', kwargs={'pk': module.id}))
             else:
                 messages.warning(request, 'form is no valid')
@@ -413,3 +410,47 @@ class CourseCategoriesView(LoginRequiredMixin, TemplateView):
 
 
 course_categories = CourseCategoriesView.as_view()
+
+
+class CourseDetail(LoginRequiredMixin, TemplateView):
+    template_name = 'course/users/pages/detail.html'
+
+    def get(self, request, pk):
+        object = get_object_or_404(Course, pk=pk)
+        modules = Module.objects.select_related('parent', 'course').filter(course=object)
+        results = Result.objects.select_related('quiz__category', 'quiz__module').filter(user=request.user, quiz__course=object)
+        return self.render_to_response({
+            'object': object,
+            'modules': modules,
+            'count_m': modules.filter(parent__isnull=False).count(),
+            'results': results
+        })
+
+
+user_course_detail = CourseDetail.as_view()
+
+
+class ModuleDetailView(LoginRequiredMixin, TemplateResponseMixin, View):
+    template_name = 'course/users/pages/module/detail.html'
+
+    def get(self, request, pk):
+        object = get_object_or_404(Module, pk=pk)
+        contents = Content.objects.filter(module=object)
+        modules = Module.objects.filter(course=object.course)
+        quiz = object.quizs_module.first()
+        if quiz:
+            if quiz.active:
+                quiz = quiz
+            else:
+                quiz = None
+        else:
+            quiz = None
+        return self.render_to_response({
+            'quiz': quiz,
+            'object': object,
+            'contents': contents,
+            'modules': modules
+        })
+
+
+module_detail_view = ModuleDetailView.as_view()

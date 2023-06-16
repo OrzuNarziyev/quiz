@@ -18,7 +18,7 @@
         <button type='submit' class="btn btn-success float-end">saqlash</button>
 
         {% if object %}
-            <button class="btn btn-outline-dark" hx-get="{% url 'quiz:htmx_quiz_detail' object.id %}" hx-swap="innerHTML" hx-target="#quiz_detail-{{ object.id }}">orqaga</button>
+            <button class="btn btn-outline-dark" hx-get="{% url 'quiz:htmx_quiz_detail' object.id %}" hx-swap="innerHTML" hx-target="#quiz_detail-{{ object.id }}">orqaga11</button>
             <button class="btn btn-warning" hx-post="{% url 'course:module_quiz_update' module.id object.id %}" hx-swap="innerHTML" hx-target="#quiz_detail-{{ object.id }}">update</button>
         {% endif %}
     

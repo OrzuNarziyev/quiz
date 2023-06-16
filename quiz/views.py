@@ -36,7 +36,7 @@ class Dashboard(LoginRequiredMixin, TemplateView):
         categories = Category.objects.filter(parent__isnull=True)[:7]
         end_date = datetime.today()
         st_date = end_date - timedelta(days=7)
-        results = Result.objects.filter(user=request.user).select_related('quiz__category__parent')
+        results = Result.objects.filter(user=request.user, quiz__module__isnull=True).select_related('quiz__category__parent')
         return self.render_to_response({
             'object_list': categories,
             'results': results

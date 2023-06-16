@@ -2,28 +2,95 @@
 {% load static %}
 {% load mptt_tags %}
 
+{% block style %}
+    <link rel="stylesheet" href="{% static 'user/dash/css/style.css' %}">
+    {#    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css"/>#}
+    {#    <script src="https://code.jquery.com/jquery-3.7.0.min.js"#}
+    {#            integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>#}
+{% endblock %}
+
 {% block content %}
-    {{ modules.get_family }}
 
     <div class="container mt-5">
         <div class="pagetitle">
             {#            <h1>Profile</h1>#}
             <nav>
                 <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'quiz:dashboard' %}">Bosh sahifa</a></li>
+
                     {% for foo in object.subject.get_family %}
                         <li class="breadcrumb-item">{{ foo }}</li>
                     {% endfor %}
-                    {#                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>#}
                     {#                    #}
                     {#                    <li class="breadcrumb-item active">Profile</li>#}
                 </ol>
             </nav>
         </div><!-- End Page Title -->
 
-        <section class="section profile">
+        <section class="section dashboard profile">
             <div class="row">
-                <div class="col-xl-4">
+                <div class="col-xl-6">
 
+                    <div class="card">
+                        <div class="profile-group__main-dashboard rounded-3">
+                            <img
+                                    class="rounded-circle border border-4"
+                                    src="{{ photo }}"
+                                    alt="profile"
+                                    width="130"
+                                    height="130"
+                            />
+                            {#                    <h5 class="title__profile-group fw-bold mb-0 mt-1">Ali Barin</h5>#}
+                            <p class="text__profile-group text-secondary p-2"
+                               style="text-align: center">{{ organization.name }}</p>
+                            <p class="text__profile-group text-secondary "
+                               style="text-align: center">{{ staff_full }}</p>
+                        </div>
+
+                    </div>
+                    <div class="card overflow-auto">
+
+                        <div class="filter">
+                            {#                            <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>#}
+                            {#                            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">#}
+                            {#                                <li class="dropdown-header text-start">#}
+                            {#                                    <h6>Filter</h6>#}
+                            {#                                </li>#}
+                            {##}
+                            {#                                <li><a class="dropdown-item" href="#">Today</a></li>#}
+                            {#                                <li><a class="dropdown-item" href="#">This Month</a></li>#}
+                            {#                                <li><a class="dropdown-item" href="#">This Year</a></li>#}
+                            {#                            </ul>#}
+                        </div>
+
+                        <div class="card-body">
+                            <h5 class="card-title">Тест натижалари</h5>
+
+                            <table id="example" class="table table-striped datatable">
+                                <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">мавзу</th>
+                                    <th scope="col">%</th>
+                                    <th scope="col">Холат</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for result in results %}
+                                    <tr>
+                                        <th scope="row"><a href="#">{{ forloop.counter }}</a></th>
+                                        <td>{{ result.quiz.module }}</td>
+                                        {#                                        <td><a href="#" class="text-primary">At praesentium minu</a></td>#}
+                                        <td>{{ result.score }}</td>
+                                        <td><span class="badge bg-success">success</span></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6">
                     <div class="card">
                         <div class="card-header">
                         </div>
@@ -34,77 +101,72 @@
                             </p>
                         </div>
                         <div class="card-footer">
-                            modules: {{ count_m }}
+                            {#                            modules: {{ count_m }}#}
                         </div>
                     </div>
+                    <div class="card">
+                        <div class="card-header">Mavzular: {{ count_m }}</div>
+                        <div class="card-body">
+                            {#                                <h5 class="card-title">Accordion without outline borders</h5>#}
 
-                </div>
+                            <!-- Accordion without outline borders -->
+                            <div class="accordion accordion-flush" id="accordionFlushExample">
+                                {% recursetree modules %}
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header" id="flush-heading-{{ node.id }}">
+                                            <button class="accordion-button collapsed" type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#flush-collapse-{{ node.id }}"
+                                                    aria-expanded="false"
+                                                    aria-controls="flush-collapse-{{ node.id }}">
+                                                <h5 class="fw-bold">
+                                                    {{ node.title }} <span
+                                                        class="badge rounded bg-black">{{ node.get_descendant_count }}</span>
+                                                </h5>
+                                            </button>
+                                        </h2>
+                                        <div id="flush-collapse-{{ node.id }}"
+                                             class="accordion-collapse collapse"
+                                             aria-labelledby="flush-heading{{ node.id }}"
+                                             data-bs-parent="#accordionFlushExample">
+                                            <ul class="list-group list-group-flush">
+                                                {% if not node.is_leaf_node %}
+                                                    {% for get_child in node.get_children %}
 
-                <div class="col-xl-8">
+                                                        <li class="list-group-item">
+                                                            <a
+                                                                    href="{% url 'course:user_module_detail_view' get_child.pk %}">{{ get_child.title }}</a>
+                                                        </li>
 
-                    <div class="col-lg-12">
-
-                        <div class="card">
-                            <div class="card-header">Mavzular: {{ count_m }}</div>
-                            <div class="card-body">
-                                {#                                <h5 class="card-title">Accordion without outline borders</h5>#}
-
-                                <!-- Accordion without outline borders -->
-                                <div class="accordion accordion-flush" id="accordionFlushExample">
-                                    {% recursetree modules %}
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="flush-heading-{{ node.id }}">
-                                                <button class="accordion-button collapsed" type="button"
-                                                        data-bs-toggle="collapse"
-                                                        data-bs-target="#flush-collapse-{{ node.id }}"
-                                                        aria-expanded="false"
-                                                        aria-controls="flush-collapse-{{ node.id }}">
-                                                    <h5 class="fw-bold">
-                                                        {{ node.title }} <span
-                                                            class="badge rounded bg-black">{{ node.get_descendant_count }}</span>
-                                                    </h5>
-                                                </button>
-                                            </h2>
-                                            <div id="flush-collapse-{{ node.id }}"
-                                                 class="accordion-collapse collapse"
-                                                 aria-labelledby="flush-heading{{ node.id }}"
-                                                 data-bs-parent="#accordionFlushExample">
-                                                <ul class="list-group list-group-flush">
-                                                    {% if not node.is_leaf_node %}
-                                                        {% for get_child in node.get_children %}
-
-                                                            <li class="list-group-item">
-                                                                <a class="" href="">{{ get_child.title }}</a>
-                                                            </li>
-
-                                                        {% endfor %}
-                                                    {% endif %}
-                                                </ul><!-- End Clean list group -->
+                                                    {% endfor %}
+                                                {% endif %}
+                                            </ul><!-- End Clean list group -->
 
 
-                                            </div>
                                         </div>
-                                    {% endrecursetree %}
-                                </div><!-- End Accordion without outline borders -->
+                                    </div>
+                                {% endrecursetree %}
+                            </div><!-- End Accordion without outline borders -->
 
-                            </div>
                         </div>
-
                     </div>
                 </div>
             </div>
         </section>
+
     </div>
+
+
 
 
 
 {% endblock %}
 
 {% block include_js %}
-    <script>
-        let prev_btn = document.getElementById('prev')
-        prev_btn.addEventListener('click', () => {
-            window.history.back()
-        })
-    </script>
+    {#    <script>#}
+    {#        let prev_btn = document.getElementById('prev')#}
+    {#        prev_btn.addEventListener('click', () => {#}
+    {#            window.history.back()#}
+    {#        })#}
+    {#    </script>#}
 {% endblock %}

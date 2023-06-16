@@ -33,7 +33,7 @@ class Module(MPTTModel):
     order = OrderField(blank=True, for_fields=['course'])
 
     def __str__(self) -> str:
-        return f"{self.order} {self.title}"
+        return f"{self.title}"
 
     class Meta:
         ordering = ['order']

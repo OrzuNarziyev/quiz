@@ -67,7 +67,7 @@
                                 </a>
                             {% else %}
                                 {% with node.quizs.first as quiz %}
-                                    {% if quiz %}
+                                    {% if quiz and not quiz.module %}
                                         <a href="{% url 'quiz:user_quiz_detail' quiz.pk %}"
                                            class="link-card__main-dashboard rounded-3 position-relative">
                                             <span class="badge rounded-pill bg-success align-self-end">test</span>

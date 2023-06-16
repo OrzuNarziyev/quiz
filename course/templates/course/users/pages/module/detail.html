@@ -1,0 +1,166 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% load mptt_tags %}
+{% load course %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'user/dash/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <header id="header" class="header fixed-top d-flex align-items-center">
+
+        <div class="d-flex align-items-center justify-content-between">
+            <a href="{% url 'quiz:dashboard' %}" class="logo d-flex align-items-center">
+                {#                <img src="" alt="">#}
+                <span class="d-none d-lg-block">Bosh sahifa</span>
+            </a>
+            <i class="bi bi-list-task toggle-sidebar-btn"></i>
+
+        </div><!-- End Logo -->
+
+
+        <nav class="header-nav ms-auto">
+            <ul class="d-flex align-items-center">
+
+                <li class="nav-item dropdown pe-3">
+
+                    <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
+                        <img src="{{ photo }}" alt="Profile" class="rounded-circle">
+                        <span class="d-none d-md-block dropdown-toggle ps-2">{{ fullname }}</span>
+                    </a><!-- End Profile Iamge Icon -->
+
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+
+                        <li>
+                            <a class="dropdown-item d-flex align-items-center" href="{% url 'account:logout' %}">
+                                <i class="bi bi-box-arrow-right"></i>
+                                <span>Chiqish</span>
+                            </a>
+                        </li>
+
+                    </ul><!-- End Profile Dropdown Items -->
+                </li><!-- End Profile Nav -->
+
+            </ul>
+        </nav><!-- End Icons Navigation -->
+
+    </header><!-- End Header -->
+
+    <aside id="sidebar" class="sidebar">
+
+        <ul class="sidebar-nav" id="sidebar-nav">
+            {% recursetree modules %}
+                <li class="nav-item">
+                    <a class="nav-link collapsed" data-bs-target="#quiz-nav-{{ node.id }}" data-bs-toggle="collapse"
+                       href="#">
+                        <i class="bi bi-journal-text"></i><span>{{ node.title }}</span><i
+                            class="bi bi-chevron-down ms-auto"></i>
+                    </a>
+                    {% if not node.is_leaf_node %}
+                        <ul id="quiz-nav-{{ node.id }}" class="nav-content collapse show "
+                            data-bs-parent="#sidebar-nav">
+                            {% for get_child in node.get_children %}
+                                <li>
+                                    {% url 'course:user_module_detail_view' get_child.pk as url_child %}
+                                    {% if url_child == request.path %}
+                                        <a class="active"
+                                           href="{% url 'course:user_module_detail_view' get_child.pk %}">
+
+                                            <i class="bi bi-circle"></i><span>{{ get_child.title }}</span>
+                                        </a>
+                                    {% else %}
+                                        <a href="{% url 'course:user_module_detail_view' get_child.pk %}">
+
+                                            <i class="bi bi-circle"></i><span>{{ get_child.title }}</span>
+                                        </a>
+                                    {% endif %}
+
+                                </li>
+                            {% endfor %}
+
+
+                        </ul>
+                    {% endif %}
+                </li><!-- End Forms Nav -->
+
+            {% endrecursetree %}
+        </ul>
+
+    </aside><!-- End Sidebar-->
+
+
+    <main class="main" id="main">
+        <div class="pagetitle">
+            {#            <h1>Profile</h1>#}
+            <nav>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'quiz:dashboard' %}">Bosh sahifa</a></li>
+
+                    {% for subject in object.course.subject.get_family %}
+
+                        {% if forloop.last %}
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'course:user_course_detail' object.course.pk %}">{{ subject }} ({{ object.course }})</a>
+                            </li>
+                        {% else %}
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'course:user_course_categories' subject.slug %}">{{ subject }}</a>
+                                </li>
+                        {% endif %}
+                    {% endfor %}
+
+
+                </ol>
+            </nav>
+        </div><!-- End Page Title -->
+
+        <section class="section profile">
+            <div class="row">
+                <div class="col-xl-12">
+
+
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between">
+                            <h1 class="fs-3 fw-bold">{{ object }}</h1>
+                            <div>
+                                {% if quiz %}
+                                    <a href="{% url 'quiz:user_quiz_detail' object.quizs_module.first.pk %}">
+                                        <img width="50" src="{% static 'user/dash/img/test_exam.png' %}" alt="">
+                                    </a>
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+
+                            {% for content in contents %}
+                                {{ content.item.render }}
+                            {% endfor %}
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+{% endblock %}
+
+{% block include_js %}
+    <script>
+        let prev_btn = document.getElementById('prev')
+        prev_btn.addEventListener('click', () => {
+            window.history.back()
+        })
+    </script>
+{% endblock %}

@@ -1,5 +1,4 @@
 import uuid
-
 import vaex
 from django.core.cache import cache
 from django.db.models import Avg
@@ -26,17 +25,21 @@ import requests
 import pandas as pd
 from uuid import uuid4
 
+from django.views.decorators.cache import cache_page
+
 
 # Create your views here.
 
 class Dashboard(LoginRequiredMixin, TemplateView):
     template_name = 'quiz/dashboard.html'
 
+    # @cache_page(60 * 15)
     def get(self, request):
         categories = Category.objects.filter(parent__isnull=True)[:7]
         end_date = datetime.today()
         st_date = end_date - timedelta(days=7)
-        results = Result.objects.filter(user=request.user, quiz__module__isnull=True).select_related('quiz__category__parent')
+        results = Result.objects.filter(user=request.user, quiz__module__isnull=True).select_related(
+            'quiz__category__parent')
         return self.render_to_response({
             'object_list': categories,
             'results': results
@@ -45,21 +48,42 @@ class Dashboard(LoginRequiredMixin, TemplateView):
 
 dashboard = Dashboard.as_view()
 
-
 class QuizHomeView(LoginRequiredMixin, TemplateView):
     template_name = 'quiz/quiz_home.html'
 
+    # @cache_page(60 * 15)
     def get(self, request, slug=None, *args, **kwargs):
 
         if slug is not None:
-            categories = Category.objects.prefetch_related('quizs').filter(parent__slug=slug)
+            categories = Category.objects.filter(parent__slug=slug).order_by('name').distinct('name').values('name',
+                                                                                                             'level',
+                                                                                                             'icon',
+                                                                                                             'quizs',
+                                                                                                             'quizs__module',
+                                                                                                             'slug',
+                                                                                                             'children')
+
         else:
-            categories = Category.objects.all()
+            categories = Category.objects.filter(level=0).order_by('name').distinct('name').values('name',
+                                                                                                   'level',
+                                                                                                   'icon',
+                                                                                                   'quizs',
+                                                                                                   'slug',
+                                                                                                   'children')
 
         return self.render_to_response({
             'object_list': categories,
-            # 'cat': cat
         })
+
+        # if slug is not None:
+        #     categories = Category.objects.prefetch_related('quizs').filter(parent__slug=slug)
+        # else:
+        #     categories = Category.objects.all()
+        #
+        # return self.render_to_response({
+        #     'object_list': categories,
+        #     # 'cat': cat
+        # })
 
 
 quiz_home = QuizHomeView.as_view()
@@ -423,22 +447,7 @@ class HtmxQuizDetailView(DetailView):
     model = Quiz
     template_name = 'dashboard/manage/quiz_detail.html'
 
-    # def get(self, request, *args, **kwargs):
-    #     module_id = kwargs['module_id']
-    #     self.object = self.get_object
-    #     if module_id:
-    #         print('helllllloooooooooooooooooo', module_id)
-    #     return self.render_to_response({
-    #         'object': self.object
-    #     })
-
     def get_context_data(self, **kwargs):
-        # try:
-        #     module_id = kwargs['module_id']
-        #     context['module_id'] = module_id
-        # except:
-        #     module_id = None
-
         context = super().get_context_data(**kwargs)
         context['form'] = QuestionForm()
 

@@ -12,7 +12,7 @@ from quiz.fields import OrderField
 
 class Course(models.Model):
     subject = models.ForeignKey(
-        Category, on_delete=models.CASCADE, related_name='courses')
+        Category, on_delete=models.CASCADE, related_name='courses', related_query_name='courses')
     title = models.CharField(max_length=255)
     slug = models.SlugField(unique=True)
     created = models.DateTimeField(auto_now_add=True)

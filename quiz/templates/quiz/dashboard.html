@@ -22,12 +22,21 @@
                             height="130"
                     />
                     {#                    <h5 class="title__profile-group fw-bold mb-0 mt-1">Ali Barin</h5>#}
+{#                    <p class="text__profile-group text-secondary p-2"#}
+{#                       style="text-align: center">{{ organization.name }}</p>#}
                     <p class="text__profile-group text-secondary p-2"
-                       style="text-align: center">{{ organization.name }}</p>
-                    <p class="text__profile-group text-secondary " style="text-align: center">{{ staff_full }}</p>
+                       style="text-align: center">{{ fullname }}</p>
+                     <p class="text__profile-group text-secondary p-2"
+                       style="text-align: center">{{ staff_full }}</p>
+
+{#                    <p class="text__profile-group text-secondary " style="text-align: center">{{ staff_full }}</p>#}
                 </div>
                 <div class="search-group__main-dashboard rounded-3">
-                    <h3 class="text-light fw-bolder">{{ fullname }}</h3>
+                    <h3 class="text-light fw-bolder">{{ organization.name }}</h3>
+                    <br>
+                    <h4 class="text-light fw-bolder">{{ department }}</h4>
+
+
                     <div class="form-group search-content">
               <span class="google-icon__search-content">
 
@@ -93,7 +102,7 @@
                                 {% endwith %}
                             {% endif %}
                         {% endrecursetree %}
-                        <a href="#"
+                        <a href="{% url 'quiz:quiz_home' %}"
                            class="link-card__main-dashboard rounded-3">
 
                             <img width="70" src="{% static 'user/dash/img/more.png' %}" alt="icon"/>
@@ -162,50 +171,104 @@
                 </div>
             </div>
             {% if results %}
-                <div class="bottom__main-dashboard">
-                    <h3 class="title-dashboard">Natijalar</h3>
-                    <div class="table-responsive">
-                        <table class="table align-middle mb-0 bg-none borderless">
-                            <thead class="bg-light">
-                            <tr>
-                                <th>Yo'nalish</th>
-                                <th>Sana</th>
-                                <th>Natija</th>
-                                <th>Urunishlar soni</th>
-                                {#                                <th>Status</th>#}
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for result in results %}
-                                <tr
-                                        style="
-                                    box-shadow: rgba(100, 100, 111, 0.2) 2px 3px 5px 0px;
-                                    background: white;
-                                "
-                                >
-                                    <td>
-                                        <p class="fw-bold">
-                                            <a href="#">{{ result.quiz.category.parent }}</a></p>
-                                    </td>
-                                    <td>
-                                        <p class="fw-bold">{{ result.date }}</p>
-                                    </td>
-                                    <td>
-                                        <p class="fw-bold">{{ result.score|floatformat:0 }}%</p>
+                <div class="bottom__main-dashboard section dashboard">
+                    {#                    <h3 class="title-dashboard">Natijalar</h3>#}
 
-                                    </td>
-                                    <td>
-                                        <p class="fw-bold">{{ result.attempts }}</p>
-                                    </td>
-                                    <td>
-                                        {#                                        <span class="badge rounded-pill bg-warning">Completed</span>#}
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                    <!-- Recent Sales -->
+                    <div class="col-12">
+                        <div class="card recent-sales overflow-auto">
 
-                            </tbody>
-                        </table>
-                    </div>
+                            {#                            <div class="filter">#}
+                            {#                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>#}
+                            {#                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">#}
+                            {#                                    <li class="dropdown-header text-start">#}
+                            {#                                        <h6>Filter</h6>#}
+                            {#                                    </li>#}
+                            {##}
+                            {#                                    <li><a class="dropdown-item" href="#">Today</a></li>#}
+                            {#                                    <li><a class="dropdown-item" href="#">This Month</a></li>#}
+                            {#                                    <li><a class="dropdown-item" href="#">This Year</a></li>#}
+                            {#                                </ul>#}
+                            {#                            </div>#}
+
+                            <div class="card-body">
+                                <h5 class="card-title">Натижалар</h5>
+
+                                <table class="table table-borderless datatable">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Йуналиш</th>
+                                        <th scope="col">Сана</th>
+                                        <th scope="col">Натижа</th>
+                                        <th scope="col">Статус</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for result in results %}
+                                        <tr>
+                                            <th scope="row"><a href="#">{{ forloop.counter }}</a></th>
+                                            <td>{{ result.quiz.category.parent }}</td>
+                                            <td><a href="#" class="text-primary">{{ result.update_date }}</a></td>
+
+                                            <td>{{ result.score }}</td>
+                                            {% with result.quiz.score_to_path as score_to_path %}
+                                                {% if result.score >= score_to_path %}
+                                                    <td><span class="badge bg-success fs-5"> success</span></td>
+                                                {% else %}
+                                                    <td><span class="badge bg-danger">fail</span></td>
+                                                {% endif %}
+                                            {% endwith %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- End Recent Sales -->
+
+                    {#                    <div class="table-responsive">#}
+                    {#                        <table class="table align-middle mb-0 bg-none borderless">#}
+                    {#                            <thead class="bg-light">#}
+                    {#                            <tr>#}
+                    {#                                <th>Yo'nalish</th>#}
+                    {#                                <th>Sana</th>#}
+                    {#                                <th>Natija</th>#}
+                    {#                                <th>Urunishlar soni</th>#}
+                    {#                                <th>Status</th>#}
+                    {#                            </tr>#}
+                    {#                            </thead>#}
+                    {#                            <tbody>#}
+                    {#                            {% for result in results %}#}
+                    {#                                <tr#}
+                    {#                                        style="#}
+                    {#                                    box-shadow: rgba(100, 100, 111, 0.2) 2px 3px 5px 0px;#}
+                    {#                                    background: white;#}
+                    {#                                "#}
+                    {#                                >#}
+                    {#                                    <td>#}
+                    {#                                        <p class="fw-bold">#}
+                    {#                                            <a href="#">{{ result.quiz.category.parent }}</a></p>#}
+                    {#                                    </td>#}
+                    {#                                    <td>#}
+                    {#                                        <p class="fw-bold">{{ result.date }}</p>#}
+                    {#                                    </td>#}
+                    {#                                    <td>#}
+                    {#                                        <p class="fw-bold">{{ result.score|floatformat:0 }}%</p>#}
+                    {##}
+                    {#                                    </td>#}
+                    {#                                    <td>#}
+                    {#                                        <p class="fw-bold">{{ result.attempts }}</p>#}
+                    {#                                    </td>#}
+                    {#                                    <td>#}
+                    {#                                        <span class="badge rounded-pill bg-warning">Completed</span>#}
+                    {#                                    </td>#}
+                    {#                                </tr>#}
+                    {#                            {% endfor %}#}
+                    {##}
+                    {#                            </tbody>#}
+                    {#                        </table>#}
+                    {#                    </div>#}
                 </div>
             {% endif %}
 

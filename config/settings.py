@@ -157,7 +157,6 @@ CKEDITOR_UPLOAD_PATH = "uploads/"
 CKEDITOR_RESTRICT_BY_USER = False
 CKEDITOR_IMAGE_BACKEND = "pillow"
 
-
 # CKEDITOR_CONFIGS = {
 #     "default": {
 #         'skin': 'moono',
@@ -240,6 +239,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.redis.RedisCache',
         'LOCATION': 'redis://127.0.0.1:6379',
+        "TIMEOUT": None,
     }
 }
 

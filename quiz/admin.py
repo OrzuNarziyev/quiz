@@ -27,13 +27,12 @@ class CategoryAdmin(DraggableMPTTAdmin):
         ('parent', TreeRelatedFieldListFilter),
     )
 
-    # mptt_indent_field = "some_node_field"
-
 
 @admin.register(Quiz)
 class QuizAdmin(admin.ModelAdmin):
     mptt_level_indent = 50
     list_display = ['category', 'module', 'title', 'created', 'active']
+    list_editable = ['active']
     list_filter = (
         ('category', TreeRelatedFieldListFilter),
     )

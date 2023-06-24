@@ -128,10 +128,10 @@
                     <div class="card">
                         <div class="card-header d-flex justify-content-between">
                             <h1 class="fs-3 fw-bold">{{ object }}</h1>
-                            <div>
+                            <div class="me-4" >
                                 {% if quiz %}
-                                    <a href="{% url 'quiz:user_quiz_detail' object.quizs_module.first.pk %}">
-                                        <img width="50" src="{% static 'user/dash/img/test_exam.png' %}" alt="">
+                                    <a  href="{% url 'quiz:user_quiz_detail' object.quizs_module.first.pk %}">
+                                        <img width="50" src="{% static 'user/dash/img/quiz.png' %}" alt="">
                                     </a>
                                 {% endif %}
 

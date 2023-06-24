@@ -40,6 +40,9 @@ class Category(MPTTModel):
         verbose_name = _("Category")
         verbose_name_plural = _("Categories")
 
+    def icon_url(self):
+        return self.icon
+
     def __str__(self):
         return self.name
 
@@ -142,6 +145,7 @@ class Result(models.Model):
     attempts = models.IntegerField(
         verbose_name='urinishlar soni', help_text='Urinishlar soni', default=1)
     date = models.DateTimeField(auto_now_add=True)
+    update_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return f"{self.user}: result {self.score}"

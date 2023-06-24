@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.conf import settings
 from django.core.cache import cache
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -9,22 +10,30 @@ from django.contrib import messages
 from .forms import CustomAuthenticationForm, LoginForm, RegisterUserForm
 from .models import Organizations, Staff_user
 from account.translate import to_cyrillic, to_latin
-from django.contrib.syndication.views import Feed
+
+import redis, json
+
+r = redis.Redis(
+    host=settings.REDIS_HOST,
+    db=settings.REDIS_DB,
+    port=settings.REDIS_PORT
+)
+
+
 
 def register(request):
     if request.user.is_authenticated:
         return redirect('quiz:dashboard')
     form = RegisterUserForm()
-    request.session['date'] = str(datetime.now())
+    # request.session['date'] = str(datetime.now())
     if request.method == 'POST':
         form = RegisterUserForm(request.POST)
         if form.is_valid():
             user = form.save()
             if user:
-                data = cache.get(user.pinfl)
-                # organization = data['organization']['name']
-                # organization_railway = data['organization']['railway']['name']
-                # department = data['staff'][0]['department_id']['name']
+                data = json.loads(r.get(user.pinfl))
+                print(data)
+
                 organization_railway = to_cyrillic(data['organization']['name']) if str(
                     data['organization']['name']).isascii() else \
                     data['organization']['name']
@@ -38,13 +47,19 @@ def register(request):
                     data['staff'][0]['department_id']['name']
 
                 org, create = Organizations.objects.get_or_create(organization=organization)
+                print(org, create)
                 if create:
                     org_railway = Organizations.objects.create(organization=organization_railway, parent=org)
                     obj = Organizations.objects.create(organization=department, parent=org_railway)
+                    user.organizations = obj
+                    user.save()
                 else:
                     org_railway, create_railway = Organizations.objects.get_or_create(organization=organization_railway,
                                                                                       parent=org)
-                    Organizations.objects.get_or_create(organization=department, parent=org_railway)
+                    child, create_child = Organizations.objects.get_or_create(organization=department,
+                                                                              parent=org_railway)
+                    user.organizations = child
+                    user.save()
 
             messages.success(request, f'{user}user muvaffaqiyatli saqlandi')
             return redirect('account:login')
@@ -54,8 +69,6 @@ def register(request):
     }
     return render(request, 'registration/signup.html', context)
 
-
-# clickhouse
 
 def login_view(request):
     if request.user.is_authenticated:
@@ -85,3 +98,7 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect('account:login')
+
+# info user data views
+
+# bu yerda foydalanuvchining test statistika funcsiyalari

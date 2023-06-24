@@ -6,7 +6,7 @@ from account.data_user import UserDataMixin
 from django.conf import settings
 import base64
 
-import redis
+import redis, json
 
 r = redis.Redis(
     host=settings.REDIS_HOST,
@@ -21,8 +21,8 @@ endpoint = "https://api-exodim.railway.uz/api/collaborator/cadry/check"
 
 
 def get_info(pinfl):
-
     if cache.get('access_token') is None:
+        print('not access')
         api_login()
         token = cache.get('access_token')
         type_api = cache.get('token_type')
@@ -36,6 +36,7 @@ def get_info(pinfl):
             }
 
     else:
+        print('has access token')
         token = cache.get('access_token')
         type_api = cache.get('token_type')
 
@@ -50,7 +51,8 @@ def get_info(pinfl):
     get_response = requests.get(endpoint, headers=headers, params={"pinfl": pinfl})
 
     if get_response.status_code == 200:
-        cache.set(pinfl, get_response.json()['cadry'], 21600)
+        q = r.set(pinfl, json.dumps(get_response.json()['cadry']))
+        print(r.get(pinfl))
 
         return get_response.status_code
 

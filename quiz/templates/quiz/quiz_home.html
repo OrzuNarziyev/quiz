@@ -53,54 +53,179 @@
                 <hr>
                 <div class="content__middle-dashboard">
                     <div class="links-group__main-dashboard">
-                        {% recursetree object_list %}
-                            {% if not node.is_child_node %}
-
-                                <a href="{% url 'quiz:quiz_cat' node.slug %}"
+                        {% for object in object_list %}
+                            {% if object.quizs and not object.quizs__module %}
+                                <a href="{% url 'quiz:user_quiz_detail' object.quizs %}"
                                    class="link-card__main-dashboard rounded-3">
-                                    {% if node.icon %}
-                                        <img width="70" src="{{ node.icon.url }}" alt="icon"/>
+                                    <span class="badge rounded-pill bg-success align-self-end">test</span>
+
+                                    {% if object.icon %}
+                                        <img width="70" src="{% get_media_prefix %}{{ object.icon }}"
+                                             alt="{{ object.icon }}"/>
                                     {% else %}
                                         <img width="70" src="{% static 'user/dash/img/file.png' %}" alt="icon"/>
+
                                     {% endif %}
-                                    <p class="text-secondary">{{ node }}</p>
+                                    <p class="text-secondary">{{ object.name }}</p>
+                                </a>
+                            {% elif object.children %}
+                                <a href="{% url 'quiz:quiz_cat' object.slug %}"
+                                   class="link-card__main-dashboard rounded-3">
+
+                                    {% if object.icon %}
+                                        <img width="70" src="{% get_media_prefix %}{{ object.icon }}"
+                                             alt="{{ object.icon }}"/>
+                                    {% else %}
+                                        <img width="70" src="{% static 'user/dash/img/file.png' %}" alt="icon"/>
+
+                                    {% endif %}
+
+                                    <p class="text-secondary">{{ object.name }}</p>
                                 </a>
                             {% else %}
-                                {% with node.quizs.first as quiz %}
-                                    {% if quiz and not quiz.module %}
-                                        <a href="{% url 'quiz:user_quiz_detail' quiz.pk %}"
-                                           class="link-card__main-dashboard rounded-3 position-relative">
-                                            <span class="badge rounded-pill bg-success align-self-end">test</span>
+                                <a class="link-card__main-dashboard rounded-3">
 
-
-
-                                            {% if node.icon %}
-                                                <img width="70" src="{{ node.icon.url }}" alt="icon"/>
-                                            {% else %}
-                                                <img width="70" src="{% static 'user/dash/img/file.png' %}"
-                                                     alt="icon"/>
-                                            {% endif %}
-                                            <p class="text-secondary">{{ node }}</p>
-
-
-                                        </a>
-
+                                    {% if object.icon %}
+                                        <img width="70" src="{% get_media_prefix %}{{ object.icon }}"
+                                             alt="{{ object.icon }}"/>
                                     {% else %}
-                                        <div class="link-card__main-dashboard rounded-3">
-                                            {% if node.icon %}
-                                                <img width="70" src="{{ node.icon.url }}" alt="icon"/>
-                                            {% else %}
-                                                <img width="70" src="{% static 'user/dash/img/file.png' %}"
-                                                     alt="icon"/>
+                                        <img width="70" src="{% static 'user/dash/img/file.png' %}" alt="icon"/>
 
-                                            {% endif %}
-                                            <p class="text-secondary">{{ node }}</p>
-                                        </div>
                                     {% endif %}
-                                {% endwith %}
+
+                                    <p class="text-secondary">{{ object.name }}</p>
+                                </a>
                             {% endif %}
-                        {% endrecursetree %}
+
+                        {% endfor %}
+
+                        {#                        {% recursetree object_list %}#}
+                        {#                            {% if not node.is_child_node %}#}
+                        {##}
+                        {#                                <a href="{% url 'quiz:quiz_cat' node.slug %}"#}
+                        {#                                   class="link-card__main-dashboard rounded-3">#}
+                        {#                                    {% if node.icon %}#}
+                        {#                                        <img width="70" src="{{ node.icon.url }}" alt="icon"/>#}
+                        {#                                    {% else %}#}
+                        {#                                        <img width="70" src="{% static 'user/dash/img/file.png' %}" alt="icon"/>#}
+                        {#                                    {% endif %}#}
+                        {#                                    <p class="text-secondary">{{ node }}</p>#}
+                        {#                                </a>#}
+                        {#                            {% else %}#}
+                        {#                                {% with node.quizs.first as quiz %}#}
+                        {#                                    {% if quiz and not quiz.module %}#}
+                        {#                                        <a href="{% url 'quiz:user_quiz_detail' quiz.pk %}"#}
+                        {#                                           class="link-card__main-dashboard rounded-3 position-relative">#}
+                        {#                                            <span class="badge rounded-pill bg-success align-self-end">test</span>#}
+                        {##}
+                        {##}
+                        {##}
+                        {#                                            {% if node.icon %}#}
+                        {#                                                <img width="70" src="{{ node.icon.url }}" alt="icon"/>#}
+                        {#                                            {% else %}#}
+                        {#                                                <img width="70" src="{% static 'user/dash/img/file.png' %}"#}
+                        {#                                                     alt="icon"/>#}
+                        {#                                            {% endif %}#}
+                        {#                                            <p class="text-secondary">{{ node }}</p>#}
+                        {##}
+                        {##}
+                        {#                                        </a>#}
+                        {##}
+                        {#                                    {% else %}#}
+                        {#                                        <div class="link-card__main-dashboard rounded-3">#}
+                        {#                                            {% if node.icon %}#}
+                        {#                                                <img width="70" src="{{ node.icon.url }}" alt="icon"/>#}
+                        {#                                            {% else %}#}
+                        {#                                                <img width="70" src="{% static 'user/dash/img/file.png' %}"#}
+                        {#                                                     alt="icon"/>#}
+                        {##}
+                        {#                                            {% endif %}#}
+                        {#                                            <p class="text-secondary">{{ node }}</p>#}
+                        {#                                        </div>#}
+                        {#                                    {% endif %}#}
+                        {#                                {% endwith %}#}
+                        {#                            {% endif %}#}
+                        {#                        {% endrecursetree %}#}
                     </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-dashboard">
+            <div class="actions__sidebar-dashboard">
+                <div class="filter">
+                    <a class="icon" href="#" data-bs-toggle="dropdown"> <img src="{% static 'assets/img/setting.png' %}"
+                                                                             width="25" alt="setting icon"/></a>
+                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+
+                        {#                        <li><a class="dropdown-item" href="#">Today</a></li>#}
+                        {#                        <li><a class="dropdown-item" href="#">This Month</a></li>#}
+                        <li><a class="dropdown-item" href="{% url 'account:logout' %}">Chiqish</a></li>
+                    </ul>
+                </div>
+
+                {#                                <img src="{% static 'assets/img/dots.png' %}" width="25" alt="dots icon"/>#}
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bir haftalik o'zlashtirish</h5>
+
+                    <!-- Bar Chart -->
+                    <div id="barChart" style="min-height: 400px;" class="echart"></div>
+
+                    <script>
+
+                        document.addEventListener("DOMContentLoaded", () => {
+                            echarts.init(document.querySelector("#barChart")).setOption({
+                                xAxis: {
+                                    type: 'category',
+                                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                                },
+                                yAxis: {
+                                    type: 'value'
+                                },
+                                series: [{
+                                    data: [0, 0, 150, 80, 70, 110, 130],
+                                    type: 'bar'
+                                }]
+                            });
+                        });
+                    </script>
+                    <!-- End Bar Chart -->
+
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Bir yillik ko'rsatgich</h5>
+
+                    <!-- Line Chart -->
+                    <canvas id="lineChart" style="max-height: 400px;"></canvas>
+                    <script>
+                        document.addEventListener("DOMContentLoaded", () => {
+                            new Chart(document.querySelector('#lineChart'), {
+                                type: 'line',
+                                data: {
+                                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                                    datasets: [{
+                                        label: 'Line Chart',
+                                        data: [65, 59, 80, 81, 56, 55, 40],
+                                        fill: false,
+                                        borderColor: 'rgb(75, 192, 192)',
+                                        tension: 0.1
+                                    }]
+                                },
+                                options: {
+                                    scales: {
+                                        y: {
+                                            beginAtZero: true
+                                        }
+                                    }
+                                }
+                            });
+                        });
+                    </script>
+                    <!-- End Line CHart -->
 
                 </div>
             </div>

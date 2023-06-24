@@ -1,4 +1,5 @@
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django.db.models import F
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect, HttpResponse
@@ -391,8 +392,9 @@ class ModuleCreateQuiz(LoginRequiredMixin, TemplateResponseMixin, View):
 
 module_create_quiz = ModuleCreateQuiz.as_view()
 
-
 # Users views start
+from django.db.models import Subquery
+
 
 class CourseCategoriesView(LoginRequiredMixin, TemplateView):
     template_name = 'course/users/pages/course_categories.html'
@@ -400,9 +402,20 @@ class CourseCategoriesView(LoginRequiredMixin, TemplateView):
     def get(self, request, slug=None, *args, **kwargs):
 
         if slug is not None:
-            categories = Category.objects.filter(parent__slug=slug)
+            categories = Category.objects.filter(parent__slug=slug).order_by('name').distinct('name').values('name',
+                                                                                                             'level',
+                                                                                                             'icon',
+                                                                                                             'courses',
+                                                                                                             'slug',
+                                                                                                             'children')
+
         else:
-            categories = Category.objects.all()
+            categories = Category.objects.filter(level=0).order_by('name').distinct('name').values('name',
+                                                                                                   'level',
+                                                                                                   'icon',
+                                                                                                   'courses',
+                                                                                                   'slug',
+                                                                                                   'children')
 
         return self.render_to_response({
             'object_list': categories,
@@ -416,13 +429,15 @@ class CourseDetail(LoginRequiredMixin, TemplateView):
     template_name = 'course/users/pages/detail.html'
 
     def get(self, request, pk):
-        object = get_object_or_404(Course, pk=pk)
+        object = Course.objects.select_related('subject', 'subject__parent').filter(pk=pk)[0]
         modules = Module.objects.select_related('parent', 'course').filter(course=object)
-        results = Result.objects.select_related('quiz__category', 'quiz__module').filter(user=request.user, quiz__course=object)
+        results = Result.objects.select_related('quiz__category', 'quiz__module').filter(user=request.user,
+                                                                                         quiz__course=object).order_by(
+            'pk')
+
         return self.render_to_response({
             'object': object,
             'modules': modules,
-            'count_m': modules.filter(parent__isnull=False).count(),
             'results': results
         })
 

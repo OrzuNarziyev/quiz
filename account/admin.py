@@ -2,6 +2,9 @@ from django.contrib import admin
 from mptt.admin import DraggableMPTTAdmin, TreeRelatedFieldListFilter
 
 from .models import CustomUser, Organizations, Staff_user
+from django.contrib.auth.admin import UserAdmin
+
+from django.utils.translation import gettext_lazy as _
 
 # Register your models here.
 # admin.site.register(CustomUser)
@@ -9,9 +12,33 @@ from .models import CustomUser, Organizations, Staff_user
 admin.site.register(Staff_user)
 
 
+# admin.site.register(Group)
+
+
 @admin.register(CustomUser)
-class CustomUserAdmin(admin.ModelAdmin):
+class CustomUserAdmin(UserAdmin):
     list_display = ['pinfl', 'username']
+    ordering = ('date_joined',)
+    search_fields = ("pinfl", "username", "first_name", "last_name", "email")
+    fieldsets = (
+        (None, {"fields": ("username", "password")}),
+        (_("Personal info"), {"fields": ("pinfl", "first_name", "last_name", "email")}),
+        (_("Organizations"), {"fields": ("organizations",)}),
+        (
+            _("Permissions"),
+            {
+                "fields": (
+
+                    "is_active",
+                    "is_staff",
+                    "is_superuser",
+                    "groups",
+                    "user_permissions",
+                ),
+            },
+        ),
+        (_("Important dates"), {"fields": ("last_login", "date_joined")}),
+    )
 
 
 @admin.register(Organizations)

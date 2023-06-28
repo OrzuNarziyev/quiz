@@ -42,9 +42,12 @@ def account_info(request):
                 'department': to_cyrillic(user['staff'][0]['department_id']['name']) if str(
                     user['staff'][0]['department_id']['name']).isascii() else user['staff'][0]['department_id']['name'],
 
-                'organisation_name': to_cyrillic(user['organization']['name']) if str(
+                'organization_name': to_cyrillic(user['organization']['name']) if str(
                     user['organization']['name']).isascii() else \
                     user['organization']['name'],
+
+                # 'organization': to_cyrillic(user['organization']['name']) if str(
+                #     user['organization']['name']).isascii() else user['organization']['name'],
 
                 'photo': user['photo']
             }

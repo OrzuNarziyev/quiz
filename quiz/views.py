@@ -338,6 +338,8 @@ class QuizDetailView(TemplateResponseMixin, View):
 
 quiz_detail_view = QuizDetailView.as_view()
 
+from openpyxl import load_workbook
+
 
 def export_question_excel(request, quiz_id):
     quiz = get_object_or_404(Quiz, pk=quiz_id)
@@ -348,6 +350,7 @@ def export_question_excel(request, quiz_id):
             excel = form.save()
             if excel:
                 df = vaex.from_pandas(pd.read_excel(excel.excel_file))
+
 
                 for x in range(df.length_original()):
                     print(df[x][0])

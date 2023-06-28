@@ -20,7 +20,6 @@ r = redis.Redis(
 )
 
 
-
 def register(request):
     if request.user.is_authenticated:
         return redirect('quiz:dashboard')
@@ -46,12 +45,20 @@ def register(request):
                     data['staff'][0]['department_id']['name']).isascii() else \
                     data['staff'][0]['department_id']['name']
 
+                staff_full = to_cyrillic(data['staff'][0]['staff_full']) if str(
+                    data['staff'][0]['staff_full']).isascii() else data['staff'][0]['staff_full']
+
                 org, create = Organizations.objects.get_or_create(organization=organization)
-                print(org, create)
+                # staff, staff_create = Staff_user.objects.get_or_create(staff=staff_full,
+                #                                                        organization__organization=department)
+
                 if create:
                     org_railway = Organizations.objects.create(organization=organization_railway, parent=org)
                     obj = Organizations.objects.create(organization=department, parent=org_railway)
                     user.organizations = obj
+                    staff, staff_create = Staff_user.objects.get_or_create(staff=staff_full,
+                                                                           organization=obj)
+                    user.staff_user = staff
                     user.save()
                 else:
                     org_railway, create_railway = Organizations.objects.get_or_create(organization=organization_railway,
@@ -59,6 +66,12 @@ def register(request):
                     child, create_child = Organizations.objects.get_or_create(organization=department,
                                                                               parent=org_railway)
                     user.organizations = child
+
+                    staff, staff_create = Staff_user.objects.get_or_create(staff=staff_full,
+                                                                           organization=child)
+
+                    user.staff_user = staff
+
                     user.save()
 
             messages.success(request, f'{user}user muvaffaqiyatli saqlandi')

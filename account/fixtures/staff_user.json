@@ -1,0 +1,178 @@
+[
+{
+  "model": "account.staff_user",
+  "pk": 1,
+  "fields": {
+    "organization": null,
+    "staff": "Қизил қудуқ депо навбатчиси"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 3,
+  "fields": {
+    "organization": 25,
+    "staff": "Юк қабул қилиб топширувчи"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 4,
+  "fields": {
+    "organization": 25,
+    "staff": "Катта юк қабул қилиб топширувчи"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 5,
+  "fields": {
+    "organization": 27,
+    "staff": "Ўзбекистон темир ё'ллари АЖ Бухоро минтақавий темир ё'л узели УК Бухоро локомотив депоси составларни тамирлаш чилангари"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 6,
+  "fields": {
+    "organization": 29,
+    "staff": "Навоий вагонларни техник кўрикдан ўтказиш маскани вагон кўрувчи таъмирловчиси"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 7,
+  "fields": {
+    "organization": 31,
+    "staff": "Катта электромеханик"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 8,
+  "fields": {
+    "organization": 31,
+    "staff": "Электромеханик"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 9,
+  "fields": {
+    "organization": 31,
+    "staff": "Электромонтёр"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 10,
+  "fields": {
+    "organization": 33,
+    "staff": "\"O‘zbekiston temir yo‘llari\" AJ \"Buxoro mintaqaviy temir yo‘l uzeli\" UK Buxoro temir yo‘l masofasi texnigi"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 11,
+  "fields": {
+    "organization": 33,
+    "staff": "\"O‘zbekiston temir yo‘llari\" AJ \"Buxoro mintaqaviy temir yo‘l uzeli\" UK Buxoro temir yo‘l masofasi ishchisi"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 12,
+  "fields": {
+    "organization": 33,
+    "staff": "\"O‘zbekiston temir yo‘llari\" AJ \"Buxoro mintaqaviy temir yo‘l uzeli\" UK Buxoro temir yo‘l masofasi yo‘l ta’mirlovchisi"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 13,
+  "fields": {
+    "organization": 33,
+    "staff": "\"O‘zbekiston temir yo‘llari\" AJ \"Buxoro mintaqaviy temir yo‘l uzeli\" UK Buxoro temir yo‘l masofasi yo‘l brigadiri"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 14,
+  "fields": {
+    "organization": 33,
+    "staff": "\"O‘zbekiston temir yo‘llari\" AJ \"Buxoro mintaqaviy temir yo‘l uzeli\" UK Buxoro temir yo‘l masofasi yo‘l ustasi"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 15,
+  "fields": {
+    "organization": 35,
+    "staff": "Муҳандис"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 16,
+  "fields": {
+    "organization": 35,
+    "staff": "Ахборот хавфсизлигини таъминлаш бўйича етакчи муҳандиси"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 17,
+  "fields": {
+    "organization": 35,
+    "staff": "техник"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 18,
+  "fields": {
+    "organization": 35,
+    "staff": "Электр энергияни назорат қилиш бўлими муҳандиси"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 19,
+  "fields": {
+    "organization": 35,
+    "staff": "ЭХМ оператори."
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 20,
+  "fields": {
+    "organization": 35,
+    "staff": "Ходимлар бўлими катта нозири"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 21,
+  "fields": {
+    "organization": 35,
+    "staff": "Техник бўлими мухандис метрологи"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 22,
+  "fields": {
+    "organization": 35,
+    "staff": "Етакчи иқтисодчи"
+  }
+},
+{
+  "model": "account.staff_user",
+  "pk": 23,
+  "fields": {
+    "organization": 35,
+    "staff": "Меҳнатни мухофаза қилиш ва саноат хавфсизлиги муҳандиси"
+  }
+}
+]

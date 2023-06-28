@@ -1,0 +1,572 @@
+[
+{
+  "model": "quiz.category",
+  "pk": 1,
+  "fields": {
+    "name": "Алоқа ва сигналлаштириш",
+    "slug": "aloqa-va-signallashtirish",
+    "parent": null,
+    "is_active": true,
+    "icon": "wire_ZR35ei6.png",
+    "lft": 1,
+    "rght": 6,
+    "tree_id": 1,
+    "level": 0
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 2,
+  "fields": {
+    "name": "Алоқа",
+    "slug": "aloqa",
+    "parent": 1,
+    "is_active": true,
+    "icon": "",
+    "lft": 2,
+    "rght": 3,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 3,
+  "fields": {
+    "name": "Сигналлаштириш(СЦБ)",
+    "slug": "signallashtirish",
+    "parent": 1,
+    "is_active": true,
+    "icon": "",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 4,
+  "fields": {
+    "name": "Электр хўжалиги",
+    "slug": "elektr-xojaligi",
+    "parent": null,
+    "is_active": true,
+    "icon": "electric-panel_f3mIaTJ.png",
+    "lft": 1,
+    "rght": 16,
+    "tree_id": 7,
+    "level": 0
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 5,
+  "fields": {
+    "name": "Электромантёр",
+    "slug": "elektromantyor",
+    "parent": 4,
+    "is_active": true,
+    "icon": "",
+    "lft": 12,
+    "rght": 13,
+    "tree_id": 7,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 6,
+  "fields": {
+    "name": "Электромеханик",
+    "slug": "elektromexanik",
+    "parent": 4,
+    "is_active": true,
+    "icon": "",
+    "lft": 14,
+    "rght": 15,
+    "tree_id": 7,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 7,
+  "fields": {
+    "name": "Катта ЭлектромантёрКатта Электрмеханик",
+    "slug": "katta-elektromantyorkatta-elektrmexanik",
+    "parent": 4,
+    "is_active": true,
+    "icon": "",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 7,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 8,
+  "fields": {
+    "name": "Контакт электр тармоқлари бўлими бошлиг'и",
+    "slug": "kontakt-elektr-tarmoqlari-bolimi-boshligi",
+    "parent": 4,
+    "is_active": true,
+    "icon": "",
+    "lft": 6,
+    "rght": 7,
+    "tree_id": 7,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 9,
+  "fields": {
+    "name": "Туман электр тармоқлари бўлими бошлиг'и",
+    "slug": "tuman-elektr-tarmoqlari-bolimi-boshligi",
+    "parent": 4,
+    "is_active": true,
+    "icon": "",
+    "lft": 10,
+    "rght": 11,
+    "tree_id": 7,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 10,
+  "fields": {
+    "name": "Тортув ним стансияц бошлиг'и",
+    "slug": "tortuv-nim-stansiya-boshligi",
+    "parent": 4,
+    "is_active": true,
+    "icon": "",
+    "lft": 8,
+    "rght": 9,
+    "tree_id": 7,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 11,
+  "fields": {
+    "name": "Бошлиқ ўринбосари",
+    "slug": "boshliq-orinbosari",
+    "parent": 4,
+    "is_active": true,
+    "icon": "",
+    "lft": 2,
+    "rght": 3,
+    "tree_id": 7,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 12,
+  "fields": {
+    "name": "Ташиш ва бекат ишлари",
+    "slug": "tashish-va-bekat-ishlari",
+    "parent": null,
+    "is_active": true,
+    "icon": "railway-station_EIwkyb4.png",
+    "lft": 1,
+    "rght": 10,
+    "tree_id": 6,
+    "level": 0
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 13,
+  "fields": {
+    "name": "Поэзд тузувчиси",
+    "slug": "poezd-tuzuvchisi",
+    "parent": 12,
+    "is_active": true,
+    "icon": "",
+    "lft": 8,
+    "rght": 9,
+    "tree_id": 6,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 14,
+  "fields": {
+    "name": "Бекат навбатчиси",
+    "slug": "bekat-navbatchisi",
+    "parent": 12,
+    "is_active": true,
+    "icon": "",
+    "lft": 6,
+    "rght": 7,
+    "tree_id": 6,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 15,
+  "fields": {
+    "name": "Бекат бошлиг'ининг ўринбосари",
+    "slug": "bekat-boshligining-orinbosari",
+    "parent": 12,
+    "is_active": true,
+    "icon": "",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 6,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 16,
+  "fields": {
+    "name": "Бекат бошлиг'и",
+    "slug": "bekat-boshligi",
+    "parent": 12,
+    "is_active": true,
+    "icon": "",
+    "lft": 2,
+    "rght": 3,
+    "tree_id": 6,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 17,
+  "fields": {
+    "name": "Юк ва тижорат ишлари",
+    "slug": "yuk-va-tijorat-ishlari",
+    "parent": null,
+    "is_active": true,
+    "icon": "gondola-car_tiV7dwb.png",
+    "lft": 1,
+    "rght": 10,
+    "tree_id": 8,
+    "level": 0
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 18,
+  "fields": {
+    "name": "Юк қабул қилувчи топширувчи",
+    "slug": "yuk-qabul-qiluvchi-topshiruvchi",
+    "parent": 17,
+    "is_active": true,
+    "icon": "",
+    "lft": 6,
+    "rght": 7,
+    "tree_id": 8,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 19,
+  "fields": {
+    "name": "Катта юк қабул қилувчи топширувчи",
+    "slug": "katta-yuk-qabul-qiluvchi-topshiruvchi",
+    "parent": 17,
+    "is_active": true,
+    "icon": "",
+    "lft": 2,
+    "rght": 3,
+    "tree_id": 8,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 20,
+  "fields": {
+    "name": "Юк хазинасичи",
+    "slug": "yuk-xazinasichi",
+    "parent": 17,
+    "is_active": true,
+    "icon": "",
+    "lft": 8,
+    "rght": 9,
+    "tree_id": 8,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 21,
+  "fields": {
+    "name": "Катта юк хазиначиси",
+    "slug": "katta-yuk-xazinachisi",
+    "parent": 17,
+    "is_active": true,
+    "icon": "",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 8,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 22,
+  "fields": {
+    "name": "Ё'л хўжалиги",
+    "slug": "yol-xojaligi",
+    "parent": null,
+    "is_active": true,
+    "icon": "zig-zag.png",
+    "lft": 1,
+    "rght": 12,
+    "tree_id": 4,
+    "level": 0
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 23,
+  "fields": {
+    "name": "Бригадир",
+    "slug": "brigadir",
+    "parent": 22,
+    "is_active": true,
+    "icon": "",
+    "lft": 2,
+    "rght": 3,
+    "tree_id": 4,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 24,
+  "fields": {
+    "name": "Катта ё'л устаси",
+    "slug": "katta-yol-ustasi",
+    "parent": 22,
+    "is_active": true,
+    "icon": "",
+    "lft": 8,
+    "rght": 9,
+    "tree_id": 4,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 25,
+  "fields": {
+    "name": "Темир ё'л масофаси бошлиг'и ўринбосари",
+    "slug": "temir-yol-masofasi-boshligi-orinbosari",
+    "parent": 22,
+    "is_active": true,
+    "icon": "",
+    "lft": 10,
+    "rght": 11,
+    "tree_id": 4,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 26,
+  "fields": {
+    "name": "Ё'л тамирловчи",
+    "slug": "yol-tamirlovchi",
+    "parent": 22,
+    "is_active": true,
+    "icon": "",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 4,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 27,
+  "fields": {
+    "name": "Ё'л устаси",
+    "slug": "yol-ustasi",
+    "parent": 22,
+    "is_active": true,
+    "icon": "",
+    "lft": 6,
+    "rght": 7,
+    "tree_id": 4,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 28,
+  "fields": {
+    "name": "Локоматив хўжалиги",
+    "slug": "lokomativ-xojaligi",
+    "parent": null,
+    "is_active": true,
+    "icon": "train_lyhLJ94.png",
+    "lft": 1,
+    "rght": 6,
+    "tree_id": 5,
+    "level": 0
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 29,
+  "fields": {
+    "name": "Эксплутатсия",
+    "slug": "eksplutatsiya",
+    "parent": 28,
+    "is_active": true,
+    "icon": "",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 5,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 30,
+  "fields": {
+    "name": "Тамирлаш",
+    "slug": "tamirlash",
+    "parent": 28,
+    "is_active": true,
+    "icon": "",
+    "lft": 2,
+    "rght": 3,
+    "tree_id": 5,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 31,
+  "fields": {
+    "name": "Вагон хўжалиги",
+    "slug": "vagon-xojaligi",
+    "parent": null,
+    "is_active": true,
+    "icon": "railway_06pu5SM.png",
+    "lft": 1,
+    "rght": 6,
+    "tree_id": 3,
+    "level": 0
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 32,
+  "fields": {
+    "name": "Эксплутатсия-20",
+    "slug": "eksplutatsiya-20",
+    "parent": 31,
+    "is_active": true,
+    "icon": "",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 3,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 33,
+  "fields": {
+    "name": "Тамирлаш-20",
+    "slug": "tamirlash-20",
+    "parent": 31,
+    "is_active": true,
+    "icon": "",
+    "lft": 2,
+    "rght": 3,
+    "tree_id": 3,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 34,
+  "fields": {
+    "name": "Аҳборот ҳавфсизлигини та'минлаш ва ривожлантириш",
+    "slug": "aborot-avfsizligini-taminlash-va-rivozhlantirish",
+    "parent": null,
+    "is_active": true,
+    "icon": "cyber-security.png",
+    "lft": 1,
+    "rght": 10,
+    "tree_id": 2,
+    "level": 0
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 35,
+  "fields": {
+    "name": "Backend dasturlash",
+    "slug": "backend-dasturlash-34",
+    "parent": 34,
+    "is_active": true,
+    "icon": "backend.png",
+    "lft": 2,
+    "rght": 3,
+    "tree_id": 2,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 36,
+  "fields": {
+    "name": "Frontend dasturlash",
+    "slug": "frontend-dasturlash-34",
+    "parent": 34,
+    "is_active": true,
+    "icon": "front-development.png",
+    "lft": 4,
+    "rght": 5,
+    "tree_id": 2,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 37,
+  "fields": {
+    "name": "Tarmoq administratiri",
+    "slug": "tarmoq-administratiri-34",
+    "parent": 34,
+    "is_active": true,
+    "icon": "switch.png",
+    "lft": 6,
+    "rght": 9,
+    "tree_id": 2,
+    "level": 1
+  }
+},
+{
+  "model": "quiz.category",
+  "pk": 38,
+  "fields": {
+    "name": "new",
+    "slug": "new-37",
+    "parent": 37,
+    "is_active": true,
+    "icon": "1581942.png",
+    "lft": 7,
+    "rght": 8,
+    "tree_id": 2,
+    "level": 2
+  }
+}
+]

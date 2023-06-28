@@ -1,0 +1,422 @@
+[
+{
+  "model": "account.organizations",
+  "pk": 1,
+  "fields": {
+    "organization": "МТУ-3 \"Бухоро минтақавий темир йўл узели\" УК",
+    "parent": null,
+    "lft": 1,
+    "rght": 64,
+    "tree_id": 1,
+    "level": 0
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 2,
+  "fields": {
+    "organization": "РЖУ собственный Бухара",
+    "parent": 1,
+    "lft": 2,
+    "rght": 29,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 3,
+  "fields": {
+    "organization": "Аҳборот ҳавфсизлигини та'минлаш ва ривожлантириш бўлими",
+    "parent": 2,
+    "lft": 3,
+    "rght": 4,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 4,
+  "fields": {
+    "organization": "УПХ \"Йўл хўжалик бошқармаси\"",
+    "parent": null,
+    "lft": 1,
+    "rght": 6,
+    "tree_id": 2,
+    "level": 0
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 5,
+  "fields": {
+    "organization": "ПЧЛ-Ташкент",
+    "parent": 4,
+    "lft": 2,
+    "rght": 5,
+    "tree_id": 2,
+    "level": 1
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 6,
+  "fields": {
+    "organization": "Ма`мурий бошқарув бўлими ",
+    "parent": 5,
+    "lft": 3,
+    "rght": 4,
+    "tree_id": 2,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 7,
+  "fields": {
+    "organization": "Улуг'бек бекати",
+    "parent": 2,
+    "lft": 5,
+    "rght": 6,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 8,
+  "fields": {
+    "organization": "Ташиш ва бекатлар ишлари бўлими",
+    "parent": 2,
+    "lft": 7,
+    "rght": 8,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 9,
+  "fields": {
+    "organization": "Когон бекати",
+    "parent": 2,
+    "lft": 9,
+    "rght": 10,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 10,
+  "fields": {
+    "organization": "Бухоро-2 бекати",
+    "parent": 2,
+    "lft": 11,
+    "rght": 12,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 11,
+  "fields": {
+    "organization": "Тинчлик бекати",
+    "parent": 2,
+    "lft": 13,
+    "rght": 14,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 12,
+  "fields": {
+    "organization": "Бухоро-1 бекати",
+    "parent": 2,
+    "lft": 15,
+    "rght": 16,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 13,
+  "fields": {
+    "organization": "Хўжа-Давлат бекати",
+    "parent": 2,
+    "lft": 17,
+    "rght": 18,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 14,
+  "fields": {
+    "organization": "Зиёвуддин бекати",
+    "parent": 2,
+    "lft": 19,
+    "rght": 20,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 15,
+  "fields": {
+    "organization": "Зарафшон бекати",
+    "parent": 2,
+    "lft": 21,
+    "rght": 22,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 16,
+  "fields": {
+    "organization": "Қизил-Тепо бекати",
+    "parent": 2,
+    "lft": 23,
+    "rght": 24,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 17,
+  "fields": {
+    "organization": "Бинокор бекати",
+    "parent": 2,
+    "lft": 25,
+    "rght": 26,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 18,
+  "fields": {
+    "organization": "Навоий бекати",
+    "parent": 2,
+    "lft": 27,
+    "rght": 28,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 19,
+  "fields": {
+    "organization": "ТЧ-5 Тинчлик локомотив депоси",
+    "parent": 1,
+    "lft": 30,
+    "rght": 39,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 20,
+  "fields": {
+    "organization": "Та'мирлаш ва тайёрлаш бўлими",
+    "parent": 19,
+    "lft": 31,
+    "rght": 32,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 21,
+  "fields": {
+    "organization": "Қурилиш бўлими",
+    "parent": 19,
+    "lft": 33,
+    "rght": 34,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 22,
+  "fields": {
+    "organization": "Эксплуататсия бўлими",
+    "parent": 19,
+    "lft": 35,
+    "rght": 36,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 23,
+  "fields": {
+    "organization": "Депо навбатчилари бўлими",
+    "parent": 19,
+    "lft": 37,
+    "rght": 38,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 24,
+  "fields": {
+    "organization": "Қоровулбозор темир йўл станцияси",
+    "parent": 1,
+    "lft": 40,
+    "rght": 43,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 25,
+  "fields": {
+    "organization": "Юк ташиш ишлари бўлими",
+    "parent": 24,
+    "lft": 41,
+    "rght": 42,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 26,
+  "fields": {
+    "organization": "ТЧ-6 Бухоро локомотив депоси",
+    "parent": 1,
+    "lft": 44,
+    "rght": 47,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 27,
+  "fields": {
+    "organization": "ТР-1,ТО-3 чилангари",
+    "parent": 26,
+    "lft": 45,
+    "rght": 46,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 28,
+  "fields": {
+    "organization": "ВЧД-7 Бухоро вагон депоси",
+    "parent": 1,
+    "lft": 48,
+    "rght": 51,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 29,
+  "fields": {
+    "organization": "Навоий ВТКЎ маскани",
+    "parent": 28,
+    "lft": 49,
+    "rght": 50,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 30,
+  "fields": {
+    "organization": "ШЧ-7 Бухоро сигналлаштириш ва алоқа дист.си",
+    "parent": 1,
+    "lft": 52,
+    "rght": 55,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 31,
+  "fields": {
+    "organization": "4-тармоқ",
+    "parent": 30,
+    "lft": 53,
+    "rght": 54,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 32,
+  "fields": {
+    "organization": "ПЧ-10 Бухоро темир йўл масофаси",
+    "parent": 1,
+    "lft": 56,
+    "rght": 59,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 33,
+  "fields": {
+    "organization": "21-тармоқ",
+    "parent": 32,
+    "lft": 57,
+    "rght": 58,
+    "tree_id": 1,
+    "level": 2
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 34,
+  "fields": {
+    "organization": "ЭЧ-4 Бухоро электр таъминоти дистанцияси",
+    "parent": 1,
+    "lft": 60,
+    "rght": 63,
+    "tree_id": 1,
+    "level": 1
+  }
+},
+{
+  "model": "account.organizations",
+  "pk": 35,
+  "fields": {
+    "organization": "Муҳандис техник ходимлар",
+    "parent": 34,
+    "lft": 61,
+    "rght": 62,
+    "tree_id": 1,
+    "level": 2
+  }
+}
+]

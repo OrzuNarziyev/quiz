@@ -1,5 +1,5 @@
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 
 from django.core.cache import cache
 from django.shortcuts import redirect
@@ -27,6 +27,11 @@ def account_info(request):
         pinfl = request.user.pinfl
         try:
             user = json.loads(r.get(pinfl))
+            join_date = datetime.fromtimestamp(user.get('date'))
+            time_delta = join_date + timedelta(hours=6)
+            if datetime.now() >= time_delta:
+                auth_token.get_info(request.user.pinfl)
+                user = json.loads(r.get(pinfl))
         except:
             user = None
         if user:
@@ -39,8 +44,8 @@ def account_info(request):
                 'staff_full': to_cyrillic(user['staff'][0]['staff_full']) if str(
                     user['staff'][0]['staff_full']).isascii() else user['staff'][0]['staff_full'],
 
-                'department': to_cyrillic(user['staff'][0]['department_id']['name']) if str(
-                    user['staff'][0]['department_id']['name']).isascii() else user['staff'][0]['department_id']['name'],
+                'department': to_cyrillic(user['staff'][0]['department']['name']) if str(
+                    user['staff'][0]['department']['name']).isascii() else user['staff'][0]['department']['name'],
 
                 'organization_name': to_cyrillic(user['organization']['name']) if str(
                     user['organization']['name']).isascii() else \
@@ -53,13 +58,11 @@ def account_info(request):
             }
             return context
         else:
-            print('hello world info')
             status = auth_token.get_info(request.user.pinfl)
             if status == 200:
-                user = cache.get(pinfl)
-                print(user)
+                user = json.loads(r.get(pinfl))
                 context = {
-                    'organization': user['organization']['railway'],
+                    'organization':  user['organization']['railway'],
                     'fullname': to_cyrillic(user['fullname']),
                     'photo': user['photo'],
                     'staff_full': user['staff'][0]['staff_full'],

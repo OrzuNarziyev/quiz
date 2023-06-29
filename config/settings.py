@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "crispy_bootstrap5",
     'embed_video',
     'debug_toolbar',
+    'redisboard',
 
 ]
 

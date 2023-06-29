@@ -5,6 +5,7 @@ from django.core.cache import cache
 from account.data_user import UserDataMixin
 from django.conf import settings
 import base64
+from datetime import datetime
 
 import redis, json
 
@@ -51,8 +52,9 @@ def get_info(pinfl):
     get_response = requests.get(endpoint, headers=headers, params={"pinfl": pinfl})
 
     if get_response.status_code == 200:
-        q = r.set(pinfl, json.dumps(get_response.json()['cadry']))
-        print(r.get(pinfl))
+        data = get_response.json()['cadry']
+        data['date'] = datetime.now().timestamp()
+        r.set(pinfl, json.dumps(data))
 
         return get_response.status_code
 

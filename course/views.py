@@ -1,4 +1,8 @@
+import json
+
+import redis
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django.conf import settings
 from django.db.models import F
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
@@ -21,7 +25,13 @@ from django.apps import apps
 from braces.views import CsrfExemptMixin, JsonRequestResponseMixin
 from ckeditor.widgets import CKEditorWidget
 from django.utils.text import slugify
+from datetime import datetime
 
+r = redis.Redis(
+    host=settings.REDIS_HOST,
+    db=settings.REDIS_DB,
+    port=settings.REDIS_PORT
+)
 
 class CourseHomeView(LoginRequiredMixin, TemplateView):
     template_name = 'course/course_home.html'
@@ -434,7 +444,8 @@ class CourseDetail(LoginRequiredMixin, TemplateView):
         results = Result.objects.select_related('quiz__category', 'quiz__module').filter(user=request.user,
                                                                                          quiz__course=object).order_by(
             'pk')
-
+        # r.append(request.user.pinfl, json.dumps({'time': str(datetime.now())}))
+        print(r.get(request.user.pinfl))
         return self.render_to_response({
             'object': object,
             'modules': modules,

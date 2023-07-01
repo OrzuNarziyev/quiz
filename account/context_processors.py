@@ -1,19 +1,13 @@
 import json
 from datetime import datetime, timedelta
-
-from django.core.cache import cache
-from django.shortcuts import redirect
-from django.urls import reverse
-
 from account.utils import auth_token
-from account.utils.auth_token import get_info
 from account.data_user import UserDataMixin
 from account.models import CustomUser, Organizations
-# import redis
 from django.conf import settings
 from account.translate import to_latin, to_cyrillic
-from account.translate import to_latin, to_cyrillic
 import redis, json
+from account.utils.recent_activity import RecentActivity
+from quiz.models import Result
 
 r = redis.Redis(
     host=settings.REDIS_HOST,
@@ -25,6 +19,8 @@ r = redis.Redis(
 def account_info(request):
     if request.user.is_authenticated and not request.user.is_superuser:
         pinfl = request.user.pinfl
+        resent = RecentActivity(request.user)
+        results = Result.objects.filter(user=request.user)
         try:
             user = json.loads(r.get(pinfl))
             join_date = datetime.fromtimestamp(user.get('date'))
@@ -51,6 +47,9 @@ def account_info(request):
                     user['organization']['name']).isascii() else \
                     user['organization']['name'],
 
+                'data': resent,
+                'result': results,
+
                 # 'organization': to_cyrillic(user['organization']['name']) if str(
                 #     user['organization']['name']).isascii() else user['organization']['name'],
 
@@ -62,12 +61,13 @@ def account_info(request):
             if status == 200:
                 user = json.loads(r.get(pinfl))
                 context = {
-                    'organization':  user['organization']['railway'],
+                    'organization': user['organization']['railway'],
                     'fullname': to_cyrillic(user['fullname']),
                     'photo': user['photo'],
                     'staff_full': user['staff'][0]['staff_full'],
                     'department': user['staff'],
-                    'organisation_name': user['organization']['name']
+                    'organisation_name': user['organization']['name'],
+                    # 'data': data,
                 }
                 return context
             else:

@@ -14,6 +14,9 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
 from braces.views import JsonRequestResponseMixin, CsrfExemptMixin
+from django.db.models.functions import ExtractDay, ExtractYear
+
+from account.utils.recent_activity import RecentActivity
 # models
 from .models import Quiz, Question, Answer, Result, Category, ExcelFileUploaded
 from .forms import QuestionForm, QuizForm, answer_formset, ExportExcelQuestion
@@ -47,6 +50,7 @@ class Dashboard(LoginRequiredMixin, TemplateView):
 
 
 dashboard = Dashboard.as_view()
+
 
 class QuizHomeView(LoginRequiredMixin, TemplateView):
     template_name = 'quiz/quiz_home.html'
@@ -100,6 +104,18 @@ class UserQuizDetail(LoginRequiredMixin, DetailView):
             result = get_object_or_404(Result, user=self.request.user, quiz=self.object)
         except:
             result = None
+        resent = RecentActivity(self.request.user)
+        if self.object.course:
+            title = f"{self.object.category}-{self.object.course}"
+        else:
+            title = f"{self.object.category}"
+        data = {
+            'date': datetime.now().timestamp(),
+            'category': 'test',
+            'title': title,
+            'url': self.request.path
+        }
+        resent.add_resent_activity(data)
 
         context['result'] = result
         return context
@@ -351,7 +367,6 @@ def export_question_excel(request, quiz_id):
             if excel:
                 df = vaex.from_pandas(pd.read_excel(excel.excel_file))
 
-
                 for x in range(df.length_original()):
                     print(df[x][0])
                     if df[x][0] is not None and df[x][0] != 'nan':
@@ -458,3 +473,19 @@ class HtmxQuizDetailView(DetailView):
 
 
 htmx_quiz_detail_view = HtmxQuizDetailView.as_view()
+
+
+# statistics function
+
+def result_api_view(request):
+    results = Result.objects.filter(user=request.user, quiz__module__isnull=True).order_by('date').annotate(
+        day=ExtractDay('date'), year=ExtractYear('date')).values('pk', 'day', 'year', 'score')
+    data = dict()
+    for x in results:
+        day = x.get('day')
+        a = data.get(day)
+        if a:
+            data[day].append(x)
+        else:
+            data[day] = [x]
+

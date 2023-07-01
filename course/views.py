@@ -1,4 +1,5 @@
 import json
+import urllib
 
 import redis
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
@@ -15,6 +16,7 @@ from django.views.generic.list import ListView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 
+from account.utils.recent_activity import RecentActivity
 from .models import Course, Category, Module, Content, Text
 from .forms import CourseForm, ModuleForm, ModuleQuizForm
 from quiz.models import Question, Quiz, Result, Answer
@@ -32,6 +34,8 @@ r = redis.Redis(
     db=settings.REDIS_DB,
     port=settings.REDIS_PORT
 )
+
+r.keys()
 
 class CourseHomeView(LoginRequiredMixin, TemplateView):
     template_name = 'course/course_home.html'
@@ -444,8 +448,14 @@ class CourseDetail(LoginRequiredMixin, TemplateView):
         results = Result.objects.select_related('quiz__category', 'quiz__module').filter(user=request.user,
                                                                                          quiz__course=object).order_by(
             'pk')
-        # r.append(request.user.pinfl, json.dumps({'time': str(datetime.now())}))
-        print(r.get(request.user.pinfl))
+        resent = RecentActivity(request.user)
+        data = {
+            'date': datetime.now().timestamp(),
+            'category': 'course',
+            'title': object.title,
+            'url': request.path
+        }
+        resent.add_resent_activity(data)
         return self.render_to_response({
             'object': object,
             'modules': modules,
@@ -471,6 +481,16 @@ class ModuleDetailView(LoginRequiredMixin, TemplateResponseMixin, View):
                 quiz = None
         else:
             quiz = None
+
+        resent = RecentActivity(request.user)
+        title = f"{object.course.subject}-{object.course}-{object.title}"
+        data = {
+            'date': datetime.now().timestamp(),
+            'category': 'dars',
+            'title': title,
+            'url': request.path
+        }
+        resent.add_resent_activity(data)
         return self.render_to_response({
             'quiz': quiz,
             'object': object,

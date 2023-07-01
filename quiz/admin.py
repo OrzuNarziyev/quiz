@@ -55,7 +55,7 @@ class QuestionAdmin(admin.ModelAdmin):
 
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
-    list_display = ['quiz', 'user', 'score', 'attempts', 'date']
+    list_display = ['quiz', 'user', 'score', 'attempts', 'date', 'update_date']
 
 
 @admin.register(ExcelFileUploaded)

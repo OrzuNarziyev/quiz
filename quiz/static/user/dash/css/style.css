@@ -228,6 +228,13 @@ body {
     box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
 
+/*resent activity*/
+.dashboard .activity .activity-item {
+    display: grid;
+    grid-template-columns:.5fr 10px 1fr;
+}
+
+
 @media (min-width: 1601px) {
     .wrapper-dashboard {
         max-width: 1600px;

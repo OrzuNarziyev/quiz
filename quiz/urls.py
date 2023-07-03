@@ -29,6 +29,11 @@ urlpatterns = [
     path('update/question/<question_id>', views.update_question, name='update_question'),
     path('delete/question/<question_id>', views.delete_question, name='delete_question'),
 
+    # statistics user
+    path('test/user/statistics', views.ResultApiView.as_view(), name='statistics_user'),
     # manage
-    path('manage/', views.manage_dashboard, name='manage_dashboard')
+    path('manage/', views.manage_dashboard, name='manage_dashboard'),
+    path('manage/statistics', views.statistics, name='manage_statistics'),
+    path('manage/employers', views.employers, name='manage_employers'),
+    path('manage/organization', views.organizations, name='manage_organizations'),
 ]

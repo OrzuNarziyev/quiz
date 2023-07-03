@@ -261,204 +261,56 @@
             {% endif %}
 
         </div>
-        <div class="sidebar-dashboard section dashboard">
-
-            <div class="actions__sidebar-dashboard">
-                <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"> <img src="{% static 'assets/img/setting.png' %}"
-                                                                             width="25" alt="setting icon"/></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-
-                        {#                        <li><a class="dropdown-item" href="#">Today</a></li>#}
-                        {#                        <li><a class="dropdown-item" href="#">This Month</a></li>#}
-                        <li><a class="dropdown-item" href="{% url 'account:logout' %}">Chiqish</a></li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Oxirgi faoliyat</h5>
-
-
-                    <div class="activity">
-                        {% for datum in data %}
-                            <div class="activity-item">
-                                <div class="activite-label">
-                                    {{ datum.date|time_since }}
-                                </div>
-                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                <div class="activity-content">
-                                    <span class="text-bg-danger"></span>
-                                    <a href="{{ datum.url }}" class="fw-bold text-dark">{{ datum.title }}
-                                        ({{ datum.category }})</a>
-
-                                </div>
-                            </div><!-- End activity item-->
-                        {% endfor %}
-
-
-                        {##}
-                        {#                        <div class="activity-item d-flex">#}
-                        {#                            <div class="activite-label">56 min</div>#}
-                        {#                            <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>#}
-                        {#                            <div class="activity-content">#}
-                        {#                                Voluptatem blanditiis blanditiis eveniet#}
-                        {#                            </div>#}
-                        {#                        </div><!-- End activity item-->#}
-                        {##}
-                        {#                        <div class="activity-item d-flex">#}
-                        {#                            <div class="activite-label">2 hrs</div>#}
-                        {#                            <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>#}
-                        {#                            <div class="activity-content">#}
-                        {#                                Voluptates corrupti molestias voluptatem#}
-                        {#                            </div>#}
-                        {#                        </div><!-- End activity item-->#}
-                        {##}
-                        {#                        <div class="activity-item d-flex">#}
-                        {#                            <div class="activite-label">1 day</div>#}
-                        {#                            <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>#}
-                        {#                            <div class="activity-content">#}
-                        {#                                Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati voluptatem</a>#}
-                        {#                                tempore#}
-                        {#                            </div>#}
-                        {#                        </div><!-- End activity item-->#}
-                        {##}
-                        {#                        <div class="activity-item d-flex">#}
-                        {#                            <div class="activite-label">2 days</div>#}
-                        {#                            <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>#}
-                        {#                            <div class="activity-content">#}
-                        {#                                Est sit eum reiciendis exercitationem#}
-                        {#                            </div>#}
-                        {#                        </div><!-- End activity item-->#}
-                        {##}
-                        {#                        <div class="activity-item d-flex">#}
-                        {#                            <div class="activite-label">4 weeks</div>#}
-                        {#                            <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>#}
-                        {#                            <div class="activity-content">#}
-                        {#                                Dicta dolorem harum nulla eius. Ut quidem quidem sit quas#}
-                        {#                            </div>#}
-                        {#                        </div><!-- End activity item-->#}
-                        {#                        <div class="activity-item d-flex">#}
-                        {#                            <div class="activite-label">4 weeks</div>#}
-                        {#                            <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>#}
-                        {#                            <div class="activity-content">#}
-                        {#                                Dicta dolorem harum nulla eius. Ut quidem quidem sit quas#}
-                        {#                            </div>#}
-                        {#                        </div><!-- End activity item-->#}
-                        {#                        <div class="activity-item d-flex">#}
-                        {#                            <div class="activite-label">4 weeks</div>#}
-                        {#                            <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>#}
-                        {#                            <div class="activity-content">#}
-                        {#                                Dicta dolorem harum nulla eius. Ut quidem quidem sit quas#}
-                        {#                            </div>#}
-                        {#                        </div><!-- End activity item-->#}
-                        {#                        <div class="activity-item d-flex">#}
-                        {#                            <div class="activite-label">4 weeks</div>#}
-                        {#                            <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>#}
-                        {#                            <div class="activity-content">#}
-                        {#                                Dicta dolorem harum nulla eius. Ut quidem quidem sit quas#}
-                        {#                            </div>#}
-                        {#                        </div><!-- End activity item-->#}
-                        {#                        <div class="activity-item d-flex">#}
-                        {#                            <div class="activite-label">4 weeks</div>#}
-                        {#                            <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>#}
-                        {#                            <div class="activity-content">#}
-                        {#                                Dicta dolorem harum nulla eius. Ut quidem quidem sit quas#}
-                        {#                            </div>#}
-                        {#                        </div><!-- End activity item-->#}
-                        {#                        <div class="activity-item d-flex">#}
-                        {#                            <div class="activite-label">4 weeks</div>#}
-                        {#                            <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>#}
-                        {#                            <div class="activity-content">#}
-                        {#                                Dicta dolorem harum nulla eius. Ut quidem quidem sit quas#}
-                        {#                            </div>#}
-                        {#                        </div><!-- End activity item-->#}
-
-                    </div>
-
-                </div>
-            </div><!-- End Recent Activity -->
-
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Line Chart</h5>
-
-                    <!-- Line Chart -->
-                    <canvas id="lineChart" style="max-height: 400px;"></canvas>
-                    <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                            new Chart(document.querySelector('#lineChart'), {
-                                type: 'line',
-                                data: {
-                                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                                    datasets: [{
-                                        label: 'Line Chart',
-                                        data: [65, 40],
-                                        fill: false,
-                                        borderColor: 'rgb(75, 192, 192)',
-                                        tension: 0.1
-                                    }]
-                                },
-                                options: {
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true
-                                        }
-                                    }
-                                }
-                            });
-                        });
-                    </script>
-                    <!-- End Line CHart -->
-
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Bar CHart</h5>
-
-                    <!-- Bar Chart -->
-                    <canvas id="barChart" style="max-height: 400px;"></canvas>
-                    <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                            new Chart(document.querySelector('#barChart'), {
-                                type: 'bar',
-                                data: {
-                                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'yanvar', 'fevral', 'mart','aprel'],
-                                    datasets: [{
-                                        label: "O'zlashtirish",
-                                        data: [65, 59, 80, 81, 56, 55, 40, 80, 90, 10,20],
-                                        backgroundColor: [
-                                            'rgba(255, 99, 132,1)',
-                                            'rgba(255, 159, 64, 1)',
-                                            'rgba(255, 205, 86, 1)',
-                                            'rgba(75, 192, 192, 1)',
-                                            'rgba(54, 162, 235, 1)',
-                                            'rgba(153, 102, 255, 1)',
-                                            'rgba(201, 203, 207, 1)'
-                                        ],
-
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true
-                                        }
-                                    }
-                                }
-                            });
-                        });
-                    </script>
-                    <!-- End Bar CHart -->
-
-                </div>
-            </div>
-        </div>
+        {% include 'dashboard/include/__sidebar.html' %}
     </div>
+{% endblock %}
+
+{% block include_js %}
+    <script>
+        const url = '{% url 'quiz:statistics_user' %}'
+        var options = {
+            method: 'GET',
+            mode: 'same-origin',
+            headers: {
+                "Content-Type": "application/json",
+
+            }
+        }
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                new Chart(document.querySelector('#barChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: "O'zlashtirish",
+                            data: data.data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132,1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255, 205, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(201, 203, 207, 1)'
+                            ],
+
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+            })
+
+    </script>
 {% endblock %}
 
 

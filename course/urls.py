@@ -42,4 +42,6 @@ urlpatterns = [
     path('user/<slug:slug>', views.course_categories, name='user_course_categories'),
     path('user/module/detail/<int:pk>', views.module_detail_view, name='user_module_detail_view'),
 
+    # fetch api
+
 ]

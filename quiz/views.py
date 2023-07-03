@@ -1,10 +1,12 @@
+import json
 import uuid
+
+import redis, json
 import vaex
-from django.core.cache import cache
-from django.db.models import Avg
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
+from django.conf import settings
 
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic.detail import DetailView
@@ -29,6 +31,12 @@ import pandas as pd
 from uuid import uuid4
 
 from django.views.decorators.cache import cache_page
+
+r = redis.Redis(
+    host=settings.REDIS_HOST,
+    db=settings.REDIS_DB,
+    port=settings.REDIS_PORT
+)
 
 
 # Create your views here.
@@ -243,8 +251,15 @@ class ManageDashboard(LoginRequiredMixin, TemplateView):
     template_name = 'dashboard/manage/dashboard.html'
 
     def get(self, request):
+        result = Result.objects.filter(quiz__module__isnull=True)
+        year = result.filter(date__year=datetime.today().strftime('%Y')).count()
+        month = result.filter(date__month=datetime.today().strftime('%m')).count()
+        day = result.filter(date__day=datetime.today().strftime('%d')).count()
+        print(datetime.today())
         return self.render_to_response({
-            'succec': 'ok'
+            'year': year,
+            'month': month,
+            'day': day
         })
 
 
@@ -258,7 +273,6 @@ class QuizCreateView(LoginRequiredMixin, CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
-
         return redirect('quiz:quiz_detail', pk=self.object.id)
 
 
@@ -477,15 +491,48 @@ htmx_quiz_detail_view = HtmxQuizDetailView.as_view()
 
 # statistics function
 
-def result_api_view(request):
-    results = Result.objects.filter(user=request.user, quiz__module__isnull=True).order_by('date').annotate(
-        day=ExtractDay('date'), year=ExtractYear('date')).values('pk', 'day', 'year', 'score')
-    data = dict()
-    for x in results:
-        day = x.get('day')
-        a = data.get(day)
-        if a:
-            data[day].append(x)
-        else:
-            data[day] = [x]
 
+class ResultApiView(CsrfExemptMixin, JsonRequestResponseMixin, View):
+    def get(self, request):
+        result = json.loads(r.get(f"user:{request.user}:result"))
+
+        return self.render_json_response({
+            'data': result.get('data')[-8:],
+            'labels': result.get('labels')[-8:]
+        })
+
+
+class StatisticsView(TemplateView):
+    template_name = 'dashboard/pages/statistics.html'
+
+    def get(self, request):
+        return self.render_to_response({
+            'ok': 'ok'
+        })
+
+
+statistics = StatisticsView.as_view()
+
+
+class Employers(TemplateView):
+    template_name = 'dashboard/pages/employers.html'
+
+    def get(self, request):
+        return self.render_to_response({
+            'ok': 'ok'
+        })
+
+
+employers = Employers.as_view()
+
+
+class OrganizationsView(TemplateView):
+    template_name = 'dashboard/pages/organizations.html'
+
+    def get(self, request):
+        return self.render_to_response({
+            'ok': 'ok'
+        })
+
+
+organizations = OrganizationsView.as_view()

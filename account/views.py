@@ -41,9 +41,9 @@ def register(request):
                     data['organization']['railway']['name']).isascii() else \
                     data['organization']['railway']['name']
 
-                department = to_cyrillic(data['staff'][0]['department_id']['name']) if str(
-                    data['staff'][0]['department_id']['name']).isascii() else \
-                    data['staff'][0]['department_id']['name']
+                department = to_cyrillic(data['staff'][0]['department']['name']) if str(
+                    data['staff'][0]['department']['name']).isascii() else \
+                    data['staff'][0]['department']['name']
 
                 staff_full = to_cyrillic(data['staff'][0]['staff_full']) if str(
                     data['staff'][0]['staff_full']).isascii() else data['staff'][0]['staff_full']
@@ -103,7 +103,6 @@ def login_view(request):
             else:
                 messages.warning(request, 'Login yoki parol xato kiritildi')
                 return render(request, 'registration/login.html', {'form': form})
-            print(username, password)
 
     return render(request, 'registration/login.html', {'form': form})
 

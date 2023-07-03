@@ -151,84 +151,54 @@
                 </div>
             </div>
         </div>
-        <div class="sidebar-dashboard">
-            <div class="actions__sidebar-dashboard">
-                <div class="filter">
-                    <a class="icon" href="#" data-bs-toggle="dropdown"> <img src="{% static 'assets/img/setting.png' %}"
-                                                                             width="25" alt="setting icon"/></a>
-                    <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-
-                        {#                        <li><a class="dropdown-item" href="#">Today</a></li>#}
-                        {#                        <li><a class="dropdown-item" href="#">This Month</a></li>#}
-                        <li><a class="dropdown-item" href="{% url 'account:logout' %}">Chiqish</a></li>
-                    </ul>
-                </div>
-
-                {#                                <img src="{% static 'assets/img/dots.png' %}" width="25" alt="dots icon"/>#}
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Bir haftalik o'zlashtirish</h5>
-
-                    <!-- Bar Chart -->
-                    <div id="barChart" style="min-height: 400px;" class="echart"></div>
-
-                    <script>
-
-                        document.addEventListener("DOMContentLoaded", () => {
-                            echarts.init(document.querySelector("#barChart")).setOption({
-                                xAxis: {
-                                    type: 'category',
-                                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                                },
-                                yAxis: {
-                                    type: 'value'
-                                },
-                                series: [{
-                                    data: [0, 0, 150, 80, 70, 110, 130],
-                                    type: 'bar'
-                                }]
-                            });
-                        });
-                    </script>
-                    <!-- End Bar Chart -->
-
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Bir yillik ko'rsatgich</h5>
-
-                    <!-- Line Chart -->
-                    <canvas id="lineChart" style="max-height: 400px;"></canvas>
-                    <script>
-                        document.addEventListener("DOMContentLoaded", () => {
-                            new Chart(document.querySelector('#lineChart'), {
-                                type: 'line',
-                                data: {
-                                    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                                    datasets: [{
-                                        label: 'Line Chart',
-                                        data: [65, 59, 80, 81, 56, 55, 40],
-                                        fill: false,
-                                        borderColor: 'rgb(75, 192, 192)',
-                                        tension: 0.1
-                                    }]
-                                },
-                                options: {
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true
-                                        }
-                                    }
-                                }
-                            });
-                        });
-                    </script>
-                    <!-- End Line CHart -->
-
-                </div>
-            </div>
-        </div>
+        {% include 'dashboard/include/__sidebar.html' %}
     </div>
+{% endblock %}
+
+{% block include_js %}
+    <script>
+        const url = '{% url 'quiz:statistics_user' %}'
+        var options = {
+            method: 'GET',
+            mode: 'same-origin',
+            headers: {
+                "Content-Type": "application/json",
+
+            }
+        }
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                new Chart(document.querySelector('#barChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: "O'zlashtirish",
+                            data: data.data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132,1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255, 205, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(201, 203, 207, 1)'
+                            ],
+
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+            })
+
+    </script>
 {% endblock %}

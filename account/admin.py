@@ -17,7 +17,7 @@ admin.site.register(Staff_user)
 
 @admin.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
-    list_display = ['pinfl', 'username']
+    list_display = ['pinfl', 'username', 'organizations']
     ordering = ('-date_joined',)
     list_filter = (("organizations", TreeRelatedFieldListFilter), "is_staff", "is_superuser", "is_active", "groups")
     search_fields = ("pinfl", "username", "first_name", "last_name", "email")

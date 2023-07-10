@@ -65,6 +65,7 @@ class Quiz(models.Model):
     time = models.IntegerField(
         verbose_name='test vaqti', help_text="test yechish uchun vaqt davomiyligi")
     created = models.DateTimeField(auto_now_add=True)
+    period_date = models.DateTimeField(blank=True, null=True)
     active = models.BooleanField(default=False)
 
     #
@@ -148,6 +149,7 @@ class Result(models.Model):
     update_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
+
         return f"{self.user}: result {self.score}"
 
     def result(self):

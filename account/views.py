@@ -22,17 +22,17 @@ r = redis.Redis(
 
 def register(request):
     if request.user.is_authenticated:
+
         return redirect('quiz:dashboard')
     form = RegisterUserForm()
     # request.session['date'] = str(datetime.now())
     if request.method == 'POST':
         form = RegisterUserForm(request.POST)
         if form.is_valid():
+
             user = form.save()
             if user:
                 data = json.loads(r.get(user.pinfl))
-                print(data)
-
                 organization_railway = to_cyrillic(data['organization']['name']) if str(
                     data['organization']['name']).isascii() else \
                     data['organization']['name']
@@ -52,6 +52,7 @@ def register(request):
                 # staff, staff_create = Staff_user.objects.get_or_create(staff=staff_full,
                 #                                                        organization__organization=department)
 
+
                 if create:
                     org_railway = Organizations.objects.create(organization=organization_railway, parent=org)
                     obj = Organizations.objects.create(organization=department, parent=org_railway)
@@ -60,6 +61,8 @@ def register(request):
                                                                            organization=obj)
                     user.staff_user = staff
                     user.save()
+                    r.zincrby('organization', 1, org.id)
+
                 else:
                     org_railway, create_railway = Organizations.objects.get_or_create(organization=organization_railway,
                                                                                       parent=org)
@@ -73,6 +76,7 @@ def register(request):
                     user.staff_user = staff
 
                     user.save()
+                    r.zincrby('organization', 1, child.id)
 
             messages.success(request, f'{user}user muvaffaqiyatli saqlandi')
             return redirect('account:login')

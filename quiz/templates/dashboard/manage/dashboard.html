@@ -7,11 +7,11 @@
     <section class="section dashboard">
         <div class="row">
 
-            <div class="col-lg-8">
+            <div class="col-lg-12">
                 <div class="row">
 
                     <!-- Sales Card -->
-                    <div class="col-xxl-4 col-md-6">
+                    <div class="col-xxl-3 col-md-6">
                         <div class="card info-card sales-card">
 
                             <div class="filter">
@@ -21,23 +21,28 @@
                                         <h6>Filter</h6>
                                     </li>
 
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    <li><a data-action="today" class="dropdown-item item-quiz" href="#">Today</a></li>
+                                    <li><a data-action="month" class="dropdown-item item-quiz" href="#">This Month</a>
+                                    </li>
+                                    <li><a data-action="year" class="dropdown-item item-quiz" href="#">This Year</a>
+                                    </li>
                                 </ul>
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Sales <span>| Today</span></h5>
+                                <h5 class="card-title">Testlar <span>| Today</span></h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-cart"></i>
+                                        <i class="bi bi-spellcheck"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{ day }}</h6>
+                                        <h6 id="count_quiz"></h6>
+                                        {% comment %}
                                         <span class="text-success small pt-1 fw-bold">12%</span> <span
                                             class="text-muted small pt-2 ps-1">increase</span>
+                                        {% endcomment %}
+
 
                                     </div>
                                 </div>
@@ -47,7 +52,7 @@
                     </div><!-- End Sales Card -->
 
                     <!-- Revenue Card -->
-                    <div class="col-xxl-4 col-md-6">
+                    <div class="col-xxl-3 col-md-6">
                         <div class="card info-card revenue-card">
 
                             <div class="filter">
@@ -57,23 +62,28 @@
                                         <h6>Filter</h6>
                                     </li>
 
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                                    <li><a data-action="today" class="dropdown-item item-result" href="#">Today</a></li>
+                                    <li><a data-action="month" class="dropdown-item item-result" href="#">This Month</a>
+                                    </li>
+                                    <li><a data-action="year" class="dropdown-item item-result" href="#">This Year</a>
+                                    </li>
                                 </ul>
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                                <h5 class="card-title">Result Test<span>| This Month</span></h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-currency-dollar"></i>
+                                        <i class="bi bi-percent"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{ month }}</h6>
+                                        <h6 id="count_result"></h6>
+                                        {% comment %}
                                         <span class="text-success small pt-1 fw-bold">8%</span> <span
                                             class="text-muted small pt-2 ps-1">increase</span>
+                                        {% endcomment %}
+
 
                                     </div>
                                 </div>
@@ -83,34 +93,44 @@
                     </div><!-- End Revenue Card -->
 
                     <!-- Customers Card -->
-                    <div class="col-xxl-4 col-xl-12">
+                    <div class="col-xxl-3 col-xl-12">
 
                         <div class="card info-card customers-card">
-
-                            <div class="filter">
+                            {% comment %}
+                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                     <li class="dropdown-header text-start">
                                         <h6>Filter</h6>
                                     </li>
 
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
+                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>
+                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>
+                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>
+                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>
+                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>
+                                    <li><a class="dropdown-item" href="#">lorem10</a></li>
                                     <li><a class="dropdown-item" href="#">This Month</a></li>
                                     <li><a class="dropdown-item" href="#">This Year</a></li>
                                 </ul>
                             </div>
+                            {% endcomment %}
+
 
                             <div class="card-body">
-                                <h5 class="card-title">Customers <span>| This Year</span></h5>
+                                <h5 class="card-title">Xodimlar</h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-people"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6>{{ year }}</h6>
-                                        <span class="text-danger small pt-1 fw-bold">12%</span> <span
+                                        <h6 id="employers_count"></h6>
+                                        {% comment %}
+                                         <span class="text-danger small pt-1 fw-bold">12%</span> <span
                                             class="text-muted small pt-2 ps-1">decrease</span>
+                                        {% endcomment %}
+
 
                                     </div>
                                 </div>
@@ -119,305 +139,201 @@
                         </div>
 
                     </div><!-- End Customers Card -->
+                    <!-- Customers Card -->
+                    {#                    <div class="col-xxl-3 col-xl-12">#}
+                    {##}
+                    {#                        <div class="card info-card customers-card">#}
+                    {#                            {% comment %}#}
+                    {#                             <div class="filter">#}
+                    {#                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>#}
+                    {#                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">#}
+                    {#                                    <li class="dropdown-header text-start">#}
+                    {#                                        <h6>Filter</h6>#}
+                    {#                                    </li>#}
+                    {##}
+                    {#                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>#}
+                    {#                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>#}
+                    {#                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>#}
+                    {#                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>#}
+                    {#                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>#}
+                    {#                                    <li><a class="dropdown-item" href="#">lorem10</a></li>#}
+                    {#                                    <li><a class="dropdown-item" href="#">This Month</a></li>#}
+                    {#                                    <li><a class="dropdown-item" href="#">This Year</a></li>#}
+                    {#                                </ul>#}
+                    {#                            </div>#}
+                    {#                            {% endcomment %}#}
+                    {##}
+                    {##}
+                    {#                            <div class="card-body">#}
+                    {#                                <h5 class="card-title">Xodimlar</h5>#}
+                    {##}
+                    {#                                <div class="d-flex align-items-center">#}
+                    {#                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">#}
+                    {#                                        <i class="bi bi-people"></i>#}
+                    {#                                    </div>#}
+                    {#                                    <div class="ps-3">#}
+                    {#                                        <h6 id="employers_count"></h6>#}
+                    {#                                        {% comment %}#}
+                    {#                                         <span class="text-danger small pt-1 fw-bold">12%</span> <span#}
+                    {#                                            class="text-muted small pt-2 ps-1">decrease</span>#}
+                    {#                                        {% endcomment %}#}
+                    {##}
+                    {##}
+                    {#                                    </div>#}
+                    {#                                </div>#}
+                    {##}
+                    {#                            </div>#}
+                    {#                        </div>#}
+                    {##}
+                    {#                    </div><!-- End Customers Card -->#}
+                    {#                    #}
 
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Bar CHart</h5>
+                    <div class="row" id="organization_results">
 
-                                <!-- Bar Chart -->
-                                <canvas id="barChart" style="max-height: 400px;"></canvas>
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        new Chart(document.querySelector('#barChart'), {
-                                            type: 'bar',
-                                            data: {
-                                                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                                                datasets: [{
-                                                    label: 'Bar Chart',
-                                                    data: [65, 59, 80, 81, 56, 55, 40],
-                                                    backgroundColor: [
-                                                        'rgba(255, 99, 132, 0.2)',
-                                                        'rgba(255, 159, 64, 0.2)',
-                                                        'rgba(255, 205, 86, 0.2)',
-                                                        'rgba(75, 192, 192, 0.2)',
-                                                        'rgba(54, 162, 235, 0.2)',
-                                                        'rgba(153, 102, 255, 0.2)',
-                                                        'rgba(201, 203, 207, 0.2)'
-                                                    ],
-                                                    borderColor: [
-                                                        'rgb(255, 99, 132)',
-                                                        'rgb(255, 159, 64)',
-                                                        'rgb(255, 205, 86)',
-                                                        'rgb(75, 192, 192)',
-                                                        'rgb(54, 162, 235)',
-                                                        'rgb(153, 102, 255)',
-                                                        'rgb(201, 203, 207)'
-                                                    ],
-                                                    borderWidth: 1
-                                                }]
-                                            },
-                                            options: {
-                                                scales: {
-                                                    y: {
-                                                        beginAtZero: true
-                                                    }
-                                                }
-                                            }
-                                        });
-                                    });
-                                </script>
-                                <!-- End Bar CHart -->
-
-                            </div>
-                        </div>
                     </div>
-
-
-                    <div class="col-lg-12">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Line Chart</h5>
-
-                                <!-- Line Chart -->
-                                <div id="lineChart" style="min-height: 400px;" class="echart"></div>
-
-                                <script>
-                                    document.addEventListener("DOMContentLoaded", () => {
-                                        echarts.init(document.querySelector("#lineChart")).setOption({
-                                                dataset: [
-                                                    {
-                                                        dimensions: ['name', 'age', 'profession', 'score', 'date'],
-                                                        source: [
-                                                            ['Hannah Krause', 41, 'Engineer', 314, '2011-02-12'],
-                                                            ['Zhao Qian', 20, 'Teacher', 351, '2011-03-01'],
-                                                            ['Jasmin Krause ', 52, 'Musician', 287, '2011-02-14'],
-                                                            ['Li Lei', 37, 'Teacher', 219, '2011-02-18'],
-                                                            ['Karle Neumann', 25, 'Engineer', 253, '2011-04-02'],
-                                                            ['Adrian Groß', 19, 'Teacher', '-', '2011-01-16'],
-                                                            ['Mia Neumann', 71, 'Engineer', 165, '2011-03-19'],
-                                                            ['Böhm Fuchs', 36, 'Musician', 318, '2011-02-24'],
-                                                            ['Han Meimei', 67, 'Engineer', 366, '2011-03-12']
-                                                        ]
-                                                    },
-                                                    {
-                                                        transform: {
-                                                            type: 'sort',
-                                                            config: {dimension: 'score', order: 'desc'}
-                                                        }
-                                                    }
-                                                ],
-                                                xAxis: {
-                                                    type: 'category',
-                                                    axisLabel: {interval: 0, rotate: 30}
-                                                },
-                                                yAxis: {},
-                                                series: {
-                                                    type: 'bar',
-                                                    encode: {x: 'name', y: 'score'},
-                                                    datasetIndex: 1
-                                                }
-                                            }
-                                        );
-                                    });
-
-                                </script>
-                                <!-- End Line Chart -->
-
-                            </div>
-                        </div>
-                    </div>
-
-
-                    <!-- Reports -->
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
-
-                            <div class="card-body">
-                                <h5 class="card-title">Reports <span>/Today</span></h5>
-
-                                <!-- Line Chart -->
-                                <div id="reportsChart"></div>
-
-
-                                <!-- End Line Chart -->
-
-                            </div>
-
-                        </div>
-                    </div><!-- end Reports -->
-
-
-                    <!-- Recent Sales -->
-                    <div class="col-12">
-                        <div class="card recent-sales overflow-auto">
-
-                            <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Today</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
-
-                            <div class="card-body">
-                                <h5 class="card-title">Recent Sales <span>| Today</span></h5>
-
-                                <table class="table table-borderless datatable">
-                                    <thead>
-                                    <tr>
-                                        <th scope="col">#</th>
-                                        <th scope="col">Customer</th>
-                                        <th scope="col">Product</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Status</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2457</a></th>
-                                        <td>Brandon Jacob</td>
-                                        <td><a href="#" class="text-primary">At praesentium minu</a></td>
-                                        <td>$64</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2147</a></th>
-                                        <td>Bridie Kessler</td>
-                                        <td><a href="#" class="text-primary">Blanditiis dolor omnis similique</a></td>
-                                        <td>$47</td>
-                                        <td><span class="badge bg-warning">Pending</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2049</a></th>
-                                        <td>Ashleigh Langosh</td>
-                                        <td><a href="#" class="text-primary">At recusandae consectetur</a></td>
-                                        <td>$147</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td>Angus Grady</td>
-                                        <td><a href="#" class="text-primar">Ut voluptatem id earum et</a></td>
-                                        <td>$67</td>
-                                        <td><span class="badge bg-danger">Rejected</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row"><a href="#">#2644</a></th>
-                                        <td>Raheem Lehner</td>
-                                        <td><a href="#" class="text-primary">Sunt similique distinctio</a></td>
-                                        <td>$165</td>
-                                        <td><span class="badge bg-success">Approved</span></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-                            </div>
-
-                        </div>
-                    </div><!-- End Recent Sales -->
-
 
                 </div>
             </div>
-            <div class="col-lg-4">
-                <!-- Recent Activity -->
-                <div class="card">
-                    <div class="filter">
-                        <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                            <li class="dropdown-header text-start">
-                                <h6>Filter</h6>
-                            </li>
-
-                            <li><a class="dropdown-item" href="#">Today</a></li>
-                            <li><a class="dropdown-item" href="#">This Month</a></li>
-                            <li><a class="dropdown-item" href="#">This Year</a></li>
-                        </ul>
-                    </div>
-
-                    <div class="card-body">
-                        <h5 class="card-title">Recent Activity <span>| Today</span></h5>
-
-                        <div class="activity">
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">32 min</div>
-                                <i class='bi bi-circle-fill activity-badge text-success align-self-start'></i>
-                                <div class="activity-content">
-                                    Quia quae rerum <a href="#" class="fw-bold text-dark">explicabo officiis</a>
-                                    beatae
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">56 min</div>
-                                <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                                <div class="activity-content">
-                                    Voluptatem blanditiis blanditiis eveniet
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">2 hrs</div>
-                                <i class='bi bi-circle-fill activity-badge text-primary align-self-start'></i>
-                                <div class="activity-content">
-                                    Voluptates corrupti molestias voluptatem
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">1 day</div>
-                                <i class='bi bi-circle-fill activity-badge text-info align-self-start'></i>
-                                <div class="activity-content">
-                                    Tempore autem saepe <a href="#" class="fw-bold text-dark">occaecati
-                                    voluptatem</a> tempore
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">2 days</div>
-                                <i class='bi bi-circle-fill activity-badge text-warning align-self-start'></i>
-                                <div class="activity-content">
-                                    Est sit eum reiciendis exercitationem
-                                </div>
-                            </div><!-- End activity item-->
-
-                            <div class="activity-item d-flex">
-                                <div class="activite-label">4 weeks</div>
-                                <i class='bi bi-circle-fill activity-badge text-muted align-self-start'></i>
-                                <div class="activity-content">
-                                    Dicta dolorem harum nulla eius. Ut quidem quidem sit quas
-                                </div>
-                            </div><!-- End activity item-->
-
-                        </div>
-
-                    </div>
-                </div><!-- End Recent Activity -->
-            </div>
+{#            <div class="col-lg-12">#}
+{#                <div width="100%" class="auto-jsCalendar  material-theme green" data-language="ru"></div>#}
+{#            </div>#}
 
         </div>
     </section>
 {% endblock %}
 
 {% block include_js %}
-    <script src="{% static 'assets/js/manage_dashboard.js' %}"></script>
+    <!-- jsCalendar v1.4.4 Javascript and CSS from unpkg cdn -->
+    <script src="https://unpkg.com/simple-jscalendar@1.4.4/source/jsCalendar.min.js"
+            integrity="sha384-0LaRLH/U5g8eCAwewLGQRyC/O+g0kXh8P+5pWpzijxwYczD3nKETIqUyhuA8B/UB"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/simple-jscalendar@1.4.4/source/jsCalendar.min.css"
+          integrity="sha384-44GnAqZy9yUojzFPjdcUpP822DGm1ebORKY8pe6TkHuqJ038FANyfBYBpRvw8O9w" crossorigin="anonymous">
+
+    <script>
+        const url = '{% url 'quiz:api_dashboard_info' %}'
+        let quiz_count = document.getElementById('count_quiz')
+        let result_count = document.getElementById('count_result')
+        let employers_count = document.getElementById('employers_count')
+        let list_quiz_action = document.querySelectorAll('.item-quiz')
+        let list_result_action = document.querySelectorAll('.item-result');
+        let org = document.getElementById('organization_results')
+
+        var options = {
+            method: 'GET',
+            mode: 'same-origin',
+            headers: {
+                "Content-Type": "application/json",
+            }
+        }
+
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                var day = data.test.day
+                var month = data.test.month
+                var year = data.test.year
+                var cnt = 0
+
+                for (const [key, value] of Object.entries(data.data_res)) {
+                    cnt++
+                    var arr_org = []
+                    var arr_score = []
+                    var card = `
+                            <div class="col-lg-4">
+                                <div class='card'>
+                                    <div class="card-body">
+                                        <h5 class="card-title">${key}</h5>
+                                         <canvas id='org-${cnt}' style="max-height: 400px;" ><canvas>
+                                    </div>
+                                </div>
+                            </div>
+                    `
+                    org.insertAdjacentHTML('afterbegin', card)
+                    Object.entries(value).forEach(el => {
+                        arr_org.push(el[0])
+                        arr_score.push(el[1].reduce((a, b) => a + b, 0) / el[1].length)
+                    })
+                    {#for (const [key, value1] of Object.entries(value)) {#}
+                    {#    console.log(value1.reduce((a, b) => a + b, 0) / value1.length);}#}
+                    {#console.log(Object.entries(value)[0][1])#}
+
+                    new Chart(document.querySelector(`#org-${cnt}`), {
+                        type: 'doughnut',
+                        data: {
+                            labels: arr_org,
+                            datasets: [{
+                                label: 'My first dataset',
+                                data: arr_score,
+                                backgroundColor: [
+                                    'rgb(255, 99, 132)',
+                                    'rgb(54, 162, 235)',
+                                    'rgb(255, 205, 86)',
+                                    'rgb(25, 205, 86)',
+                                    'rgb(255, 25, 86)',
+                                ],
+                                hoverOffset: 4
+                            }
+
+                            ]
+                        }
+                    });
+
+
+                }
+                quiz_count.innerHTML = day
+                result_count.innerHTML = data.result.day
+                employers_count.innerHTML = data.users
+
+                list_quiz_action.forEach(el => {
+                    el.addEventListener('click', (event) => {
+                        if (el.dataset.action == 'today') {
+                            quiz_count.innerHTML = day
+                        }
+                        if (el.dataset.action == 'month') {
+                            quiz_count.innerHTML = month
+                        }
+                        if (el.dataset.action == 'year') {
+                            quiz_count.innerHTML = year
+                        }
+                    })
+                });
+
+                list_result_action.forEach(el => {
+                    el.addEventListener('click', (event) => {
+                        if (el.dataset.action == 'today') {
+                            result_count.innerHTML = data.result.day
+                        }
+                        if (el.dataset.action == 'month') {
+                            result_count.innerHTML = data.result.month
+                        }
+                        if (el.dataset.action == 'year') {
+                            result_count.innerHTML = data.result.year
+                        }
+                    })
+                })
+
+            })
+            .catch(error => {
+                console.log('error')
+            })
+
+    </script>
+
+
+    {#    <script>#}
+    {#        document.addEventListener("DOMContentLoaded", () => {#}
+    {#            new ApexCharts(document.querySelector("#donutChart"), {#}
+    {#                series: [44, 55, 13, 43, 22],#}
+    {#                chart: {#}
+    {#                    height: 350,#}
+    {#                    type: 'donut',#}
+    {#                    toolbar: {#}
+    {#                        show: true#}
+    {#                    }#}
+    {#                },#}
+    {#                labels: ['Team A', 'Team B', 'Team C', 'Team D', 'Team E'],#}
+    {#            }).render();#}
+    {#        });#}
+    {#    </script>#}
 {% endblock %}

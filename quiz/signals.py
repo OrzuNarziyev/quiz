@@ -15,6 +15,9 @@ r = redis.Redis(
 def add_statistics_save(sender, instance, **kwargs):
     user = instance.user
     results = Result.objects.filter(user=user, quiz__module__isnull=True).order_by('date').values('pk', 'score', 'date')
+
+
+
     data = dict()
     for x in results:
         day = x.get('date').strftime('%x')
@@ -37,6 +40,18 @@ def add_statistics_save(sender, instance, **kwargs):
         'labels': labels,
         'data': data_chartjs
     }))
+    if instance.quiz.module is None:
+        railway = user.organizations.get_root()
+        r.lpush(f"organization_result_info",
+                json.dumps({
+                    'result_id':instance.id,
+                    'railway': railway.organization,
+                    'organization':user.organizations.parent.organization,
+                    'department': user.organizations.organization,
+                    'user': user.pinfl,
+                    'score': instance.score
+                }))
+
 
 @receiver(post_delete, sender=Result)
 def add_statistics_delete(sender, instance, **kwargs):

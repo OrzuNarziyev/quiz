@@ -56,6 +56,10 @@ class QuestionAdmin(admin.ModelAdmin):
 @admin.register(Result)
 class ResultAdmin(admin.ModelAdmin):
     list_display = ['quiz', 'user', 'score', 'attempts', 'date', 'update_date']
+    list_filter = (
+        ('quiz__module', admin.EmptyFieldListFilter),
+        ('quiz__course', admin.EmptyFieldListFilter),
+    )
 
 
 @admin.register(ExcelFileUploaded)

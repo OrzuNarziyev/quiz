@@ -18,6 +18,7 @@ from django.core.exceptions import ImproperlyConfigured
 from braces.views import JsonRequestResponseMixin, CsrfExemptMixin
 from django.db.models.functions import ExtractDay, ExtractYear
 
+from account.models import Organizations
 from account.utils.recent_activity import RecentActivity
 # models
 from .models import Quiz, Question, Answer, Result, Category, ExcelFileUploaded
@@ -255,11 +256,13 @@ class ManageDashboard(LoginRequiredMixin, TemplateView):
         year = result.filter(date__year=datetime.today().strftime('%Y')).count()
         month = result.filter(date__month=datetime.today().strftime('%m')).count()
         day = result.filter(date__day=datetime.today().strftime('%d')).count()
+        organizations = Organizations.objects.all()
         print(datetime.today())
         return self.render_to_response({
             'year': year,
             'month': month,
-            'day': day
+            'day': day,
+            'organizations': organizations
         })
 
 
@@ -488,8 +491,84 @@ class HtmxQuizDetailView(DetailView):
 
 htmx_quiz_detail_view = HtmxQuizDetailView.as_view()
 
-
 # statistics function
+import functools
+
+
+class QuizDashboardCountView(CsrfExemptMixin, JsonRequestResponseMixin, View):
+
+    def get(self, request):
+        today = datetime.today()
+        quiz = Quiz.objects.filter(active=True)
+        # result = Result.objects.filter(quiz__module__isnull=True)
+        year = quiz.filter(period_date__year=datetime.today().strftime('%Y')).count()
+        month = quiz.filter(period_date__month=datetime.today().strftime('%m')).count()
+        day = quiz.filter(period_date__day=datetime.today().strftime('%d')).count()
+        count_users_org = r.zmscore('organization', [x['id'] for x in Organizations.objects.all().values('id')])
+        sum_users_org = functools.reduce(lambda a, b: (0 if a is None else a) + (0 if b is None else b),
+                                         count_users_org, 0)
+
+        org_result = r.lrange('organization_result_info', 0, -1)
+
+        data_res = dict()
+
+        # for result in org_result:
+        #     result = json.loads(result)
+        #
+        #     if railway := data_res.get(result['railway']):
+        #
+        #         if organization := railway.get(result['organization']):
+        #
+        #             if department := organization.get(result['department']):
+        #                 department.append(result['score'])
+        #             else:
+        #                 organization[result['department']] = [result['score']]
+        #         else:
+        #             railway[result['organization']] = {
+        #                 result['department']: [result['score']]
+        #             }
+        #     else:
+        #         data_res[result['railway']] = {
+        #             result['organization']: {
+        #                 result['department']: [result['score']]
+        #             }
+        #         }
+
+        for result in org_result:
+            result = json.loads(result)
+
+            if railway := data_res.get(result['railway']):
+
+                if organization := railway.get(result['organization']):
+                    organization.append(result['score'])
+                else:
+                    railway[result['organization']] = [result['score']]
+            else:
+                data_res[result['railway']] = {
+                    result['organization']: [result['score']]
+                }
+
+            test = {
+                'day': day,
+                'month': month,
+                'year': year
+            }
+
+        result = {
+            'day': 71,
+            'month': 70,
+            'year': 59
+        }
+
+        return self.render_json_response({
+            'test': test,
+            'result': result,
+            'users': sum_users_org,
+            'data_res': data_res
+        })
+
+
+quiz_dashboard_info = QuizDashboardCountView.as_view()
 
 
 class ResultApiView(CsrfExemptMixin, JsonRequestResponseMixin, View):

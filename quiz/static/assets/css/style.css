@@ -1224,3 +1224,168 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 13px;
     color: #012970;
 }
+
+.avatar-sm {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: .875rem;
+}
+
+.avatar {
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    border-radius: 0.75rem;
+    height: 48px;
+    width: 48px;
+    transition: all .2s ease-in-out;
+}
+
+
+.progress {
+    overflow: visible
+}
+
+.progress.progress-sm {
+    height: 4px
+}
+
+.progress.progress-lg {
+    height: 20px
+}
+
+.bg-gradient-primary {
+    background-image: linear-gradient(310deg, #7928ca, #ff0080)
+}
+
+.bg-gradient-secondary {
+    background-image: linear-gradient(310deg, #627594, #a8b8d8)
+}
+
+.bg-gradient-success {
+    background-image: linear-gradient(310deg, #17ad37, #98ec2d)
+}
+
+.bg-gradient-info {
+    background-image: linear-gradient(310deg, #2152ff, #21d4fd)
+}
+
+.bg-gradient-warning {
+    background-image: linear-gradient(310deg, #f53939, #fbcf33)
+}
+
+.bg-gradient-danger {
+    background-image: linear-gradient(310deg, #ea0606, #ff667c)
+}
+
+.bg-gradient-light {
+    background-image: linear-gradient(310deg, #ced4da, #ebeff4)
+}
+
+.bg-gradient-dark {
+    background-image: linear-gradient(310deg, #141727, #3a416f)
+}
+
+
+.bg-primary {
+    background-color: #cb0c9f !important
+}
+
+.bg-secondary {
+    background-color: #8392ab !important
+}
+
+.bg-success {
+    background-color: #82d616 !important
+}
+
+.bg-info {
+    background-color: #17c1e8 !important
+}
+
+.bg-warning {
+    background-color: #fbcf33 !important
+}
+
+.bg-danger {
+    background-color: #ea0606 !important
+}
+
+/*.bg-light {*/
+/*    background-color: #e9ecef !important*/
+/*}*/
+
+.bg-dark {
+    background-color: #344767 !important
+}
+
+.bg-body,
+.bg-white {
+    background-color: #fff !important
+}
+
+.table td .progress {
+    height: 3px;
+    width: 120px;
+    margin: 0;
+}
+
+
+
+.progress {
+    --bs-progress-height: 3px;
+    --bs-progress-font-size: 0.75rem;
+    --bs-progress-bg: #e9ecef;
+    --bs-progress-border-radius: 0.5rem;
+    --bs-progress-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .075);
+    --bs-progress-bar-color: #fff;
+    --bs-progress-bar-bg: #cb0c9f;
+    --bs-progress-bar-transition: width 0.6s ease;
+    height: var(--bs-progress-height);
+    font-size: var(--bs-progress-font-size);
+    background-color: var(--bs-progress-bg);
+    border-radius: var(--bs-progress-border-radius)
+}
+
+.progress, .progress-bar {
+    display: flex;
+    overflow: hidden
+}
+
+.progress-bar {
+    flex-direction: column;
+    justify-content: center;
+    color: var(--bs-progress-bar-color);
+    text-align: center;
+    white-space: nowrap;
+    background-color: var(--bs-progress-bar-bg);
+    transition: var(--bs-progress-bar-transition)
+}
+.progress-bar {
+    height: 6px;
+    border-radius: .25rem;
+    margin-top: -2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .progress-bar {
+        transition: none
+    }
+}
+
+.progress-bar-striped {
+    background-image: linear-gradient(45deg, hsla(0, 0%, 100%, .15) 25%, transparent 0, transparent 50%, hsla(0, 0%, 100%, .15) 0, hsla(0, 0%, 100%, .15) 75%, transparent 0, transparent);
+    background-size: var(--bs-progress-height) var(--bs-progress-height)
+}
+
+.progress-bar-animated {
+    animation: 1s linear infinite a
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .progress-bar-animated {
+        animation: none
+    }
+}

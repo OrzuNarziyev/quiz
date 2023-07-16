@@ -1,0 +1,25 @@
+{% if object.active %}
+
+    <th>Holat</th>
+    <td>
+        <button
+                class="btn btn-outline-success" hx-get="{% url 'course:active_or_deactive_course' object.id %}"
+                hx-swap="innerHTML"
+                hx-target="#active-{{ object.id }}">active
+        </button>
+    </td>
+
+
+
+{% else %}
+
+    <th>Holat</th>
+    <td>
+        <button
+                class="btn btn-outline-danger" hx-get="{% url 'course:active_or_deactive_course' object.id %}"
+                hx-swap="innerHTML"
+                hx-target="#active-{{ object.id }}">deactive
+        </button>
+    </td>
+{% endif %}
+

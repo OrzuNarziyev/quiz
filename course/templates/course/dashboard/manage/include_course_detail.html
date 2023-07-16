@@ -1,49 +1,49 @@
-<div class="card">
-    <div class="card-body">
-        <h5 class="card-title">
-            <a href="{% url 'course:course_detail' object.slug %}">{{ object }}</a>
-        </h5>
+<div class="card-body">
+    <h5 class="card-title">
+        <a href="{% url 'course:course_detail' object.slug %}">{{ object }}</a>
+    </h5>
+    <div class="responsive">
+        <table class="table">
+            <tr>
+                <th>darslar soni</th>
+                <td>{{ object.modules.all.count }}</td>
+            </tr>
 
-        <div class="responsive">
-            <table class="table">
+            <tr>
+                <th>yangilangan sanasi</th>
+                <td>{{ object.updated }}</td>
+            </tr>
 
-                <tr>
-                    <th>darslar soni</th>
-                    <td>{{ object.modules.all.count }}</td>
-                </tr>
-
-                <tr>
-                    <th>yangilangan sanasi</th>
-                    <td>{{ object.updated }}</td>
-                </tr>
-
-
-            </table>
+            <tr id="active-{{ object.id }}">
+                {% include 'course/dashboard/manage/active_or_deactive_course.html' %}
+            </tr>
+        </table>
+        <div class="d-flex justify-content-end gap-2">
+            <button
+                    class="btn btn-outline-warning"
+                    hx-get="{% url 'course:course_update' object.id %}"
+                    hx-swap="innerHTML"
+                    hx-target="#course-{{ object.id }}"><i class="bi bi-pencil-square"> update</i>
+            </button>
+            <button
+                    class="btn btn-outline-danger"
+                    hx-get="{% url 'course:course_delete' object.id %}"
+                    hx-swap="innerHTML"
+                    hx-target="#course-{{ object.id }}"><i class="bi-trash"> delete</i>
+            </button>
         </div>
     </div>
+</div>
 
-    <div class="card-footer">
-        <ul class="root">
+<div class="card-footer">
+    <ul class="root">
+        <nav>
+            <ol class="breadcrumb">
+                {% for cat in object.subject.get_family %}
+                    <li class="breadcrumb-item">{{ cat }}</li>
+                {% endfor %}
+            </ol>
+        </nav>
+    </ul>
 
-            {#                        {{ object.category.get_family }}#}
-            <nav>
-                <ol class="breadcrumb">
-                    {% for cat in object.subject.get_family %}
-                        <li class="breadcrumb-item">{{ cat }}</li>
-                    {% endfor %}
-                </ol>
-            </nav>
-
-        </ul>
-
-        {% comment %} <div class="d-flex justify-content-end gap-2">
-            <button class="btn btn-warning" hx-get="{% url 'quiz:quiz_update' object.id %}" hx-swap="innerHTML"
-                    hx-target="#quiz_detail-{{ object.id }}">update
-            </button>
-
-            <button class="btn btn-danger" hx-get="{% url 'quiz:quiz_delete' object.pk %}" hx-swap="innerHTML"
-                    hx-target="#quiz_detail-{{ object.id }}">delete
-            </button>
-        </div> {% endcomment %}
-    </div>
-</div><!-- End Default Card -->
+</div>

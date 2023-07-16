@@ -9,7 +9,7 @@ from django.forms import inlineformset_factory
 class QuizForm(forms.ModelForm):
     class Meta:
         model = Quiz
-        fields = ['category', 'number_of_questions', 'score_to_pass', 'time']
+        fields = ['category', 'title', 'number_of_questions', 'score_to_pass', 'time']
 
 
 class QuestionForm(forms.ModelForm):
@@ -24,7 +24,6 @@ class QuestionForm(forms.ModelForm):
 
 
 class ExportExcelQuestion(forms.ModelForm):
-
     class Meta:
         model = ExcelFileUploaded
         fields = ['excel_file']

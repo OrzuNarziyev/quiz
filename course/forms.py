@@ -7,11 +7,12 @@ from django.utils.text import slugify
 
 
 class CourseForm(forms.ModelForm):
-    subject = TreeNodeChoiceField(queryset=Category.objects.all())
+    subject = TreeNodeChoiceField(label=_("Bo'lim"),queryset=Category.objects.all())
+    title = forms.CharField(label=_("Kurs nomi"))
 
     class Meta:
         model = Course
-        fields = ['subject', 'title', 'image']
+        fields = ['subject', 'title', 'active']
 
     # def save(self, commit=True):
     #     instance = super().save(commit=False)

@@ -11,13 +11,16 @@ urlpatterns = [
 
     path('categories/', views.course_home, name="course_home"),
     path('categories/<slug:slug>/', views.course_home, name="course_cat"),
+    path('categories/<slug:parent_slug>/<slug:cat_slug>', views.user_course_list_view, name="course_category_list"),
 
     path('<slug:course_slug>/filter',
          views.course_list_view, name='course_filter'),
     path('create/', views.course_create_view, name='course_create'),
     path('detail/<slug:slug>/', views.course_detail_view, name='course_detail'),
-    path('<int:pk>/', views.course_update_view, name='course_update'),
-    path('<int:pk>/', views.course_delete_view, name='course_delete'),
+    path('htmx/detail/<int:pk>/', views.course_include_detail_view, name='course_include_detail'),
+    path('update/<int:pk>/', views.course_update_view, name='course_update'),
+    path('active/<int:pk>', views.active_or_deactive_course, name='active_or_deactive_course'),
+    path('delete/<int:pk>/', views.course_delete_view, name='course_delete'),
 
     # module
     path('module/<int:course_id>', views.module_form, name='module_create'),
@@ -37,6 +40,7 @@ urlpatterns = [
     path('module/<quiz_id>/detail/quiz/<module_id>', quiz_views.htmx_quiz_detail_view, name='module_quiz_detail'),
 
     # users paths
+
     path('user/detail/<int:pk>/', views.user_course_detail, name="user_course_detail"),
     path('user/courses', views.course_categories, name='user_course_list'),
     path('user/<slug:slug>', views.course_categories, name='user_course_categories'),

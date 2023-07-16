@@ -1,18 +1,34 @@
-
-
 <div class="card">
     <div class="card-body">
         <h5 class="card-title">
             <a href="{% url 'quiz:quiz_detail' object.pk %}"> {{ object }}</a>
+
         </h5>
 
         <div class="responsive">
             <table class="table">
+                <tr>
+                    <th> Test kuni</th>
+                    <td>
+                        <code><i>
+                            {{ object.period_date|date }}
+                        </i></code>
+                        </td>
+                </tr>
+                <tr>
+                    <th> Test Turi</th>
+                    <td>
+                        <code><i>
+                            {{ object.get_title_display }}
+                        </i></code>
+                        </td>
+                </tr>
 
                 <tr>
                     <th>savollar soni</th>
                     <td>{{ object.number_of_questions }} talik</td>
                 </tr>
+
 
                 <tr>
                     <th>O'tish bali</th>
@@ -31,21 +47,24 @@
                     </td>
                 </tr>
                 {% if object.course %}
-                <tr>
-                    <th>Kurs</th>
+                    <tr>
+                        <th>Kurs</th>
 
-                    <td>
-                        {{ object.course }}
-                    </td>
-                </tr>
-                <tr>
-                    <th>Dars</th>
+                        <td>
+                            {{ object.course }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Dars</th>
 
-                    <td>
-                        {{ object.module }}
-                    </td>
-                </tr>
+                        <td>
+                            {{ object.module }}
+                        </td>
+                    </tr>
                 {% endif %}
+                <tr id="active-{{ object.id }}">
+                    {% include 'dashboard/manage/active.html' %}
+                </tr>
             </table>
         </div>
     </div>
@@ -66,7 +85,8 @@
 
         {% if object.module %}
             <div class="d-flex justify-content-end gap-2">
-                <button class="btn btn-warning" hx-get="{% url 'course:module_quiz_update' object.module.id object.id %}" hx-swap="innerHTML"
+                <button class="btn btn-warning"
+                        hx-get="{% url 'course:module_quiz_update' object.module.id object.id %}" hx-swap="innerHTML"
                         hx-target="#quiz_detail-{{ object.id }}">update
                 </button>
 
@@ -85,6 +105,6 @@
                 </button>
             </div>
         {% endif %}
-       
+
     </div>
 </div><!-- End Default Card -->

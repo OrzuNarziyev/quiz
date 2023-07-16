@@ -17,7 +17,7 @@ r = redis.Redis(
 
 
 def account_info(request):
-    if request.user.is_authenticated and not request.user.is_superuser:
+    if request.user.is_authenticated and not request.user.is_staff:
         pinfl = request.user.pinfl
         resent = RecentActivity(request.user)
         results = Result.objects.filter(user=request.user)

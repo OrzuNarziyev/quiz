@@ -48,6 +48,13 @@ class Category(MPTTModel):
 
 
 class Quiz(models.Model):
+    yakuniy = 'yk'
+    sinov_test = 'st'
+    title_choices = [
+        (yakuniy, 'Yakuniy nazorat'),
+        (sinov_test, 'Sinov test'),
+    ]
+
     category = TreeForeignKey("quiz.Category", on_delete=models.CASCADE, null=True, blank=True,
                               related_name='quizs',
                               verbose_name='Bo\'lim', help_text="Bo'limni tanlang")
@@ -56,7 +63,8 @@ class Quiz(models.Model):
     module = models.ForeignKey("course.Module", verbose_name=_(
         "module"), on_delete=models.CASCADE, blank=True, null=True, related_name='quizs_module')
 
-    title = models.CharField(max_length=255, blank=True)
+    title = models.CharField(verbose_name='Sarlavha', choices=title_choices, default=yakuniy,
+                             max_length=255, blank=True)
     description = models.CharField(max_length=255, blank=True)
     number_of_questions = models.IntegerField(
         verbose_name="Test savollari soni", blank=True)
@@ -67,6 +75,7 @@ class Quiz(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     period_date = models.DateTimeField(blank=True, null=True)
     active = models.BooleanField(default=False)
+    owner = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
     #
     def __str__(self):
@@ -149,7 +158,6 @@ class Result(models.Model):
     update_date = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-
         return f"{self.user}: result {self.score}"
 
     def result(self):

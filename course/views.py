@@ -1,10 +1,12 @@
 import json
 import urllib
 
+import pytz
 import redis
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.conf import settings
-from django.db.models import F
+from django.contrib.auth.decorators import permission_required
+from django.db.models import F, OuterRef, Count, Q, Avg
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect, HttpResponse
@@ -36,6 +38,7 @@ r = redis.Redis(
 )
 
 r.keys()
+
 
 class CourseHomeView(LoginRequiredMixin, TemplateView):
     template_name = 'course/course_home.html'
@@ -108,7 +111,7 @@ course_detail_view = CourseDetailView.as_view()
 
 class CourseCreateView(LoginRequiredMixin, CreateView):
     model = Course
-    template_name = 'course/dashboard/manage/course_form.html'
+    template_name = 'course/dashboard/manage/course_create.html'
     form_class = CourseForm
     success_url = reverse_lazy('course:course_list')
 
@@ -120,12 +123,42 @@ class CourseCreateView(LoginRequiredMixin, CreateView):
 course_create_view = CourseCreateView.as_view()
 
 
-class CourseUpdateView(LoginRequiredMixin, UpdateView):
+class CourseUpdateView(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):
+    permission_required = 'course.view_course'
     model = Course
     template_name = 'course/dashboard/manage/course_form.html'
+    fields = ['subject', 'title', 'active']
+
+    def form_valid(self, form):
+        self.object = form.save()
+        context = {
+            'object': self.object
+        }
+        return render(self.request, 'course/dashboard/manage/include_course_detail.html', context)
 
 
 course_update_view = CourseUpdateView.as_view()
+
+
+class CourseIncludeDetail(PermissionRequiredMixin, LoginRequiredMixin, DetailView):
+    permission_required = 'course.view_course'
+    model = Course
+    template_name = 'course/dashboard/manage/include_course_detail.html'
+
+
+course_include_detail_view = CourseIncludeDetail.as_view()
+
+
+@permission_required('course.view_course')
+def active_or_deactive_course(request, pk):
+    object = get_object_or_404(Course, pk=pk)
+    if object.active:
+        object.active = False
+        object.save()
+    else:
+        object.active = True
+        object.save()
+    return render(request, 'course/dashboard/manage/active_or_deactive_course.html', context={'object': object})
 
 
 class CourseDeleteView(LoginRequiredMixin, DeleteView):
@@ -416,12 +449,14 @@ class CourseCategoriesView(LoginRequiredMixin, TemplateView):
     def get(self, request, slug=None, *args, **kwargs):
 
         if slug is not None:
-            categories = Category.objects.filter(parent__slug=slug).order_by('name').distinct('name').values('name',
-                                                                                                             'level',
-                                                                                                             'icon',
-                                                                                                             'courses',
-                                                                                                             'slug',
-                                                                                                             'children')
+
+            course = Course.objects.filter(subject_id=OuterRef('pk'), active=True)
+
+            categories = Category.objects.filter(parent__slug=slug).select_related('parent').annotate(
+                course=Subquery(course.values('id')[:1]))
+
+
+
 
         else:
             categories = Category.objects.filter(level=0).order_by('name').distinct('name').values('name',
@@ -437,6 +472,25 @@ class CourseCategoriesView(LoginRequiredMixin, TemplateView):
 
 
 course_categories = CourseCategoriesView.as_view()
+
+
+class UserCourseListView(LoginRequiredMixin, ListView):
+    model = Course
+    template_name = 'course/users/pages/category_course_list.html'
+
+    def get_queryset(self, **kwargs):
+        queryset = super().get_queryset()
+        slug_cat = self.kwargs['cat_slug']
+        queryset = queryset.filter(subject__slug=slug_cat, active=True).prefetch_related('modules').annotate(
+            bolim=Count('modules', filter=Q(modules__level=0)),
+            mavzular=Count('modules', filter=Q(modules__level=1)),
+
+        )
+
+        return queryset
+
+
+user_course_list_view = UserCourseListView.as_view()
 
 
 class CourseDetail(LoginRequiredMixin, TemplateView):

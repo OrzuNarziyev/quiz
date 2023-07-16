@@ -31,10 +31,11 @@ class CategoryAdmin(DraggableMPTTAdmin):
 @admin.register(Quiz)
 class QuizAdmin(admin.ModelAdmin):
     mptt_level_indent = 50
-    list_display = ['category', 'module', 'title', 'created', 'active']
-    list_editable = ['active']
+    list_display = ['category', 'period_date', 'module', 'title', 'created', 'active']
+    list_editable = ['active', 'period_date']
     list_filter = (
-        ('category', TreeRelatedFieldListFilter),
+        # ('category', TreeRelatedFieldListFilter),
+        ('period_date', admin.DateFieldListFilter),
     )
 
 

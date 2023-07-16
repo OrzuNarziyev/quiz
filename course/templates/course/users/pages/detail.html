@@ -82,7 +82,20 @@
                                         <td>{{ result.quiz.module }}</td>
                                         {#                                        <td><a href="#" class="text-primary">At praesentium minu</a></td>#}
                                         <td>{{ result.score }}</td>
-                                        <td><span class="badge bg-success">success</span></td>
+                                        <td>
+
+                                            {% if result.score >= result.quiz.score_to_pass %}
+                                                <span class="badge bg-success">
+                                                    success
+                                                </span>
+                                            {% else %}
+                                                <span class="badge bg-danger">
+                                                    fail
+                                                </span>
+                                            {% endif %}
+
+
+                                        </td>
                                     </tr>
                                 {% endfor %}
                                 </tbody>
@@ -121,8 +134,8 @@
                                                     aria-controls="flush-collapse-{{ node.id }}">
                                                 <h5 class="fw-bold">
                                                     {{ node.title }}
-{#                                                    <span#}
-{#                                                        class="badge rounded bg-black">{{ node.get_descendant_count }}</span>#}
+                                                    {#                                                    <span#}
+                                                    {#                                                        class="badge rounded bg-black">{{ node.get_descendant_count }}</span>#}
                                                 </h5>
                                             </button>
                                         </h2>

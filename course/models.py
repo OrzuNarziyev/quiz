@@ -18,9 +18,13 @@ class Course(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     image = models.ImageField(blank=True)
+    active = models.BooleanField(verbose_name='Фаоллаштириш', default=False)
 
     def __str__(self) -> str:
         return f"{self.title}"
+
+    class Meta:
+        ordering = ('-created',)
 
 
 class Module(MPTTModel):

@@ -1,0 +1,186 @@
+{% extends 'user/base.html' %}
+{% load static %}
+{% load mptt_tags %}
+
+{% block title %}
+    Categories
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'user/dash/css/style.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="wrapper-dashboard bg-light">
+        <div class="main-dashboard">
+            <div class="top__main-dashboard ">
+                <div class="profile-group__main-dashboard rounded-3">
+                    <img
+                            class="rounded-circle border border-4"
+                            src="{{ photo }}"
+                            alt="profile"
+                            width="130"
+                            height="130"
+                    />
+                    {#                    <h5 class="title__profile-group fw-bold mb-0 mt-1">Ali Barin</h5>#}
+                    <p class="text__profile-group text-secondary p-2"
+                       style="text-align: center">{{ organization.name }}</p>
+                    <p class="text__profile-group text-secondary " style="text-align: center">{{ staff_full }}</p>
+                </div>
+                <div class="search-group__main-dashboard rounded-3">
+                    <h3 class="text-light fw-bolder">{{ fullname }}</h3>
+                    <div class="form-group search-content">
+              <span class="google-icon__search-content">
+
+              </span>
+                        <input
+                                type="text"
+                                class="form-control bg-white bg-opacity-75 rounded-5"
+                                placeholder="Поиск"
+                        />
+                        <div class="search-icon__search-content">
+                            <img
+                                    src="{% static 'assets/img/search-icon.png' %}"
+                                    alt="search icon"
+                                    width="30"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="middle__main-dashboard">
+                <h3 class="title-dashboard">{{ cat }}</h3>
+                <hr>
+                <div class="content__middle-dashboard">
+
+                    <div class="row">
+                        {% for object in object_list %}
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        {#                                        <h5 class="card-title">Recent Activity <span>| Today</span></h5>#}
+                                        <h5 class="card-title"> {{ object.get_title_display }}</h5>
+                                        <code><i><b>{{ object.period_date|date }}</b></i></code>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="responsive">
+                                            <table class="table">
+                                                <tr>
+                                                    <th>savollar soni</th>
+                                                    <td>{{ object.number_of_questions }} talik</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>O'tish bali</th>
+                                                    <td>{{ object.score_to_pass }} ball</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Test yechish muddati</th>
+                                                    <td>{{ object.time }} min</td>
+                                                </tr>
+                                                {% if object.result.score %}
+                                                    <tr>
+                                                        <th>To'plangan ball</th>
+                                                        <td>{{ object.result.score }} %</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th>Urinishlar soni</th>
+                                                        <td>{{ object.result.attempts }}</td>
+                                                    </tr>
+                                                {% endif %}
+
+
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                    <div class="card-footer justify-content-end">
+                                        {#                                        <ul class="root">#}
+
+                                        <a class="btn btn-outline-dark"
+                                           href="{% url 'quiz:user_quiz_detail' object.id %}">Testga kirish <i
+                                                class="bi-chevron-double-right"></i></a>
+
+                                        {#                        {{ object.category.get_family }}#}
+                                        {#                                            <nav>#}
+                                        {#                                                <ol class="breadcrumb">#}
+                                        {#                                                    {% for cat in object.category.get_family %}#}
+                                        {#                                                        <li class="breadcrumb-item">{{ cat }}</li>#}
+                                        {#                                                    {% endfor %}#}
+                                        {#                                                </ol>#}
+                                        {#                                            </nav>#}
+
+
+                                        {#                                        </ul>#}
+
+                                    </div>
+                                </div><!-- End Default Card -->
+
+                            </div>
+
+
+
+                        {% endfor %}
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        {% include 'dashboard/include/__sidebar.html' %}
+    </div>
+{% endblock %}
+
+{% block include_js %}
+
+    <script>
+        console.log('hello')
+        const url = '{% url 'quiz:statistics_user' %}'
+        var options = {
+            method: 'GET',
+            mode: 'same-origin',
+            headers: {
+                "Content-Type": "application/json",
+
+            }
+        }
+        fetch(url, options)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data)
+                new Chart(document.querySelector('#barChart'), {
+                    type: 'bar',
+                    data: {
+                        labels: data.labels,
+                        datasets: [{
+                            label: "O'zlashtirish",
+                            data: data.data,
+                            backgroundColor: [
+                                'rgba(255, 99, 132,1)',
+                                'rgba(255, 159, 64, 1)',
+                                'rgba(255, 205, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(201, 203, 207, 1)'
+                            ],
+
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+            })
+            .catch(err => (
+                console.log(err)
+            ))
+
+    </script>
+
+{% endblock %}

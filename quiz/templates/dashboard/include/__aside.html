@@ -1,81 +1,150 @@
-<aside id="sidebar" class="sidebar">
+{% url 'quiz:manage_dashboard' as dashboard %}
+{% url 'quiz:manage_statistics' as statistics %}
+{% url 'quiz:quiz_list' as quiz_list %}
+{% url 'quiz:quiz_create_view' as quiz_create_view %}
+{% url 'course:course_list' as course_list %}
+{% url 'course:course_create' as course_create %}
+{% url 'quiz:manage_employers' as manage_employers %}
+{% url 'quiz:manage_organizations' as manage_organizations %}
+{% with request.path as path %}
 
-    <ul class="sidebar-nav" id="sidebar-nav">
+    <aside id="sidebar" class="sidebar">
 
-        <li class="nav-item">
-            <a class="nav-link " href="{% url 'quiz:manage_dashboard' %}">
-                <i class="bi bi-grid"></i>
-                <span>Dashboard</span>
-            </a>
-        </li><!-- End Dashboard Nav -->
+        <ul class="sidebar-nav" id="sidebar-nav">
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{% url 'quiz:manage_statistics' %}">
-                <i class="bi bi-graph-up-arrow"></i>
-                <span>Статистика</span>
-
-            </a>
-        </li><!-- End Profile Page Nav -->
-
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#quiz-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-text"></i><span>Test</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="quiz-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="{% url 'quiz:quiz_list' %}">
-                        <i class="bi bi-circle"></i><span>Testlar</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{% url 'quiz:quiz_create_view' %}">
-                        <i class="bi bi-circle"></i><span>Test Yaratish</span>
-                    </a>
-                </li>
+            <li class="nav-item">
 
 
-            </ul>
-        </li><!-- End Forms Nav -->
+                <a
+                        {% if path == dashboard %}
+                            class="nav-link"
+                        {% else %}
+                            class="nav-link collapsed"
+                        {% endif %}
+                            class="nav-link" href="{% url 'quiz:manage_dashboard' %}">
+                    <i class="bi bi-grid"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li><!-- End Dashboard Nav -->
+
+            <li class="nav-item">
+                <a
+                        {% if path == statistics %}
+                            class="nav-link"
+                        {% else %}
+                            class="nav-link collapsed"
+                        {% endif %}
+                            href="{% url 'quiz:manage_statistics' %}">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span>Статистика</span>
+
+                </a>
+            </li><!-- End Profile Page Nav -->
+
+            <li class="nav-item">
+                <a
+                        {% if path == quiz_list or path == quiz_create_view %}
+                            class="nav-link"
+                        {% else %}
+                            class="nav-link collapsed"
+                        {% endif %}
+                         data-bs-target="#quiz-nav" aria-expanded="true" data-bs-toggle="collapse"
+                   href="#">
+                    <i class="bi bi-journal-text"></i><span>Test</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="quiz-nav" class="nav-content collapse show " data-bs-parent="#sidebar-nav">
+                    <li>
+                        <a
+                                {% if path == quiz_list %}
+                                    class="active"
+                                {% endif %}
+                                href="{% url 'quiz:quiz_list' %}">
+                            <i class="bi bi-circle"></i><span>Testlar</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a
+                                {% if path == quiz_create_view %}
+                                    class="active"
+                                {% endif %}
+                                href="{% url 'quiz:quiz_create_view' %}">
+                            <i class="bi bi-circle"></i><span>Test Yaratish</span>
+                        </a>
+                    </li>
 
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" data-bs-target="#course-nav" data-bs-toggle="collapse" href="#">
-                <i class="bi bi-journal-text"></i><span>Course</span><i class="bi bi-chevron-down ms-auto"></i>
-            </a>
-            <ul id="course-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-                <li>
-                    <a href="{% url 'course:course_list' %}">
-                        <i class="bi bi-circle"></i><span>Kurslar</span>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="{% url 'course:course_create' %}">
-                        <i class="bi bi-circle"></i><span>Kurs Yaratish</span>
-                    </a>
-                </li>
+                </ul>
+            </li><!-- End Forms Nav -->
 
 
-            </ul>
-        </li><!-- End Forms Nav -->
+            <li class="nav-item">
+                <a
+                        {% if path == course_list or path == course_create %}
+                            class="nav-link"
+                        {% else %}
+                            class="nav-link collapsed"
+                        {% endif %}
+                            class="nav-link collapsed" data-bs-target="#course-nav" data-bs-toggle="collapse" href="#">
+                    <i class="bi bi-journal-text"></i><span>Course</span><i class="bi bi-chevron-down ms-auto"></i>
+                </a>
+                <ul id="course-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+                    <li>
 
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{% url 'quiz:manage_employers' %}">
-                <i class="bi bi-people-fill"></i>
-                <span>Ходимлар</span>
-            </a>
-        </li><!-- End Profile Page Nav -->
+                        <a
+                                {% if path == course_list %}
+                                    class="active"
+                                {% endif %}
+                                    href="{% url 'course:course_list' %}">
+                            <i class="bi bi-circle"></i><span>Kurslar</span>
+                        </a>
+                    </li>
 
-        <li class="nav-item">
-            <a class="nav-link collapsed" href="{% url 'quiz:manage_organizations' %}">
-                <i class="bi bi-building"></i>
-                <span>Бўлимлар</span>
-            </a>
-        </li><!-- End Profile Page Nav -->
+                    <li>
+                        <a
+                                {% if path == course_create %}
+                                    class="active"
+                                {% endif %}
+                                href="{% url 'course:course_create' %}">
+                            <i class="bi bi-circle"></i><span>Kurs Yaratish</span>
+                        </a>
+                    </li>
 
 
-    </ul>
+                </ul>
+            </li><!-- End Forms Nav -->
 
-</aside><!-- End Sidebar-->
+
+            <li class="nav-item">
+                <a
+                        {% if path == manage_employers %}
+                            class="nav-link"
+                        {% else %}
+                            class="nav-link collapsed"
+                        {% endif %}
+                         href="{% url 'quiz:manage_employers' %}">
+                    <i class="bi bi-people-fill"></i>
+                    <span>Ходимлар</span>
+                </a>
+            </li><!-- End Profile Page Nav -->
+
+            <li class="nav-item">
+                <a
+                        {% if path == manage_organizations %}
+                            class="nav-link"
+                        {% else %}
+                            class="nav-link collapsed"
+                        {% endif %}
+                         href="{% url 'quiz:manage_organizations' %}">
+                    <i class="bi bi-building"></i>
+                    <span>Бўлимлар</span>
+                </a>
+            </li><!-- End Profile Page Nav -->
+
+
+        </ul>
+
+    </aside><!-- End Sidebar-->
+
+{% endwith %}

@@ -1,6 +1,7 @@
 import json
 import uuid
 
+import pytz
 import redis, json
 import vaex
 from django.shortcuts import render, redirect, get_object_or_404
@@ -15,9 +16,11 @@ from django.views.generic.base import TemplateResponseMixin, TemplateView, View
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.core.exceptions import ImproperlyConfigured
+from django.db.models import Q, Count, Avg, Subquery, OuterRef, Sum
 from braces.views import JsonRequestResponseMixin, CsrfExemptMixin
 from django.db.models.functions import ExtractDay, ExtractYear
 
+from django.contrib.auth.decorators import permission_required
 from account.models import Organizations
 from account.utils.recent_activity import RecentActivity
 # models
@@ -26,7 +29,7 @@ from .forms import QuestionForm, QuizForm, answer_formset, ExportExcelQuestion
 
 from django.views.decorators.csrf import csrf_exempt
 
-from datetime import datetime, date, timedelta
+from datetime import datetime, date, timedelta, timezone
 import requests
 import pandas as pd
 from uuid import uuid4
@@ -47,11 +50,14 @@ class Dashboard(LoginRequiredMixin, TemplateView):
 
     # @cache_page(60 * 15)
     def get(self, request):
+        if request.user.is_superuser or request.user.is_staff:
+            return redirect('quiz:manage_dashboard')
         categories = Category.objects.filter(parent__isnull=True)[:7]
         end_date = datetime.today()
         st_date = end_date - timedelta(days=7)
         results = Result.objects.filter(user=request.user, quiz__module__isnull=True).select_related(
             'quiz__category__parent')
+
         return self.render_to_response({
             'object_list': categories,
             'results': results
@@ -68,13 +74,12 @@ class QuizHomeView(LoginRequiredMixin, TemplateView):
     def get(self, request, slug=None, *args, **kwargs):
 
         if slug is not None:
-            categories = Category.objects.filter(parent__slug=slug).order_by('name').distinct('name').values('name',
-                                                                                                             'level',
-                                                                                                             'icon',
-                                                                                                             'quizs',
-                                                                                                             'quizs__module',
-                                                                                                             'slug',
-                                                                                                             'children')
+            today = datetime.now(pytz.timezone('Asia/Tashkent'))
+            quiz = Quiz.objects.filter(category_id=OuterRef('pk'), period_date__isnull=False, period_date__gte=today,
+                                       module__isnull=True)
+
+            categories = Category.objects.filter(parent__slug=slug).annotate(quiz=Subquery(quiz.values('id')[:1]), )
+
 
         else:
             categories = Category.objects.filter(level=0).order_by('name').distinct('name').values('name',
@@ -100,6 +105,20 @@ class QuizHomeView(LoginRequiredMixin, TemplateView):
 
 
 quiz_home = QuizHomeView.as_view()
+
+
+class UserQuizListView(LoginRequiredMixin, ListView):
+    model = Quiz
+    template_name = 'quiz/user_quiz_list.html'
+
+    def get_queryset(self, **kwargs):
+        queryset = super().get_queryset(**kwargs)
+        queryset = queryset.filter(active=True, period_date__gte=datetime.now(tz=pytz.timezone('Asia/Tashkent')),
+                                   category__slug=self.kwargs['quiz_slug'])
+        return queryset
+
+
+user_quiz_list_view = UserQuizListView.as_view()
 
 
 class UserQuizDetail(LoginRequiredMixin, DetailView):
@@ -272,7 +291,7 @@ manage_dashboard = ManageDashboard.as_view()
 class QuizCreateView(LoginRequiredMixin, CreateView):
     model = Quiz
     template_name = 'dashboard/manage/create_quiz.html'
-    fields = ['category', 'number_of_questions', 'score_to_pass', 'time']
+    fields = ['title', 'category', 'number_of_questions', 'score_to_pass', 'time']
 
     def form_valid(self, form):
         self.object = form.save()
@@ -318,6 +337,19 @@ def update_quiz(request, pk):
         'object': object
     }
     return render(request, 'dashboard/manage/quiz_form.html', context)
+
+
+@permission_required("quiz.view_quiz")
+def active_or_deactive(request, pk):
+    object = get_object_or_404(Quiz, pk=pk)
+    print(object)
+    if object.active:
+        object.active = False
+    else:
+        object.active = True
+
+    object.save()
+    return render(request, 'dashboard/manage/active.html', context={'object': object})
 
 
 class QuizDeleteView(DeleteView):
@@ -430,10 +462,8 @@ def question_form(request, quiz_id):
         if all([form.is_valid(), formset.is_valid()]):
             question = form.save(commit=False)
             quiz_obj = type(form.cleaned_data['quiz'])
-            print(quiz_obj)
             question.save()
             answers = formset.save(commit=False)
-            print(question)
             for answer in answers:
                 answer.question = question
                 answer.save()
@@ -495,21 +525,39 @@ htmx_quiz_detail_view = HtmxQuizDetailView.as_view()
 import functools
 
 
-class QuizDashboardCountView(CsrfExemptMixin, JsonRequestResponseMixin, View):
+class QuizDashboardCountView(LoginRequiredMixin, CsrfExemptMixin, JsonRequestResponseMixin, View):
 
     def get(self, request):
         today = datetime.today()
-        quiz = Quiz.objects.filter(active=True)
-        # result = Result.objects.filter(quiz__module__isnull=True)
-        year = quiz.filter(period_date__year=datetime.today().strftime('%Y')).count()
-        month = quiz.filter(period_date__month=datetime.today().strftime('%m')).count()
-        day = quiz.filter(period_date__day=datetime.today().strftime('%d')).count()
-        count_users_org = r.zmscore('organization', [x['id'] for x in Organizations.objects.all().values('id')])
+        user_org = self.request.user.organizations
+        level_org = user_org.level
+        parent_org = None
+        # keyingi oy boshi sanasi
+        next_month_start = date(datetime.today().year, datetime.today().month + 1, 1)
+        next_year_start = date(datetime.today().year + 1, 1, 1)
+
+        prev_month_start = date(datetime.today().year, datetime.today().month, 1)
+        prev_year_start = date(datetime.today().year, 1, 1)
+
+        # month = datetime.today().strftime('%m')
+        # year = datetime.today().strftime('%Y')
+        day = datetime.today().strftime('%d')
+        quiz_dmy__next = Quiz.objects.filter(active=True, module__isnull=True).aggregate(
+            day=Count('period_date', filter=Q(period_date__day=day)),
+            month=Count('period_date', filter=Q(period_date__gte=today) & Q(period_date__lt=next_month_start)),
+            year=Count('period_date', filter=Q(period_date__gte=today) & Q(period_date__lt=next_year_start)),
+        )
+
+        quiz_dmy__prev = Quiz.objects.filter(active=True, module__isnull=True).aggregate(
+            month=Count('period_date', filter=Q(period_date__lt=today) & Q(period_date__gte=prev_month_start)),
+            year=Count('period_date', filter=Q(period_date__lt=today) & Q(period_date__gte=prev_year_start)),
+        )
+
+        count_users_org = r.zmscore('organization', [x['id'] for x in user_org.get_family().values('id')])
         sum_users_org = functools.reduce(lambda a, b: (0 if a is None else a) + (0 if b is None else b),
                                          count_users_org, 0)
 
         org_result = r.lrange('organization_result_info', 0, -1)
-
         data_res = dict()
 
         # for result in org_result:
@@ -535,36 +583,68 @@ class QuizDashboardCountView(CsrfExemptMixin, JsonRequestResponseMixin, View):
         #         }
 
         for result in org_result:
+
             result = json.loads(result)
-
-            if railway := data_res.get(result['railway']):
-
-                if organization := railway.get(result['organization']):
-                    organization.append(result['score'])
+            if request.user.is_superuser:
+                parent_org = result['railway']
+                if railway := data_res.get(result['railway']):
+                    if organization := railway.get(result['organization']):
+                        organization.append(result['score'])
+                    else:
+                        railway[result['organization']] = [result['score']]
                 else:
-                    railway[result['organization']] = [result['score']]
-            else:
-                data_res[result['railway']] = {
-                    result['organization']: [result['score']]
-                }
+                    data_res[result['railway']] = {
+                        result['organization']: [result['score']]
+                    }
 
-            test = {
-                'day': day,
-                'month': month,
-                'year': year
-            }
+            if level_org == 0:
 
-        result = {
-            'day': 71,
-            'month': 70,
-            'year': 59
-        }
+                if user_org.organization == result['railway']:
+                    parent_org = result['railway']
+                    if railway := data_res.get(result['railway']):
+                        if organization := railway.get(result['organization']):
+                            organization.append(result['score'])
+                        else:
+                            railway[result['organization']] = [result['score']]
+                    else:
+                        data_res[result['railway']] = {
+                            result['organization']: [result['score']]
+                        }
+            if level_org == 1:
 
+                if user_org.organization == result['organization']:
+                    parent_org = result['organization']
+                    if railway := data_res.get(result['organization']):
+                        if organization := railway.get(result['organization']):
+                            organization.append(result['score'])
+                        else:
+                            railway[result['department']] = [result['score']]
+                    else:
+                        data_res[result['organization']] = {
+                            result['department']: [result['score']]
+                        }
+        info_list = []
+        score = []
+        for key, value in data_res.items():
+            keys = value.keys()
+
+            for v in keys:
+                avg = [sum(value[v]) / len(value[v]), v]
+                info_list.append(avg)
+                # bu yerda umumiy organizatsiyalarni ortacha scorelari listga qoshilib boriladi
+                score.extend([avg[0]])
+        try:
+
+            result = round(sum(score) / len(score))
+        except:
+            result = 0
         return self.render_json_response({
-            'test': test,
+            'test__next': quiz_dmy__next,
+            'test__prev': quiz_dmy__prev,
             'result': result,
             'users': sum_users_org,
-            'data_res': data_res
+            'data_res': info_list,
+            'data_name': parent_org
         })
 
 
@@ -581,8 +661,12 @@ class ResultApiView(CsrfExemptMixin, JsonRequestResponseMixin, View):
         })
 
 
-class StatisticsView(TemplateView):
+from django.contrib.auth.decorators import permission_required
+
+
+class StatisticsView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
     template_name = 'dashboard/pages/statistics.html'
+    permission_required = 'course.view_course'
 
     def get(self, request):
         return self.render_to_response({

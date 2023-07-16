@@ -53,10 +53,65 @@
                 <hr>
                 <div class="content__middle-dashboard">
                     <div class="links-group__main-dashboard">
+
+                        {#                        {% regroup object_list by name as objects %}#}
+
+                        {#                        {% for x in objects %}#}
+                        {#                            {% for object in x.list %}#}
+                        {##}
+                        {#                                {% if object.quizs and not object.quizs__module %}#}
+                        {#                                <a href="{% url 'quiz:user_quiz_detail' object.quizs %}"#}
+                        {#                                   class="link-card__main-dashboard rounded-3">#}
+                        {#                                    <span class="badge rounded-pill bg-success align-self-end">test</span>#}
+                        {##}
+                        {#                                    {% if object.icon %}#}
+                        {#                                        <img width="70" src="{% get_media_prefix %}{{ object.icon }}"#}
+                        {#                                             alt="{{ object.icon }}"/>#}
+                        {#                                    {% else %}#}
+                        {#                                        <img width="70" src="{% static 'user/dash/img/file.png' %}" alt="icon"/>#}
+                        {##}
+                        {#                                    {% endif %}#}
+                        {#                                    <p class="text-secondary">{{ object.name }}</p>#}
+                        {#                                </a>#}
+                        {#                            {% elif object.children %}#}
+                        {#                                <a href="{% url 'quiz:quiz_cat' object.slug %}"#}
+                        {#                                   class="link-card__main-dashboard rounded-3">#}
+                        {##}
+                        {#                                    {% if object.icon %}#}
+                        {#                                        <img width="70" src="{% get_media_prefix %}{{ object.icon }}"#}
+                        {#                                             alt="{{ object.icon }}"/>#}
+                        {#                                    {% else %}#}
+                        {#                                        <img width="70" src="{% static 'user/dash/img/file.png' %}" alt="icon"/>#}
+                        {##}
+                        {#                                    {% endif %}#}
+                        {##}
+                        {#                                    <p class="text-secondary">{{ object.name }}</p>#}
+                        {#                                </a>#}
+                        {#                            {% else %}#}
+                        {#                                <a class="link-card__main-dashboard rounded-3">#}
+                        {##}
+                        {#                                    {% if object.icon %}#}
+                        {#                                        <img width="70" src="{% get_media_prefix %}{{ object.icon }}"#}
+                        {#                                             alt="{{ object.icon }}"/>#}
+                        {#                                    {% else %}#}
+                        {#                                        <img width="70" src="{% static 'user/dash/img/file.png' %}" alt="icon"/>#}
+                        {##}
+                        {#                                    {% endif %}#}
+                        {##}
+                        {#                                    <p class="text-secondary">{{ object.name }}</p>#}
+                        {#                                </a>#}
+                        {#                            {% endif %}#}
+                        {##}
+                        {#                            {% endfor %}#}
+                        {#                        {% endfor %}#}
+
                         {% for object in object_list %}
-                            {% if object.quizs and not object.quizs__module %}
-                                <a href="{% url 'quiz:user_quiz_detail' object.quizs %}"
-                                   class="link-card__main-dashboard rounded-3">
+
+
+                            {% if object.quiz %}
+                                <a
+                                        href="{% url 'quiz:user_quiz_list_view' object.parent.slug object.slug %}"
+                                        class="link-card__main-dashboard rounded-3">
                                     <span class="badge rounded-pill bg-success align-self-end">test</span>
 
                                     {% if object.icon %}
@@ -68,7 +123,9 @@
                                     {% endif %}
                                     <p class="text-secondary">{{ object.name }}</p>
                                 </a>
-                            {% elif object.children %}
+
+
+                            {% elif object.children.all %}
                                 <a href="{% url 'quiz:quiz_cat' object.slug %}"
                                    class="link-card__main-dashboard rounded-3">
 
@@ -83,6 +140,8 @@
                                     <p class="text-secondary">{{ object.name }}</p>
                                 </a>
                             {% else %}
+
+
                                 <a class="link-card__main-dashboard rounded-3">
 
                                     {% if object.icon %}

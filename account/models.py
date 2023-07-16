@@ -14,7 +14,7 @@ class CustomUser(AbstractUser):
     username = models.CharField(max_length=100, blank=True, null=True, unique=True)
     organizations = models.ForeignKey('Organizations', on_delete=models.CASCADE, null=True, blank=True,
                                       related_name='users')
-    staff_user = models.ForeignKey('Staff_user', on_delete=models.CASCADE, related_name='user', null=True)
+    staff_user = models.ForeignKey('Staff_user', on_delete=models.CASCADE, related_name='user', null=True, blank=True)
     pinfl = models.CharField(max_length=50, verbose_name='JSHSHR', unique=True)
 
     USERNAME_FIELD = "username"

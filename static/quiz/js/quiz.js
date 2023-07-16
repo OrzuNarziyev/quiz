@@ -142,7 +142,7 @@ fetch(url + 'data', options)
                 if (sum === data.length) {
 
                     q.innerHTML += `
-                        <div class="d-flex justify-content-end mt-3 gap-3">
+                        <div class="d-flex justify-content-start mt-3 gap-3">
                         <button type="button" class="prev_btn arrow  px-8" data-arrow="${sum - 1}" data-current="${sum}">oldingi</button>
                         </div>
                         <br>
@@ -158,7 +158,7 @@ fetch(url + 'data', options)
                         `
                 } else {
                     q.innerHTML += `
-                        <div class="d-flex justify-content-end mt-3 gap-3">
+                        <div class="d-flex justify-content-between mt-3 gap-3">
                         <button type="button" class="prev_btn arrow px-8" data-arrow="${sum - 1}" data-current="${sum}">oldingi</button>
                         <button type="button" class="prev_btn arrow  px-8" data-arrow="${sum + 1}" data-current="${sum}">keyingisi</button>
                         </div>

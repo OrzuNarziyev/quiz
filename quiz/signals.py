@@ -16,8 +16,6 @@ def add_statistics_save(sender, instance, **kwargs):
     user = instance.user
     results = Result.objects.filter(user=user, quiz__module__isnull=True).order_by('date').values('pk', 'score', 'date')
 
-
-
     data = dict()
     for x in results:
         day = x.get('date').strftime('%x')
@@ -44,12 +42,15 @@ def add_statistics_save(sender, instance, **kwargs):
         railway = user.organizations.get_root()
         r.lpush(f"organization_result_info",
                 json.dumps({
-                    'result_id':instance.id,
+                    'result_id': instance.id,
                     'railway': railway.organization,
-                    'organization':user.organizations.parent.organization,
+                    'organization': user.organizations.parent.organization,
                     'department': user.organizations.organization,
                     'user': user.pinfl,
-                    'score': instance.score
+                    'score': instance.score,
+                    'update_date': instance.update_date.isoformat(),
+                    'category': instance.quiz.category.name,
+                    'owner_id': instance.quiz.owner.id
                 }))
 
 

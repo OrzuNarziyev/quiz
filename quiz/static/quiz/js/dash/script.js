@@ -1,23 +1,25 @@
-var xValues = ["Italy", "France", "Spain", "USA", "Argentina"];
-var yValues = [100, 75, 50, 25];
-var barColors = ["red", "green", "blue", "orange", "brown"];
+google.charts.load('current', {'packages': ['corechart']});
+google.charts.setOnLoadCallback(drawChart);
 
-new Chart("myChart", {
-  type: "bar",
-  data: {
-    labels: xValues,
-    datasets: [
-      {
-        backgroundColor: barColors,
-        data: yValues,
-      },
-    ],
-  },
-  options: {
-    legend: { display: false },
-    title: {
-      display: true,
-      text: "",
-    },
-  },
-});
+function drawChart() {
+
+// Set Data
+    const data = google.visualization.arrayToDataTable([
+        ['', ''],
+        ['Italy lorem ipsum dolor sit ammet duoplup dheuyjhbzscasca  e', 34],
+        ['France', 49],
+        ['Spain', 44],
+        ['USA', 24],
+        ['Argentina', 15]
+    ]);
+
+// Set Options
+    const options = {
+        title: 'World Wide Wine Production'
+    };
+
+// Draw
+    const chart = new google.visualization.BarChart(document.getElementById('myChart'));
+    chart.draw(data, options);
+
+}

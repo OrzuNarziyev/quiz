@@ -10,7 +10,7 @@
             <div class="col-lg-12">
                 <div class="row">
 
-                    <!-- Sales Card -->
+                    <!-- tugalanmagan testlar soni -->
                     <div class="col-xxl-3 col-md-6">
                         <div class="card info-card sales-card">
 
@@ -18,60 +18,107 @@
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                     <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
+                                        <h6>Филтр</h6>
                                     </li>
-
-                                    <li><a data-action="today" class="dropdown-item item-quiz" href="#">Today</a></li>
-                                    <li><a data-action="month" class="dropdown-item item-quiz" href="#">This Month</a>
+                                    <li><a data-action="next_today" class="dropdown-item next-item-quiz" href="#">Шу
+                                        кун</a></li>
+                                    <li><a data-action="next_month" class="dropdown-item next-item-quiz" href="#">Шу
+                                        ой</a>
                                     </li>
-                                    <li><a data-action="year" class="dropdown-item item-quiz" href="#">This Year</a>
+                                    <li><a data-action="next_year" class="dropdown-item next-item-quiz" href="#">Шу
+                                        йил</a>
                                     </li>
                                 </ul>
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Testlar <span>| Today</span></h5>
+                                <h5 class="card-title">Тестлар <span class='attribute'><cite
+                                        title="Тугалланмаган тестлар">|Тугалланмаган </cite>  </span>
+                                </h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-spellcheck"></i>
                                     </div>
                                     <div class="ps-3">
-                                        <h6 id="count_quiz"></h6>
+                                        <h6 id="start__count_quiz"></h6>
                                         {% comment %}
                                         <span class="text-success small pt-1 fw-bold">12%</span> <span
                                             class="text-muted small pt-2 ps-1">increase</span>
                                         {% endcomment %}
-
-
                                     </div>
                                 </div>
                             </div>
 
                         </div>
-                    </div><!-- End Sales Card -->
+                    </div><!-- End tugalanmagan testlar soni -->
 
-                    <!-- Revenue Card -->
+                    <!-- tugalangan testlar soni -->
                     <div class="col-xxl-3 col-md-6">
-                        <div class="card info-card revenue-card">
+                        <div class="card info-card sales-card">
 
                             <div class="filter">
                                 <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
                                 <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                                     <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
+                                        <h6>Филтр</h6>
                                     </li>
-
-                                    <li><a data-action="today" class="dropdown-item item-result" href="#">Today</a></li>
-                                    <li><a data-action="month" class="dropdown-item item-result" href="#">This Month</a>
+                                    <li><a data-action="prev-month" class="dropdown-item prev-item-quiz" href="#">Шу
+                                        ой</a>
                                     </li>
-                                    <li><a data-action="year" class="dropdown-item item-result" href="#">This Year</a>
+                                    <li><a data-action="prev-year" class="dropdown-item prev-item-quiz" href="#">Шу
+                                        йил</a>
                                     </li>
                                 </ul>
                             </div>
 
                             <div class="card-body">
-                                <h5 class="card-title">Result Test<span>| This Month</span></h5>
+                                <h5 class="card-title">Тестлар <span><cite
+                                        title="Тугалланган тестлар">|Тугалланган </cite></span></h5>
+
+                                <div class="d-flex align-items-center">
+                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-spellcheck"></i>
+                                    </div>
+                                    <div class="ps-3">
+                                        <h6 id="end__count_quiz"></h6>
+                                        {% comment %}
+                                        <span class="text-success small pt-1 fw-bold">12%</span> <span
+                                            class="text-muted small pt-2 ps-1">increase</span>
+                                        {% endcomment %}
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div><!--  tugalangan testlar -->
+
+                    <!-- umumiy testlar soni -->
+                    <div class="col-xxl-3 col-md-6">
+                        <div class="card info-card revenue-card">
+                            {% comment %}
+                            <div class="filter">
+                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                    <li class="dropdown-header text-start">
+                                        <h6>Филтр</h6>
+                                    </li>
+
+                                    <li><a data-action="today" class="dropdown-item item-result" href="#">Шу кун</a>
+                                    </li>
+                                    <li><a data-action="month" class="dropdown-item item-result" href="#">Шу ой</a>
+                                        </a>
+                                    </li>
+                                    <li><a data-action="year" class="dropdown-item item-result" href="#">Шу йил</a></a>
+                                    </li>
+                                </ul>
+                            </div>
+
+                            {% endcomment %}
+
+                            <div class="card-body">
+                                <h5 class="card-title">Тест <span><cite title="Тугалланган ва Тугалланмаган тестлар">|Натижалари(умумий) </cite></span>
+                                </h5>
 
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
@@ -90,36 +137,15 @@
                             </div>
 
                         </div>
-                    </div><!-- End Revenue Card -->
+                    </div><!-- End umumiy testlar soni -->
 
-                    <!-- Customers Card -->
+                    <!-- Test natijalari ortachasi -->
                     <div class="col-xxl-3 col-xl-12">
 
                         <div class="card info-card customers-card">
-                            {% comment %}
-                             <div class="filter">
-                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
-                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
-                                    <li class="dropdown-header text-start">
-                                        <h6>Filter</h6>
-                                    </li>
-
-                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>
-                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>
-                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>
-                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>
-                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>
-                                    <li><a class="dropdown-item" href="#">lorem10</a></li>
-                                    <li><a class="dropdown-item" href="#">This Month</a></li>
-                                    <li><a class="dropdown-item" href="#">This Year</a></li>
-                                </ul>
-                            </div>
-                            {% endcomment %}
-
-
                             <div class="card-body">
-                                <h5 class="card-title">Xodimlar</h5>
-
+                                <h5 class="card-title">Ходимлар <span><cite title="Тугалланган ва Тугалланмаган тестлар">|Умумий </cite></span>
+                                </h5>
                                 <div class="d-flex align-items-center">
                                     <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
                                         <i class="bi bi-people"></i>
@@ -138,65 +164,18 @@
                             </div>
                         </div>
 
-                    </div><!-- End Customers Card -->
-                    <!-- Customers Card -->
-                    {#                    <div class="col-xxl-3 col-xl-12">#}
-                    {##}
-                    {#                        <div class="card info-card customers-card">#}
-                    {#                            {% comment %}#}
-                    {#                             <div class="filter">#}
-                    {#                                <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>#}
-                    {#                                <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">#}
-                    {#                                    <li class="dropdown-header text-start">#}
-                    {#                                        <h6>Filter</h6>#}
-                    {#                                    </li>#}
-                    {##}
-                    {#                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>#}
-                    {#                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>#}
-                    {#                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>#}
-                    {#                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>#}
-                    {#                                    <li><a class="dropdown-item" href="#">Lorem ipsum dolor sit amet.</a></li>#}
-                    {#                                    <li><a class="dropdown-item" href="#">lorem10</a></li>#}
-                    {#                                    <li><a class="dropdown-item" href="#">This Month</a></li>#}
-                    {#                                    <li><a class="dropdown-item" href="#">This Year</a></li>#}
-                    {#                                </ul>#}
-                    {#                            </div>#}
-                    {#                            {% endcomment %}#}
-                    {##}
-                    {##}
-                    {#                            <div class="card-body">#}
-                    {#                                <h5 class="card-title">Xodimlar</h5>#}
-                    {##}
-                    {#                                <div class="d-flex align-items-center">#}
-                    {#                                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">#}
-                    {#                                        <i class="bi bi-people"></i>#}
-                    {#                                    </div>#}
-                    {#                                    <div class="ps-3">#}
-                    {#                                        <h6 id="employers_count"></h6>#}
-                    {#                                        {% comment %}#}
-                    {#                                         <span class="text-danger small pt-1 fw-bold">12%</span> <span#}
-                    {#                                            class="text-muted small pt-2 ps-1">decrease</span>#}
-                    {#                                        {% endcomment %}#}
-                    {##}
-                    {##}
-                    {#                                    </div>#}
-                    {#                                </div>#}
-                    {##}
-                    {#                            </div>#}
-                    {#                        </div>#}
-                    {##}
-                    {#                    </div><!-- End Customers Card -->#}
-                    {#                    #}
+                    </div><!-- End Test natijalari ortachasi -->
 
                     <div class="row" id="organization_results">
+
 
                     </div>
 
                 </div>
             </div>
-{#            <div class="col-lg-12">#}
-{#                <div width="100%" class="auto-jsCalendar  material-theme green" data-language="ru"></div>#}
-{#            </div>#}
+            {#            <div class="col-lg-12">#}
+            {#                <div width="100%" class="auto-jsCalendar  material-theme green" data-language="ru"></div>#}
+            {#            </div>#}
 
         </div>
     </section>
@@ -212,113 +191,8 @@
 
     <script>
         const url = '{% url 'quiz:api_dashboard_info' %}'
-        let quiz_count = document.getElementById('count_quiz')
-        let result_count = document.getElementById('count_result')
-        let employers_count = document.getElementById('employers_count')
-        let list_quiz_action = document.querySelectorAll('.item-quiz')
-        let list_result_action = document.querySelectorAll('.item-result');
-        let org = document.getElementById('organization_results')
-
-        var options = {
-            method: 'GET',
-            mode: 'same-origin',
-            headers: {
-                "Content-Type": "application/json",
-            }
-        }
-
-        fetch(url, options)
-            .then(response => response.json())
-            .then(data => {
-                var day = data.test.day
-                var month = data.test.month
-                var year = data.test.year
-                var cnt = 0
-
-                for (const [key, value] of Object.entries(data.data_res)) {
-                    cnt++
-                    var arr_org = []
-                    var arr_score = []
-                    var card = `
-                            <div class="col-lg-4">
-                                <div class='card'>
-                                    <div class="card-body">
-                                        <h5 class="card-title">${key}</h5>
-                                         <canvas id='org-${cnt}' style="max-height: 400px;" ><canvas>
-                                    </div>
-                                </div>
-                            </div>
-                    `
-                    org.insertAdjacentHTML('afterbegin', card)
-                    Object.entries(value).forEach(el => {
-                        arr_org.push(el[0])
-                        arr_score.push(el[1].reduce((a, b) => a + b, 0) / el[1].length)
-                    })
-                    {#for (const [key, value1] of Object.entries(value)) {#}
-                    {#    console.log(value1.reduce((a, b) => a + b, 0) / value1.length);}#}
-                    {#console.log(Object.entries(value)[0][1])#}
-
-                    new Chart(document.querySelector(`#org-${cnt}`), {
-                        type: 'doughnut',
-                        data: {
-                            labels: arr_org,
-                            datasets: [{
-                                label: 'My first dataset',
-                                data: arr_score,
-                                backgroundColor: [
-                                    'rgb(255, 99, 132)',
-                                    'rgb(54, 162, 235)',
-                                    'rgb(255, 205, 86)',
-                                    'rgb(25, 205, 86)',
-                                    'rgb(255, 25, 86)',
-                                ],
-                                hoverOffset: 4
-                            }
-
-                            ]
-                        }
-                    });
-
-
-                }
-                quiz_count.innerHTML = day
-                result_count.innerHTML = data.result.day
-                employers_count.innerHTML = data.users
-
-                list_quiz_action.forEach(el => {
-                    el.addEventListener('click', (event) => {
-                        if (el.dataset.action == 'today') {
-                            quiz_count.innerHTML = day
-                        }
-                        if (el.dataset.action == 'month') {
-                            quiz_count.innerHTML = month
-                        }
-                        if (el.dataset.action == 'year') {
-                            quiz_count.innerHTML = year
-                        }
-                    })
-                });
-
-                list_result_action.forEach(el => {
-                    el.addEventListener('click', (event) => {
-                        if (el.dataset.action == 'today') {
-                            result_count.innerHTML = data.result.day
-                        }
-                        if (el.dataset.action == 'month') {
-                            result_count.innerHTML = data.result.month
-                        }
-                        if (el.dataset.action == 'year') {
-                            result_count.innerHTML = data.result.year
-                        }
-                    })
-                })
-
-            })
-            .catch(error => {
-                console.log('error')
-            })
-
     </script>
+    <script src="{% static 'assets/js/manage_dashboard.js' %}"></script>
 
 
     {#    <script>#}

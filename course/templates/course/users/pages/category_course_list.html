@@ -48,61 +48,66 @@
                 </div>
             </div>
             <div class="middle__main-dashboard">
-                <h3 class="title-dashboard">Билим ошириш бўлими</h3>
+                <h3 class="title-dashboard">{{ object_list.first.subject }}</h3>
                 <hr>
 
                 <div class="content__middle-dashboard">
-                    <div class="links-group__main-dashboard">
-
+                    <div class="row">
                         {% for object in object_list %}
-                            {% if object.course %}
-                                <a href="{% url 'course:course_category_list' object.parent.slug object.slug %}"
-                                   class="link-card__main-dashboard rounded-3">
-                                    <span class="badge rounded-pill bg-success align-self-end">course</span>
+                            <div class="col-lg-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        {#                                        <h5 class="card-title">Recent Activity <span>| Today</span></h5>#}
+                                        <h5 class="card-title"> {{ object }}</h5>
+                                        <code><i><b>{{ object.period_date|date }}</b></i></code>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="responsive">
+                                            <table class="table">
+                                                <tr>
+                                                    <th>Bo'limlar</th>
+                                                    <td>{{ object.bolim }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Mavzular soni</th>
+                                                    <td>{{ object.mavzular }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>Testlar soni</th>
+                                                    <td>{{ object.quizs_course.count }}</td>
+                                                </tr>
 
-                                    {% if object.icon %}
-                                        <img width="70" src="{% get_media_prefix %}{{ object.icon }}"
-                                             alt="{{ object.icon }}"/>
-                                    {% else %}
-                                        <img width="70" src="{% static 'user/dash/img/file.png' %}" alt="icon"/>
 
-                                    {% endif %}
-                                    <p class="text-secondary">{{ object.name }}</p>
-                                </a>
-                            {% elif object.children.last %}
-                                <a href="{% url 'course:user_course_categories' object.slug %}"
-                                   class="link-card__main-dashboard rounded-3">
+                                            </table>
+                                        </div>
+                                    </div>
 
-                                    {% if object.icon %}
-                                        <img width="70" src="{% get_media_prefix %}{{ object.icon }}"
-                                             alt="{{ object.icon }}"/>
-                                    {% else %}
-                                        <img width="70" src="{% static 'user/dash/img/file.png' %}" alt="icon"/>
+                                    <div class="card-footer justify-content-end">
+                                        {#                                        <ul class="root">#}
 
-                                    {% endif %}
+                                        <a class="btn btn-outline-dark"
+                                           href="{% url 'course:user_course_detail' object.id %}">Кириш<i
+                                                class="bi-chevron-double-right"></i></a>
 
-                                    <p class="text-secondary">{{ object.name }}</p>
-                                </a>
-                            {% else %}
-                                <a
-                                        class="link-card__main-dashboard rounded-3">
+                                        {#                        {{ object.category.get_family }}#}
+                                        {#                                            <nav>#}
+                                        {#                                                <ol class="breadcrumb">#}
+                                        {#                                                    {% for cat in object.category.get_family %}#}
+                                        {#                                                        <li class="breadcrumb-item">{{ cat }}</li>#}
+                                        {#                                                    {% endfor %}#}
+                                        {#                                                </ol>#}
+                                        {#                                            </nav>#}
 
-                                    {% if object.icon %}
-                                        <img width="70" src="{% get_media_prefix %}{{ object.icon }}"
-                                             alt="{{ object.icon }}"/>
-                                    {% else %}
-                                        <img width="70" src="{% static 'user/dash/img/file.png' %}" alt="icon"/>
 
-                                    {% endif %}
+                                        {#                                        </ul>#}
 
-                                    <p class="text-secondary">{{ object.name }}</p>
-                                </a>
-                            {% endif %}
+                                    </div>
+                                </div><!-- End Default Card -->
 
+                            </div>
                         {% endfor %}
+
                     </div>
-
-
                 </div>
             </div>
         </div>

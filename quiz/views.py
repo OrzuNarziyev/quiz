@@ -21,7 +21,7 @@ from braces.views import JsonRequestResponseMixin, CsrfExemptMixin
 from django.db.models.functions import ExtractDay, ExtractYear
 
 from django.contrib.auth.decorators import permission_required
-from account.models import Organizations
+from account.models import Organizations, CustomUser
 from account.utils.recent_activity import RecentActivity
 # models
 from .models import Quiz, Question, Answer, Result, Category, ExcelFileUploaded
@@ -560,28 +560,6 @@ class QuizDashboardCountView(LoginRequiredMixin, CsrfExemptMixin, JsonRequestRes
         org_result = r.lrange('organization_result_info', 0, -1)
         data_res = dict()
 
-        # for result in org_result:
-        #     result = json.loads(result)
-        #
-        #     if railway := data_res.get(result['railway']):
-        #
-        #         if organization := railway.get(result['organization']):
-        #
-        #             if department := organization.get(result['department']):
-        #                 department.append(result['score'])
-        #             else:
-        #                 organization[result['department']] = [result['score']]
-        #         else:
-        #             railway[result['organization']] = {
-        #                 result['department']: [result['score']]
-        #             }
-        #     else:
-        #         data_res[result['railway']] = {
-        #             result['organization']: {
-        #                 result['department']: [result['score']]
-        #             }
-        #         }
-
         for result in org_result:
 
             result = json.loads(result)
@@ -669,12 +647,28 @@ class StatisticsView(LoginRequiredMixin, PermissionRequiredMixin, TemplateView):
     permission_required = 'course.view_course'
 
     def get(self, request):
+        print(self.request.user.organizations)
+        results = Result.objects.filter(user__organizations__parent__parent__in=[self.request.user.organizations])
+        print(results)
         return self.render_to_response({
-            'ok': 'ok'
+            'results': results
         })
 
 
 statistics = StatisticsView.as_view()
+
+
+class StatisticsOrganizationApi(PermissionRequiredMixin, LoginRequiredMixin, JsonRequestResponseMixin, View):
+    permission_required = 'quiz.view_quiz'
+
+    def get(self, request):
+
+        return self.render_json_response({
+            'organizations': 'ok'
+        })
+
+
+statistics_org_api = StatisticsOrganizationApi.as_view()
 
 
 class Employers(TemplateView):

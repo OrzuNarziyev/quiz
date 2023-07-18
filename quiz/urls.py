@@ -39,4 +39,6 @@ urlpatterns = [
     path('manage/employers', views.employers, name='manage_employers'),
     path('manage/organization', views.organizations, name='manage_organizations'),
     path('api/manage/dashboard/info', views.quiz_dashboard_info, name='api_dashboard_info'),
+    path('api/manage/statistics/org', views.statistics_org_api, name='statistics_org_api'),
+
 ]

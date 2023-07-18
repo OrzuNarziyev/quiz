@@ -13,6 +13,7 @@ r = redis.Redis(
 
 @receiver(post_save, sender=Result)
 def add_statistics_save(sender, instance, **kwargs):
+    print('update')
     user = instance.user
     results = Result.objects.filter(user=user, quiz__module__isnull=True).order_by('date').values('pk', 'score', 'date')
 
@@ -60,6 +61,7 @@ def add_statistics_delete(sender, instance, **kwargs):
     results = Result.objects.filter(user=user, quiz__module__isnull=True).order_by('date').values('pk', 'score', 'date')
     data = dict()
     for x in results:
+        print(x.get('score'))
         day = x.get('date').strftime('%x')
         a = data.get(day)
         if a:
@@ -76,7 +78,9 @@ def add_statistics_delete(sender, instance, **kwargs):
         data_chartjs.append(score / len(data[x]))
     if r.get(f"user:{user}:result"):
         r.delete(f"user:{user}:result")
+    print('delete')
     r.set(f"user:{user}:result", json.dumps({
         'labels': labels,
         'data': data_chartjs
     }))
+

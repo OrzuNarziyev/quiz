@@ -37,11 +37,8 @@
     "organizations": null,
     "staff_user": null,
     "pinfl": "30504965380010",
-    "groups": [
-      1
-    ],
+    "groups": [],
     "user_permissions": [
-      49
     ]
   }
 },

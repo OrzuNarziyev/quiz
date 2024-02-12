@@ -50,6 +50,7 @@ class Dashboard(LoginRequiredMixin, TemplateView):
 
     # @cache_page(60 * 15)
     def get(self, request):
+        print('hello')
         if request.user.is_superuser or request.user.is_staff:
             return redirect('quiz:manage_dashboard')
         categories = Category.objects.filter(parent__isnull=True)[:7]

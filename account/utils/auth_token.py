@@ -40,6 +40,7 @@ def get_info(pinfl):
         print('has access token')
         token = cache.get('access_token')
         type_api = cache.get('token_type')
+        print(token)
 
         if isinstance(token, bytes):
             headers = {
@@ -50,7 +51,7 @@ def get_info(pinfl):
                 'Authorization': f"{type_api} {token}"
             }
     get_response = requests.get(endpoint, headers=headers, params={"pinfl": pinfl})
-
+    print(get_response)
     if get_response.status_code == 200:
         data = get_response.json()['cadry']
         data['date'] = datetime.now().timestamp()
